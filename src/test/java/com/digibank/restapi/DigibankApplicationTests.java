@@ -1,5 +1,7 @@
 package com.digibank.restapi;
 
+import com.digibank.restapi.model.Example;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -7,7 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 class DigibankApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void check_lombok_usage_with_sample_data() {
+		var ex = new Example();
+		ex.setData("sample");
+		Assertions.assertEquals("sample",ex.getData());
 	}
 
 }
