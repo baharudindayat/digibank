@@ -70,7 +70,7 @@ Response Body (succes) :
 ```json
 {
     "status" : 200,
-    "errors" : null
+    "validate": true,
 }
 ```
 
