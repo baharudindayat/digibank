@@ -70,7 +70,7 @@ Response Body (succes) :
 ```json
 {
     "status" : 200,
-    "validate": true,
+    "errors: : null
 }
 ```
 
@@ -80,8 +80,7 @@ Response Body (failed nik) :
 ```json
 {
     "status" : 401,
-    "validate" : false,
-    "message" : "Maaf! NIK yang dimasukkan tidak terdaftar. Pastikan memasukkan NIK yang benar"
+    "errors" : "Maaf! NIK yang dimasukkan tidak terdaftar. Pastikan memasukkan NIK yang benar"
 }
 ```
 
@@ -91,8 +90,7 @@ Response Body (failed email) :
 ```json
 {
     "status" : 401,
-    "validate" : false,
-    "message" : "Email yang dimasukkan salah atau tidak terdaftar. pastikan email benar atau silahkan registrasi dahulu"
+    "errors" : "Email yang dimasukkan salah atau tidak terdaftar. pastikan email benar atau silahkan registrasi dahulu"
 }
 ```
 
