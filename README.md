@@ -75,25 +75,6 @@ Response Body (succes) :
 ```
 
 
-Response Body (failed nik) :
-
-```json
-{
-    "status" : 401,
-    "errors" : "Maaf! NIK yang dimasukkan tidak terdaftar. Pastikan memasukkan NIK yang benar"
-}
-```
-
-
-Response Body (failed email) :
-
-```json
-{
-    "status" : 401,
-    "errors" : "Email yang dimasukkan salah atau tidak terdaftar. pastikan email benar atau silahkan registrasi dahulu"
-}
-```
-
 
 ## MPIN
 
