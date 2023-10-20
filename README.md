@@ -80,7 +80,7 @@ Response Body (succes) :
 
 
 
-Endpoint : POST /mpin
+Endpoint : POST users/:id/mpin
 
 Request Body :
 
@@ -97,26 +97,6 @@ Response Body (succes) :
 {
     "status" : 200,
     "errors" : null
-}
-```
-
-
-Response Body (failed mpin) :
-
-```json
-{
-    "status" : 400,
-    "errors" : "MPIN harus terdiri dari 6 digit"
-}
-```
-
-
-Response Body (failed konfirmasi mpin) :
-
-```json
-{
-    "status" : 400,
-    "errors" : "MPIN tidak sama"
 }
 ```
 
