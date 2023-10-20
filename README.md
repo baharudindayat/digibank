@@ -287,6 +287,6 @@ Response Body (failed otp) :
 ```json
 {
     "status" : 400,
-    "errors" : "OTP tidak terverifikasi"
+    "message" : "OTP tidak terverifikasi"
 }
 ```
