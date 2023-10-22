@@ -55,7 +55,7 @@ Response Body (failed email) :
 
 
 
-Endpoint : POST /create-rekening
+Endpoint : POST users/:id/create-rekening
 
 Request Body :
 
