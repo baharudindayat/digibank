@@ -6,6 +6,30 @@ Base URL [https://digibank/api/v1](https://digibank/api/v1)
 
 
 
+## Create Rekening
+
+
+
+Endpoint : POST /create-rekening
+
+Request Body :
+
+```json
+{
+    "tipe_kartu" : "platinum",
+}
+```
+
+Response Body (succes) :
+
+```json
+{
+    "status" : 200,
+    "errors": null
+}
+```
+
+
 Endpoint : POST /users/validate
 
 Request Body :
@@ -51,28 +75,6 @@ Response Body (failed email) :
 ```
 
 
-## Create Rekening
-
-
-
-Endpoint : POST users/:id/create-rekening
-
-Request Body :
-
-```json
-{
-    "tipe_kartu" : "platinum",
-}
-```
-
-Response Body (succes) :
-
-```json
-{
-    "status" : 200,
-    "errors": null
-}
-```
 
 
 
@@ -128,35 +130,6 @@ Response Body (success) :
 }
 ```
 
-
-Response Body (failed nik) :
-
-```json
-{
-    "status" : 401,
-    "message" : "NIK tidak terdaftar"
-}
-```
-
-
-Response Body (failed nama lengkap) :
-
-```json
-{
-    "status" : 400,
-    "message" : "Berupa huruf"
-}
-```
-
-
-Response Body (failed no telepon) :
-
-```json
-{
-    "status" : 400,
-    "message" : "Berupa angka"
-}
-```
 
 
 Response Body (failed email) :
