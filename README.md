@@ -2,7 +2,6 @@
 
 Base URL [https://digibank/api/v1](https://digibank/api/v1)
 
-## Validasi Rekening
 
 
 
@@ -28,6 +27,9 @@ Response Body (succes) :
     "errors": null
 }
 ```
+
+
+## Validasi Rekening
 
 
 Endpoint : POST /users/validate
