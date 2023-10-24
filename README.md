@@ -102,12 +102,13 @@ Request Body :
 }
 ```
 
-Response Body (succes) :
+Response Body (success) :
 
 ```json
 {
     "status" : 200,
     "message" : "success",
+    "id_cif" : 1,
     "no_rek" : "1234567890"
 }
 ```
