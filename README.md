@@ -97,7 +97,7 @@ Request Body :
     "nama_lengkap" : "Suparman"
     "pekerjaan" : "PNS",
     "penghasilan" : "100.000.000",
-    "id_tipe_rekening" : 3 // post id rekening yang sudah ditampung
+    "id_tipe_rekening" : 3 // post id tipe rekening yang sudah ditampung
 }
 ```
 
