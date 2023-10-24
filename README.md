@@ -7,6 +7,34 @@ Base URL: http://digibank/api/v1
 
 ## Choose Rekening Type / Card Type
 
+Setelah user pilih kartu, data tipe rekening ditampung di fe, nantinya akan dipost ketika user klik button lanjut pada isi data diri/cif
+
+Endpoint : GET/users/pilih-rekening
+
+Response : 
+
+```json
+{
+    "status" : 200,
+    "data" :[
+        {
+            "id" : 1,
+            "nama" : "Silver",
+            "limit_transfer" : "5 Juta"
+        },
+        {
+            "id" : 2,
+            "nama" : "Gold",
+            "limit_transfer" : "10 Juta"
+        },
+        {    
+            "id" : 3,
+            "nama" : "Platinum",
+            "limit_transfer" : "15 Juta"
+        },
+    ]
+}
+```
 
 
 Endpoint : POST/users/pilih-rekening
