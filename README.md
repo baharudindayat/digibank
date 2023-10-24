@@ -208,16 +208,6 @@ Response Body (success) :
 }
 ```
 
-Response Body (failed) :
-
-```json
-{
-    "status" : 401,
-    "message" : "Nomor Rekening tidak terdaftar"
-    "id_cif" : null
-}
-```
-
 
 
 
