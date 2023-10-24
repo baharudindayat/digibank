@@ -63,7 +63,7 @@ Response Body (succes) :
 ### OTP Verification / OTP Confirmation
 
 
-Endpoint : POST/users/otp-verification
+Endpoint : POST /users/otp-verification
 
 Request Body :
 
@@ -86,17 +86,18 @@ Response Body (succes) :
 ### CIF
 
 
-Endpoint : POST/users/:id_user/cif
+Endpoint : POST /users/cif
 
 Request Body :
 
 ```json
 {
+    "id_user" : 1
     "nik" : "123456",
     "alamat" : "123456",
     "nama_lengkap" : "Suparman"
     "pekerjaan" : "PNS",
-    "penghasilan" : "100.000.000"
+    "penghasilan" : "100.000.000",
     "id_tipe_rekening" : 3
 }
 ```
@@ -115,7 +116,7 @@ Response Body (succes) :
 ### Create Password
 
 
-Endpoint : POST/users/:id_user/password
+Endpoint : POST /users/:id_user/password
 
 Request Body :
 
@@ -138,7 +139,7 @@ Response Body (success) :
 ### Create MPIN
 
 
-Endpoint : POST/users/:id_user/mpin
+Endpoint : POST /users/:id_user/mpin
 
 Request Body :
 
@@ -162,7 +163,7 @@ Response Body (success) :
 
 ### Konfirmasi Rekening
 
-Endpoint : POST/users/users/confirm-rekening
+Endpoint : POST /users/users/confirm-rekening
 
 Request Body :
 
@@ -222,7 +223,6 @@ Response Body (failed) :
 
 
 ### User Login
-
 
 
 Endpoint : POST /users/login
