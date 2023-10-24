@@ -123,6 +123,7 @@ Request Body :
 
 ```json
 {
+    "id_cif" : 1
     "password" : "rahasia1"
 }
 ```
