@@ -55,7 +55,7 @@ Response Body (succes) :
 ```json
 {
     "status" : 200,
-    "otp" : "zTRIq",
+    "otp" : "1234",
     "id_user" : 1,
 }
 ```
