@@ -69,7 +69,7 @@ Request Body :
 
 ```json
 {
-     "otp" : "zTRIq"
+     "otp" : "1234"
 }
 ```
 
