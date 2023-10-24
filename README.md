@@ -37,29 +37,6 @@ Response :
 ```
 
 
-Endpoint : POST/users/pilih-rekening
-
-Request Body :
-
-```json
-{
-    "id_tipe_kartu" : "1",
-    "id_tipe_kartu" : "2",
-    "id_tipe_kartu" : "3"
-}
-```
-
-Response Body (succes) :
-
-```json
-{
-    "status" : 200,
-    tipe-rekekning
-}
-```
-
-
-
 ## OTP Generate / Email Confirmation
 
 
@@ -88,8 +65,7 @@ Response Body (succes) :
 ## CIF
 
 
-
-Endpoint : POST/users/:id/cif
+Endpoint : POST/users/:id_user/cif
 
 Request Body :
 
@@ -99,6 +75,7 @@ Request Body :
     "alamat" : "123456",
     "pekerjaan" : "PNS",
     "penghasilan" : "100.000.000"
+    "id_tipe_rekening" : 3
 }
 ```
 
@@ -118,7 +95,7 @@ Response Body (succes) :
 
 
 
-Endpoint : POST/users/:id/password
+Endpoint : POST/users/:id_user/password
 
 Request Body :
 
