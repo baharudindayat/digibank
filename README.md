@@ -1,21 +1,23 @@
 # Auth API Documentation
 
-Base URL [https://digibank/api/v1](https://digibank/api/v1)
+Base URL: http://digibank/api/v1
 
 
 
 
-## Create Rekening
+## Choose Rekening Type / Card Type
 
 
 
-Endpoint : POST /create-rekening
+Endpoint : POST/users/pilih-rekening
 
 Request Body :
 
 ```json
 {
-    "tipe_kartu" : "platinum",
+    "id_tipe_kartu" : "1",
+    "id_tipe_kartu" : "2",
+    "id_tipe_kartu" : "3"
 }
 ```
 
@@ -24,22 +26,22 @@ Response Body (succes) :
 ```json
 {
     "status" : 200,
-    "errors": null
+    tipe-rekekning
 }
 ```
 
 
-## Validasi Rekening
+
+## OTP Generate / Email Confirmation
 
 
-Endpoint : POST /users/validate
+Endpoint : POST/users/otp-generate
 
 Request Body :
 
 ```json
 {
-    "nik" : "3304060511010002",
-    "email" : "fahrizalshofyanaziz@gmail.com"
+    "email" : "budi@gmail.com"
 }
 ```
 
@@ -48,50 +50,27 @@ Response Body (succes) :
 ```json
 {
     "status" : 200,
-    "validate" : true,
-    "message" : "Selamat! NIK dan Email Berhasil dikonfirmasi"
-}
-```
-
-
-Response Body (failed nik) :
-
-```json
-{
-    "status" : 401,
-    "validate" : false,
-    "message" : "Maaf! NIK yang dimasukkan tidak terdaftar. Pastikan memasukkan NIK yang benar"
-}
-```
-
-
-Response Body (failed email) :
-
-```json
-{
-    "status" : 401,
-    "validate" : false,
-    "message" : "Email yang dimasukkan salah atau tidak terdaftar. pastikan email benar atau silahkan registrasi dahulu"
-    
+    "OTP" : 123456,
+    "id_user" : 1,
 }
 ```
 
 
 
-
-
-## MPIN
+## CIF
 
 
 
-Endpoint : POST users/:id/mpin
+Endpoint : POST/users/:id/cif
 
 Request Body :
 
 ```json
 {
-    "mpin" : "123456",
-    "konfirmasi_mpin" : "123456"
+    "nik" : "123456",
+    "alamat" : "123456",
+    "pekerjaan" : "PNS",
+    "penghasilan" : "100.000.000"
 }
 ```
 
@@ -100,16 +79,18 @@ Response Body (succes) :
 ```json
 {
     "status" : 200,
-    "errors" : null
+    "message" : "success",
+    "no_rek" : "1234567890"
 }
 ```
 
 
-## User Registrasi
+
+## Create Password
 
 
 
-Endpoint : POST /users/registrasi
+Endpoint : POST/users/:id/password
 
 Request Body :
 
