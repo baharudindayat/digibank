@@ -3,9 +3,9 @@
 Base URL: http://digibank/api/v1
 
 
+## Belum punya akun & Rekening
 
-
-## Choose Rekening Type / Card Type
+### Choose Rekening Type / Card Type
 
 Setelah user pilih kartu, data tipe rekening ditampung di fe, nantinya akan dipost ketika user klik button lanjut pada isi data diri/cif
 
@@ -37,7 +37,7 @@ Response :
 ```
 
 
-## OTP Generate / Email Confirmation
+### OTP Generate / Email Confirmation
 
 
 Endpoint : POST/users/otp-generate
@@ -55,14 +55,35 @@ Response Body (succes) :
 ```json
 {
     "status" : 200,
-    "OTP" : 123456,
+    "otp" : "zTRIq",
     "id_user" : 1,
 }
 ```
 
+### OTP Verification / OTP Confirmation
 
 
-## CIF
+Endpoint : POST/users/otp-verification
+
+Request Body :
+
+```json
+{
+     "otp" : "zTRIq"
+}
+```
+
+Response Body (succes) :
+
+```json
+{
+    "status" : 200,
+    "message" : "Success"
+}
+```
+
+
+### CIF
 
 
 Endpoint : POST/users/:id_user/cif
@@ -73,6 +94,7 @@ Request Body :
 {
     "nik" : "123456",
     "alamat" : "123456",
+    "nama_lengkap" : "Suparman"
     "pekerjaan" : "PNS",
     "penghasilan" : "100.000.000"
     "id_tipe_rekening" : 3
@@ -90,9 +112,7 @@ Response Body (succes) :
 ```
 
 
-
-## Create Password
-
+### Create Password
 
 
 Endpoint : POST/users/:id_user/password
@@ -101,10 +121,6 @@ Request Body :
 
 ```json
 {
-    "nik" : "3304060511010002",
-    "nama_lengkap" : "Fahrizal Shofyan Aziz",
-    "no_telepon" : "0895384163787",
-    "email" : "fahrizalshofyanaziz@gmail.com"
     "password" : "rahasia1"
 }
 ```
@@ -114,33 +130,98 @@ Response Body (success) :
 ```json
 {
     "status" : 200,
-    "message" : "zTRIq" // otp
+    "message" : "Success" 
 }
 ```
 
 
+### Create MPIN
 
-Response Body (failed email) :
+
+Endpoint : POST/users/:id_user/mpin
+
+Request Body :
 
 ```json
 {
-    "status" : 400,
-    "message" : "Email harus sesuai dengan format penulisan"
+    "mpin" : "123456"
 }
 ```
 
-Response Body (failed password) :
+Response Body (success) :
 
 ```json
 {
-    "status" : 400,
-    "message" : "Password harus terdiri dari minimal 8 karakter"
+    "status" : 200,
+    "message" : "Success" 
+}
+```
+
+
+## Belum punya akun & sudah punya rekening
+
+### Konfirmasi Rekening
+
+Endpoint : POST/users/users/confirm-rekening
+
+Request Body :
+
+```json
+{
+    "nomor_rekening" : "1234563445"
+}
+```
+
+Response Body (success) :
+
+```json
+{
+    "status" : 200,
+    "message" : "Success"
+    "id_cif" : 1
+}
+```
+
+Response Body (failed) :
+
+```json
+{
+    "status" : 401,
+    "message" : "Nomor Rekening tidak terdaftar"
+    "id_cif" : null
+}
+```
+
+
+### Konfirmasi CIF
+
+Endpoint : GET /users/:id_cif/confirm-cif
+
+
+Response Body (success) :
+
+```json
+{
+    "nik" : "123456",
+    "nama_lengkap" : "Suparman"
+}
+```
+
+Response Body (failed) :
+
+```json
+{
+    "status" : 401,
+    "message" : "Nomor Rekening tidak terdaftar"
+    "id_cif" : null
 }
 ```
 
 
 
-## User Login
+
+
+### User Login
 
 
 
@@ -180,54 +261,4 @@ Response Body (failed email&password) :
 ```
 
 
-Response Body (failed email) :
 
-```json
-{
-    "status" : 400,
-    "message" : "Email harus sesuai dengan format penulisan"
-}
-```
-
-Response Body (failed password) :
-
-```json
-{
-    "status" : 400,
-    "message" : "Password harus terdiri dari minimal 8 karakter"
-}
-```
-
-
-## OTP Verify
-
-
-
-Endpoint : POST /users/otpver
-
-Request Body :
-
-```json
-{
-    "otp": "zTRIq"
-}
-```
-
-Response Body (success) :
-
-```json
-{
-    "status": 200,
-    "message": "OTP terverifikasi",
-}
-```
-
-
-Response Body (failed otp) :
-
-```json
-{
-    "status" : 400,
-    "message" : "OTP tidak terverifikasi"
-}
-```
