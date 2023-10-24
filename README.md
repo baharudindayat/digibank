@@ -92,13 +92,12 @@ Request Body :
 
 ```json
 {
-    "id_user" : 1
     "nik" : "123456",
     "alamat" : "123456",
     "nama_lengkap" : "Suparman"
     "pekerjaan" : "PNS",
     "penghasilan" : "100.000.000",
-    "id_tipe_rekening" : 3
+    "id_tipe_rekening" : 3 // post id rekening yang sudah ditampung
 }
 ```
 
@@ -212,8 +211,6 @@ Response Body (success) :
 
 
 
-
-
 ### User Login
 
 
@@ -238,7 +235,6 @@ Response Body (success) :
     
 }
 ```
-
 
 Response Body (failed email&password) :
 
