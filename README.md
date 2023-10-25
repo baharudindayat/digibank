@@ -62,7 +62,7 @@ Response Body (succes) :
 ### OTP Verification / OTP Confirmation
 
 
-Endpoint : POST /users/:id_user/otp-verification
+Endpoint : POST /users/{id}/otp-verification
 
 Request Body :
 
@@ -100,10 +100,10 @@ Request Body :
 ```json
 {
     "nik" : "123456",
-    "alamat" : "123456",
+    "alamat" : "Maguwo 12",
     "nama_lengkap" : "Suparman"
-    "pekerjaan" : "PNS",
-    "penghasilan" : "100.000.000",
+    "pekerjaan" : "Pegawai Negeri Sipil (PNS)",
+    "penghasilan" : "0 - 5.000.000",
    
 }
 ```
@@ -115,20 +115,20 @@ Response Body (success) :
     "status" : 200,
     "message" : "success",
     "id_cif" : 1,
-    "no_rek" : "1234567890"
+    "no_rek" : "12345678"
 }
 ```
 
 ### Create Rekening
 
 
-Endpoint : POST /users/create-rekening
+Endpoint : POST /users/account
 
 Request Body :
 
 ```json
 {
-    "no_rek" : "1234567890",
+    "no_rek" : "12345678",
     "id_cif" : 1,
     "id_tipe_rekening" : 3 // post id tipe rekening yang sudah ditampung
 }
@@ -148,7 +148,7 @@ Response Body (success) :
 ### Create Password
 
 
-Endpoint : POST /users/:id_user/password
+Endpoint : POST /users/{id}/password
 
 Request Body :
 
@@ -181,7 +181,7 @@ Response Body (failed) :
 ### Create MPIN
 
 
-Endpoint : POST /users/:id_user/mpin
+Endpoint : POST /users/{id}pin
 
 Request Body :
 
@@ -205,13 +205,13 @@ Response Body (success) :
 
 ### Konfirmasi Rekening
 
-Endpoint : POST /users/confirm-rekening
+Endpoint : POST /users/confirm-accounts
 
 Request Body :
 
 ```json
 {
-    "nomor_rekening" : "1234563445"
+    "nomor_rekening" : "12345678"
 }
 ```
 
@@ -238,14 +238,14 @@ Response Body (failed) :
 
 ### Konfirmasi CIF
 
-Endpoint : GET /users/:id_cif/confirm-cif
+Endpoint : GET /users/{id}/confirm-cif
 
 
 Response Body (success) :
 
 ```json
 {
-    "nik" : "123456",
+    "nik" : "1234567887654321",
     "nama_lengkap" : "Suparman"
 }
 ```
