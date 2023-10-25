@@ -97,7 +97,7 @@ Request Body :
     "nama_lengkap" : "Suparman"
     "pekerjaan" : "PNS",
     "penghasilan" : "100.000.000",
-    "id_tipe_rekening" : 3 // post id tipe rekening yang sudah ditampung
+   
 }
 ```
 
@@ -111,6 +111,31 @@ Response Body (success) :
     "no_rek" : "1234567890"
 }
 ```
+
+### Create Rekening
+
+
+Endpoint : POST /users/create-rekening
+
+Request Body :
+
+```json
+{
+    "no_rek" : "1234567890",
+    "id_cif" : 1,
+    "id_tipe_rekening" : 3 // post id tipe rekening yang sudah ditampung
+}
+```
+
+Response Body (success) :
+
+```json
+{
+    "status" : 200,
+    "message" : "success",
+}
+```
+
 
 
 ### Create Password
@@ -164,7 +189,7 @@ Response Body (success) :
 
 ### Konfirmasi Rekening
 
-Endpoint : POST /users/users/confirm-rekening
+Endpoint : POST /users/confirm-rekening
 
 Request Body :
 
