@@ -189,7 +189,7 @@ Response Body (success) :
 ```json
 {
     "status" : 200,
-    "message" : "Success" 
+    "message" : "Selamat! Akun Berhasil dibuat. Silakan Melakukan Login." 
 }
 ```
 
