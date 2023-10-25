@@ -37,7 +37,7 @@ Response :
 ```
 
 
-### OTP Generate / Email Confirmation
+### Email Confirmation / OTP Generate
 
 
 Endpoint : POST/users/otp-generate
