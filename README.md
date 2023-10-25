@@ -203,6 +203,60 @@ Response Body (success) :
 
 ## Belum punya akun & sudah punya rekening
 
+
+### Email Confirmation / OTP Generate
+
+
+Endpoint : POST/users/otp-generate
+
+Request Body :
+
+```json
+{
+    "email" : "budi@gmail.com"
+}
+```
+
+Response Body (succes) :
+
+```json
+{
+    "status" : 200,
+    "id_user" : 1,
+}
+```
+
+### OTP Verification / OTP Confirmation
+
+
+Endpoint : POST /users/{id}/otp-verification
+
+Request Body :
+
+```json
+{
+     "otp" : "1234"
+}
+```
+
+Response Body (succes) :
+
+```json
+{
+    "status" : 200,
+    "message" : "Success"
+}
+```
+
+Response Body (failed) :
+
+```json
+{
+    "status" : 400,
+    "message" : "Maaf Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi."
+}
+```
+
 ### Konfirmasi Rekening
 
 Endpoint : POST /users/confirm-accounts
