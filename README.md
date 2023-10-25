@@ -9,7 +9,7 @@ Base URL: http://digibank/api/v1
 
 Setelah user pilih kartu, data tipe rekening ditampung di fe, nantinya akan dipost ketika user klik button lanjut pada isi data diri/cif
 
-Endpoint : GET/users/choose-card
+Endpoint : GET/users/cards
 
 Response : 
 
