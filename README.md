@@ -305,6 +305,62 @@ Response Body (success) :
 ```
 
 
+### Create Password
+
+
+Endpoint : POST /users/{id}/password
+
+Request Body :
+
+```json
+{
+    "id_cif" : 1
+    "password" : "rahasia1"
+}
+```
+
+Response Body (success) :
+
+```json
+{
+    "status" : 200,
+    "message" : "Kata Sandi Berhasil Disimpan" 
+}
+```
+
+Response Body (failed) :
+
+```json
+{
+    "status" : 408,
+    "message" : "Maaf! Kata Sandi gagal disimpan. Silakan masukkan ulang Kata Sandi" 
+}
+```
+
+
+### Create MPIN
+
+
+Endpoint : POST /users/{id}pin
+
+Request Body :
+
+```json
+{
+    "mpin" : "123456"
+}
+```
+
+Response Body (success) :
+
+```json
+{
+    "status" : 200,
+    "message" : "Selamat! Akun Berhasil dibuat. Silakan Melakukan Login." 
+}
+```
+
+
 
 ### User Login
 
