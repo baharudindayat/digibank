@@ -157,7 +157,16 @@ Response Body (success) :
 ```json
 {
     "status" : 200,
-    "message" : "Success" 
+    "message" : "Kata Sandi Berhasil Disimpan" 
+}
+```
+
+Response Body (failed) :
+
+```json
+{
+    "status" : 408,
+    "message" : "Maaf! Kata Sandi gagal disimpan. Silakan masukkan ulang Kata Sandi" 
 }
 ```
 
