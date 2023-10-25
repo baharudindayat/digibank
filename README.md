@@ -292,7 +292,7 @@ Response Body (failed) :
 
 ### Konfirmasi CIF
 
-Endpoint : GET /users/{id}/confirm-cif
+Endpoint : GET /users/{id_cif}/confirm-cif
 
 
 Response Body (success) :
