@@ -55,7 +55,6 @@ Response Body (succes) :
 ```json
 {
     "status" : 200,
-    "otp" : "1234",
     "id_user" : 1,
 }
 ```
@@ -82,6 +81,14 @@ Response Body (succes) :
 }
 ```
 
+Response Body (failed) :
+
+```json
+{
+    "status" : 400,
+    "message" : "Maaf Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi."
+}
+```
 
 ### CIF
 
