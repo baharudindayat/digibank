@@ -62,7 +62,7 @@ Response Body (succes) :
 ### OTP Verification / OTP Confirmation
 
 
-Endpoint : POST /users/otp-verification
+Endpoint : POST /users/:id_user/otp-verification
 
 Request Body :
 
