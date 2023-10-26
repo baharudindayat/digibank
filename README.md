@@ -94,7 +94,8 @@ Response Body (failed) :
 ### Email Confirmation / OTP Regenerate
 
 
-Endpoint : POST/users/otp-regenerate?email={email}
+Endpoint : PUT /users/otp-regenerate/
+query param = email
 
 Request Body :
 
@@ -109,8 +110,7 @@ Response Body (succes) :
 ```json
 {
     "status" : 200,
-    "id_user" : 1,
-    "email"   : "budi@gmail.com" 
+    "id_user" : 1
 }
 ```
 
