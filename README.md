@@ -56,6 +56,7 @@ Response Body (succes) :
 {
     "status" : 200,
     "id_user" : 1,
+    "email"   : "budi@gmail.com" 
 }
 ```
 
@@ -87,6 +88,29 @@ Response Body (failed) :
 {
     "status" : 400,
     "message" : "Maaf Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi."
+}
+```
+
+### Email Confirmation / OTP Generate Resend
+
+
+Endpoint : POST/users/otp-generate-resend
+
+Request Body :
+
+```json
+{
+    "email" : "budi@gmail.com"
+}
+```
+
+Response Body (succes) :
+
+```json
+{
+    "status" : 200,
+    "id_user" : 1,
+    "email"   : "budi@gmail.com" 
 }
 ```
 
