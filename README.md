@@ -91,10 +91,10 @@ Response Body (failed) :
 }
 ```
 
-### Email Confirmation / OTP Generate Resend
+### Email Confirmation / OTP Regenerate
 
 
-Endpoint : POST/users/otp-regenerate
+Endpoint : POST/users/otp-regenerate?email={email}
 
 Request Body :
 
