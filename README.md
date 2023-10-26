@@ -94,7 +94,7 @@ Response Body (failed) :
 ### Email Confirmation / OTP Generate Resend
 
 
-Endpoint : POST/users/otp-generate-resend
+Endpoint : POST/users/otp-regenerate
 
 Request Body :
 
