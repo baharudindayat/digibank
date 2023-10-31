@@ -63,7 +63,7 @@ Response Body (succes) :
 ### OTP Verification / OTP Confirmation
 
 
-Endpoint : POST /users/otp-verification?email=alamsyah.rizki157@gmail.com&otp=1938
+Endpoint : POST /users/otp-verification?email=test@gmail.com&otp=1938
 
 Request Body :
 
