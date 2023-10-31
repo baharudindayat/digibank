@@ -95,7 +95,6 @@ Response Body (failed) :
 
 
 Endpoint : PUT /users/otp-regenerate?email=test@gmail.com
-query param = email
 
 Request Body :
 
