@@ -1,10 +1,10 @@
-package com.digibank.restapi.User.service;
+package com.digibank.restapi.digibank.service;
 
-import com.digibank.restapi.User.dto.RegisterDto;
-import com.digibank.restapi.User.entity.User;
-import com.digibank.restapi.User.repository.UserRepository;
-import com.digibank.restapi.User.util.EmailUtil;
-import com.digibank.restapi.User.util.OtpUtil;
+import com.digibank.restapi.digibank.dto.RegisterDto;
+import com.digibank.restapi.digibank.entity.User;
+import com.digibank.restapi.digibank.repository.UserRepository;
+import com.digibank.restapi.digibank.util.EmailUtil;
+import com.digibank.restapi.digibank.util.OtpUtil;
 import jakarta.mail.MessagingException;
 import java.time.Duration;
 import java.time.LocalDateTime;

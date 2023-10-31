@@ -1,7 +1,7 @@
-package com.digibank.restapi.User.controller;
+package com.digibank.restapi.digibank.controller;
 
-import com.digibank.restapi.User.dto.RegisterDto;
-import com.digibank.restapi.User.service.UserService;
+import com.digibank.restapi.digibank.dto.RegisterDto;
+import com.digibank.restapi.digibank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

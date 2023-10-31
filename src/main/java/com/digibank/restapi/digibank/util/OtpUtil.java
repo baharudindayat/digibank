@@ -1,4 +1,4 @@
-package com.digibank.restapi.User.util;
+package com.digibank.restapi.digibank.util;
 
 import java.util.Random;
 import org.springframework.stereotype.Component;

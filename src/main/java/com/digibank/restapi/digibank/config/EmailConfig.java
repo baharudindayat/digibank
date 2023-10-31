@@ -1,4 +1,4 @@
-package com.digibank.restapi.User.config;
+package com.digibank.restapi.digibank.config;
 
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Value;
