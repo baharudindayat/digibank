@@ -63,7 +63,7 @@ Response Body (succes) :
 ### OTP Verification / OTP Confirmation
 
 
-Endpoint : POST /users/{id}/otp-verification
+Endpoint : POST /users/otp-verification?email=alamsyah.rizki157@gmail.com&otp=1938
 
 Request Body :
 
@@ -94,7 +94,7 @@ Response Body (failed) :
 ### Email Confirmation / OTP Regenerate
 
 
-Endpoint : PUT /users/otp-regenerate/
+Endpoint : PUT /users/otp-regenerate?email=test@gmail.com
 query param = email
 
 Request Body :
