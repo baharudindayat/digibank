@@ -2,7 +2,6 @@ package com.digibank.restapi.digibank.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,7 +21,10 @@ public class User {
     private status_user Status_User;
     private String mpin;
 
-    //id_cif fk (belum dibuat)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cif")
+    private CIF cif;
+
     private LocalDateTime created_user;
     private Integer count_blocked_mpin;
     @Column(length = 4, nullable = false, unique = true)

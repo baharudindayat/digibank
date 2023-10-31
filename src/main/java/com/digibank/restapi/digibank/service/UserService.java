@@ -26,7 +26,7 @@ public class UserService {
         User existingUser = userRepository.findByEmail(registerDto.getEmail()).orElse(null);
         if (existingUser != null) {
             // Handle the case where the email already exists
-            return "Email already registered. Please log in or reset your password.";
+            return "Email already registered";
         }
 
         String otp = otpUtil.generateOtp();
