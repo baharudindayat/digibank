@@ -26,7 +26,7 @@ public class UserService {
         User existingUser = userRepository.findByEmail(registerDto.getEmail()).orElse(null);
         if (existingUser != null) {
             // Handle the case where the email already exists
-            return "Email already exists";
+            return "Email Sudah Terdaftar";
         }
 
         String otp = otpUtil.generateOtp();
@@ -50,24 +50,24 @@ public class UserService {
                 LocalDateTime.now()).getSeconds() < (2 * 60)) {
             user.setActive(true);
             userRepository.save(user);
-            return "OTP verified";
+            return "OTP Terverifikasi";
         }
-        return "Please regenerate otp and try again";
+        return "Maaf Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi.";
     }
 
     public String regenerateOtp(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found with this email: " + email));
+                .orElseThrow(() -> new RuntimeException("Email tidak dapat ditemukan"));
         String otp = otpUtil.generateOtp();
         try {
             emailUtil.sendOtpEmail(email, otp);
         } catch (MessagingException e) {
-            throw new RuntimeException("Unable to send otp please try again");
+            throw new RuntimeException("Tidak dapat mengirim otp, silakan coba lagi");
         }
         user.setOtp(otp);
         user.setCreated_otp(LocalDateTime.now());
         userRepository.save(user);
-        return "Email sent... please verify account within 1 minute";
+        return "OTP Terkirim Kembali";
     }
 }
 
