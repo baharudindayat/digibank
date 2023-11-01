@@ -1,6 +1,6 @@
 package com.digibank.restapi;
 
-import com.digibank.restapi.digibank.entity.data.TipeRekeningData;
+import com.digibank.restapi.digibank.model.data.TipeRekeningData;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

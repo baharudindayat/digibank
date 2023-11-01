@@ -1,6 +1,6 @@
-package com.digibank.restapi.digibank.entity.data;
+package com.digibank.restapi.digibank.model.data;
 
-import com.digibank.restapi.digibank.entity.TipeRekening;
+import com.digibank.restapi.digibank.model.TipeRekening;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;

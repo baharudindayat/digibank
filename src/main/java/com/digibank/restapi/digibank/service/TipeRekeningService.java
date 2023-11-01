@@ -1,11 +1,10 @@
 package com.digibank.restapi.digibank.service;
 
 import com.digibank.restapi.digibank.dto.TipeRekeningDto;
-import com.digibank.restapi.digibank.entity.TipeRekening;
+import com.digibank.restapi.digibank.model.TipeRekening;
 import com.digibank.restapi.digibank.repository.TipeRekeningRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

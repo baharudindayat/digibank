@@ -1,8 +1,7 @@
 package com.digibank.restapi.digibank.service;
 
-import com.digibank.restapi.digibank.config.BCrypt;
-import com.digibank.restapi.digibank.dto.UsersDto;
-import com.digibank.restapi.digibank.entity.User;
+import com.digibank.restapi.digibank.dto.OtpDto;
+import com.digibank.restapi.digibank.model.User;
 import com.digibank.restapi.digibank.repository.UserRepository;
 import com.digibank.restapi.digibank.util.EmailUtil;
 import com.digibank.restapi.digibank.util.OtpUtil;
@@ -14,7 +13,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Service
-public class UserService {
+public class OtpService {
 
     @Autowired
     private OtpUtil otpUtil;
@@ -23,7 +22,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public String register(UsersDto registerDto) {
+    public String register(OtpDto registerDto) {
         // Check if the email is already registered
         User existingUser = userRepository.findByEmail(registerDto.getEmail()).orElse(null);
         if (existingUser != null) {
@@ -70,35 +69,6 @@ public class UserService {
         user.setCreated_otp(LocalDateTime.now());
         userRepository.save(user);
         return "OTP Terkirim Kembali";
-    }
-
-    public String changePassword(Integer id_user, String password) {
-        User user = userRepository.findById(id_user)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id_user));
-
-        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
-        userRepository.save(user);
-
-        return "Password changed successfully";
-    }
-
-    public String changePasswordWithValidation(Integer id_user, String oldPassword, String newPassword) {
-        User user = userRepository.findById(id_user)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id_user));
-
-        // Memeriksa apakah password lama sesuai
-        if (!BCrypt.checkpw(oldPassword, user.getPassword())) {
-            return "Password lama tidak sesuai";
-        }
-
-        // Implementasikan validasi password baru di sini sesuai kebutuhan Anda
-
-        // Meng-hash password baru dan menyimpannya
-        String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
-        user.setPassword(hashedPassword);
-        userRepository.save(user);
-
-        return "Password berhasil diubah";
     }
 
 }

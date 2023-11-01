@@ -1,6 +1,6 @@
 package com.digibank.restapi.digibank.repository;
 
-import com.digibank.restapi.digibank.entity.TipeRekening;
+import com.digibank.restapi.digibank.model.TipeRekening;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
