@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users/tipe-rekening")
+@RequestMapping("/users/cards")
 public class tipe_rekeningController {
     @Autowired
     private tipe_rekeningService tipeRekeningService;
