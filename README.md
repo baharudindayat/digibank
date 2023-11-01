@@ -56,7 +56,16 @@ Response Body (succes) :
 {
     "status" : 200,
     "id_user" : 1,
-    "email"   : "budi@gmail.com" 
+    "email"   : "budi@gmail.com"
+    "otp"     : "1990" 
+}
+```
+Response Body (failed) :
+
+```json
+{
+    "status"  : 200,
+    "message" : "Email Sudah Terdaftar"
 }
 ```
 
@@ -69,7 +78,8 @@ Request Body :
 
 ```json
 {
-     "otp" : "1234"
+     "email" : "budi@gmail.com",
+     "otp"   : "1990"
 }
 ```
 
@@ -78,7 +88,7 @@ Response Body (succes) :
 ```json
 {
     "status" : 200,
-    "message" : "Success"
+    "message" : "OTP Terverifikasi"
 }
 ```
 
@@ -109,12 +119,29 @@ Response Body (succes) :
 ```json
 {
     "status" : 200,
-    "id_user" : 1
+    "otp"    : "OTP Terkirim Kembali" 
+}
+```
+
+Response Body (failed) :
+
+```json
+{
+    "status" : 400,
+    "otp"    : "Email tidak dapat ditemukan"
+}
+```
+
+Response Body (failed) :
+
+```json
+{
+    "status" : 400,
+    "otp"    : "Tidak dapat mengirim otp, silakan coba lagi"
 }
 ```
 
 ### CIF
-
 
 Endpoint : POST /users/cif
 
