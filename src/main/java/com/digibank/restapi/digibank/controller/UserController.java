@@ -1,6 +1,6 @@
 package com.digibank.restapi.digibank.controller;
 
-import com.digibank.restapi.digibank.dto.RegisterDto;
+import com.digibank.restapi.digibank.dto.UsersDto;
 import com.digibank.restapi.digibank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/users/otp-generate")
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
+    public ResponseEntity<String> register(@RequestBody UsersDto registerDto) {
         return new ResponseEntity<>(userService.register(registerDto), HttpStatus.OK);
     }
 
@@ -30,8 +30,16 @@ public class UserController {
     }
 
     @PutMapping("/users/password")
-    public ResponseEntity<String> changePassword(@RequestParam Integer id_user, @RequestBody RegisterDto userDto) {
+    public ResponseEntity<String> changePassword(@RequestParam Integer id_user, @RequestBody UsersDto userDto) {
         return new ResponseEntity<>(userService.changePassword(id_user, userDto.getPassword()), HttpStatus.OK);
     }
 
+    @PutMapping("/users/change-password")
+    public ResponseEntity<String> changePassword(
+            @RequestParam Integer id_user,
+            @RequestParam String oldPassword,
+            @RequestParam String newPassword
+    ) {
+        return new ResponseEntity<>(userService.changePasswordWithValidation(id_user, oldPassword, newPassword), HttpStatus.OK);
+    }
 }

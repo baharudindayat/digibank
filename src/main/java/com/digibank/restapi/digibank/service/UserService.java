@@ -1,7 +1,7 @@
 package com.digibank.restapi.digibank.service;
 
 import com.digibank.restapi.digibank.config.BCrypt;
-import com.digibank.restapi.digibank.dto.RegisterDto;
+import com.digibank.restapi.digibank.dto.UsersDto;
 import com.digibank.restapi.digibank.entity.User;
 import com.digibank.restapi.digibank.repository.UserRepository;
 import com.digibank.restapi.digibank.util.EmailUtil;
@@ -23,7 +23,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public String register(RegisterDto registerDto) {
+    public String register(UsersDto registerDto) {
         // Check if the email is already registered
         User existingUser = userRepository.findByEmail(registerDto.getEmail()).orElse(null);
         if (existingUser != null) {
@@ -76,12 +76,29 @@ public class UserService {
         User user = userRepository.findById(id_user)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + id_user));
 
-        // Implement password validation and hashing logic as needed
-
         user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
         userRepository.save(user);
 
         return "Password changed successfully";
+    }
+
+    public String changePasswordWithValidation(Integer id_user, String oldPassword, String newPassword) {
+        User user = userRepository.findById(id_user)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id_user));
+
+        // Memeriksa apakah password lama sesuai
+        if (!BCrypt.checkpw(oldPassword, user.getPassword())) {
+            return "Password lama tidak sesuai";
+        }
+
+        // Implementasikan validasi password baru di sini sesuai kebutuhan Anda
+
+        // Meng-hash password baru dan menyimpannya
+        String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+        user.setPassword(hashedPassword);
+        userRepository.save(user);
+
+        return "Password berhasil diubah";
     }
 
 }

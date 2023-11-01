@@ -1,6 +1,6 @@
 package com.digibank.restapi.digibank.entity.data;
 
-import com.digibank.restapi.digibank.entity.tipe_rekening;
+import com.digibank.restapi.digibank.entity.TipeRekening;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
@@ -18,17 +18,17 @@ public class TipeRekeningData {
     public void initData() {
         // Cek apakah entri dengan ID yang akan dibuat sudah ada
         if (!isIdExists(1)) {
-            tipe_rekening silver = new tipe_rekening("Silver", "5 Juta");
+            TipeRekening silver = new TipeRekening("Silver", "5 Juta");
             entityManager.persist(silver);
         }
 
         if (!isIdExists(2)) {
-            tipe_rekening gold = new tipe_rekening("Gold", "10 Juta");
+            TipeRekening gold = new TipeRekening("Gold", "10 Juta");
             entityManager.persist(gold);
         }
 
         if (!isIdExists(3)) {
-            tipe_rekening platinum = new tipe_rekening("Platinum", "15 Juta");
+            TipeRekening platinum = new TipeRekening("Platinum", "15 Juta");
             entityManager.persist(platinum);
         }
     }

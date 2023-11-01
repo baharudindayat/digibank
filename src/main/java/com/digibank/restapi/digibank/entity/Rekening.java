@@ -17,7 +17,7 @@ public class Rekening {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_type")
-    private tipe_rekening tipe_rekening;
+    private TipeRekening tipe_rekening;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cif")
