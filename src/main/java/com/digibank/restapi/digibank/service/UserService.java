@@ -9,6 +9,7 @@ import jakarta.mail.MessagingException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -69,5 +70,19 @@ public class UserService {
         userRepository.save(user);
         return "OTP Terkirim Kembali";
     }
+
+    public String changePassword(Integer id_user, String password) {
+        User user = userRepository.findById(id_user)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id_user));
+
+        // Implement password validation and hashing logic as needed
+
+
+        user.setPassword(password);
+        userRepository.save(user);
+
+        return "Password changed successfully";
+    }
+
 }
 

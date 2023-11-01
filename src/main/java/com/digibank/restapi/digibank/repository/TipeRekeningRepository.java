@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface tipe_rekeningRepository extends JpaRepository<tipe_rekening, Integer> {
+public interface TipeRekeningRepository extends JpaRepository<tipe_rekening, Integer> {
 }

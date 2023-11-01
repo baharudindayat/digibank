@@ -5,11 +5,7 @@ import com.digibank.restapi.digibank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -32,4 +28,10 @@ public class UserController {
     public ResponseEntity<String> regenerateOtp(@RequestParam String email) {
         return new ResponseEntity<>(userService.regenerateOtp(email), HttpStatus.OK);
     }
+
+    @PutMapping("/users/password")
+    public ResponseEntity<String> changePassword(@RequestParam Integer id_user, @RequestBody RegisterDto userDto) {
+        return new ResponseEntity<>(userService.changePassword(id_user, userDto.getPassword()), HttpStatus.OK);
+    }
+
 }

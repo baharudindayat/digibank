@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class tipe_rekeningDto {
+public class TipeRekeningDto {
     private Integer id_type;
     private String nama_type;
     private String limit_transfer;
