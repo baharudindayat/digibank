@@ -1,6 +1,6 @@
 package com.digibank.restapi;
 
-import com.digibank.restapi.digibank.entity.data.tipe_rekeningDATA;
+import com.digibank.restapi.digibank.entity.data.TipeRekeningData;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,7 +18,7 @@ public class DigibankApplication {
 	}
 
 	@Bean
-	public ApplicationRunner dataInitializerRunner(tipe_rekeningDATA tipeRekeningDATA) {
+	public ApplicationRunner dataInitializerRunner(TipeRekeningData tipeRekeningDATA) {
 		return args -> {
 			tipeRekeningDATA.initData();
 		};

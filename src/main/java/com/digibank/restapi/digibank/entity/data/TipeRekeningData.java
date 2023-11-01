@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-public class tipe_rekeningDATA {
+public class TipeRekeningData {
 
     @Autowired
     private EntityManager entityManager;
