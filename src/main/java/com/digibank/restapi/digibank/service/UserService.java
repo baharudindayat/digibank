@@ -26,7 +26,7 @@ public class UserService {
         User existingUser = userRepository.findByEmail(registerDto.getEmail()).orElse(null);
         if (existingUser != null) {
             // Handle the case where the email already exists
-            return "Email already registered";
+            return "Email already exists";
         }
 
         String otp = otpUtil.generateOtp();
@@ -40,7 +40,7 @@ public class UserService {
         user.setOtp(otp);
         user.setCreated_otp(LocalDateTime.now());
         userRepository.save(user);
-        return "User registration successful";
+        return "success";
     }
 
     public String verifyAccount(String email, String otp) {
@@ -50,7 +50,7 @@ public class UserService {
                 LocalDateTime.now()).getSeconds() < (2 * 60)) {
             user.setActive(true);
             userRepository.save(user);
-            return "OTP verified you can login";
+            return "OTP verified";
         }
         return "Please regenerate otp and try again";
     }
