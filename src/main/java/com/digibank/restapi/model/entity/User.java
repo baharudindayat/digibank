@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -42,11 +41,9 @@ public class User {
 
     private Integer CountBlockedMpin;
 
-//    @Column(nullable = false)
     private String Otp;
 
     private Boolean active;
 
-//    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime cretaedOtp;
 }
