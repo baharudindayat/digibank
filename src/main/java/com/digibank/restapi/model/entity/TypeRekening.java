@@ -1,6 +1,5 @@
 package com.digibank.restapi.model.entity;
 
-import com.digibank.restapi.model.enums.TypeCard;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -20,7 +19,7 @@ public class TypeRekening{
     @Id
     private Integer id_type;
 
-    private TypeCard nama_type;
+    private String nama_type;
 
     private String limit_transfer;
 }
