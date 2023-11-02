@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "user", schema = "public")
 public class Users {
 
     @Id
@@ -24,36 +24,26 @@ public class Users {
     @NotNull(message = "ID should not be null")
     private long id_user;
 
-    @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private AccountStatus StatusUser;
 
-    @Column(nullable = false)
     private String mpin;
 
     @PrimaryKeyJoinColumn(name = "id_cif")
     @OneToOne(fetch = FetchType.LAZY)
     private CIF Idcif;
 
-    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date createdUser;
 
-    @Column(nullable = false)
     private Integer CountBlockedMpin;
 
-    @Column(nullable = false)
     private String Otp;
 
-    @Column(nullable = false)
-    private Integer active;
+    private Boolean active;
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp cretaedOtp;
+    private LocalDateTime cretaedOtp;
 }

@@ -1,4 +1,4 @@
 package com.digibank.restapi.service;
 
-public interface Service {
+public interface TransferService {
 }
