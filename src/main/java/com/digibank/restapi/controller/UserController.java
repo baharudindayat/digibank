@@ -1,7 +1,9 @@
 package com.digibank.restapi.controller;
 
-import com.digibank.restapi.dto.UsersDto;
-import com.digibank.restapi.service.UserService;
+import com.digibank.restapi.dto.createPassword.CreatePasswordDto;
+import com.digibank.restapi.dto.otp.OtpDto;
+import com.digibank.restapi.service.CreatePasswordService;
+import com.digibank.restapi.service.OtpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +13,13 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private OtpService userService;
+
+    @Autowired
+    private CreatePasswordService createPasswordService;
 
     @PostMapping("/users/otp-generate")
-    public ResponseEntity<String> register(@RequestBody UsersDto registerDto) {
+    public ResponseEntity<String> register(@RequestBody OtpDto registerDto) {
         return new ResponseEntity<>(userService.register(registerDto), HttpStatus.OK);
     }
 
@@ -30,8 +35,8 @@ public class UserController {
     }
 
     @PutMapping("/users/password")
-    public ResponseEntity<String> changePassword(@RequestParam Integer id_user, @RequestBody UsersDto userDto) {
-        return new ResponseEntity<>(userService.changePassword(id_user, userDto.getPassword()), HttpStatus.OK);
+    public ResponseEntity<String> changePassword(@RequestParam Integer id_user, @RequestBody CreatePasswordDto userDto) {
+        return new ResponseEntity<>(createPasswordService.changePassword(id_user, userDto.getPassword()), HttpStatus.OK);
     }
 
     @PutMapping("/users/change-password")
@@ -40,6 +45,6 @@ public class UserController {
             @RequestParam String oldPassword,
             @RequestParam String newPassword
     ) {
-        return new ResponseEntity<>(userService.changePasswordWithValidation(id_user, oldPassword, newPassword), HttpStatus.OK);
+        return new ResponseEntity<>(createPasswordService.changePasswordWithValidation(id_user, oldPassword, newPassword), HttpStatus.OK);
     }
 }

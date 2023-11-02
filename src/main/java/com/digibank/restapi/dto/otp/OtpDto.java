@@ -1,14 +1,13 @@
-package com.digibank.restapi.dto;
+package com.digibank.restapi.dto.otp;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UsersDto {
+public class OtpDto {
 
     private String email;
-    private String password;
 
     private String newpassword;
     private String oldpassword;

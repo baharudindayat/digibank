@@ -1,6 +1,6 @@
 package com.digibank.restapi.service;
 
-import com.digibank.restapi.dto.UsersDto;
+import com.digibank.restapi.dto.otp.OtpDto;
 import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.utils.EmailUtil;
@@ -14,7 +14,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Service
-public class UserService {
+public class OtpService {
 
     @Autowired
     private OtpUtil otpUtil;
@@ -23,7 +23,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public String register(UsersDto registerDto) {
+    public String register(OtpDto registerDto) {
         // Check if the email is already registered
         User existingUser = userRepository.findByEmail(registerDto.getEmail()).orElse(null);
         if (existingUser != null) {
@@ -71,35 +71,5 @@ public class UserService {
         userRepository.save(user);
         return "OTP Terkirim Kembali";
     }
-
-    public String changePassword(Integer id_user, String password) {
-        User user = userRepository.findById(id_user)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id_user));
-
-        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
-        userRepository.save(user);
-
-        return "Password changed successfully";
-    }
-
-    public String changePasswordWithValidation(Integer id_user, String oldPassword, String newPassword) {
-        User user = userRepository.findById(id_user)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id_user));
-
-        // Memeriksa apakah password lama sesuai
-        if (!BCrypt.checkpw(oldPassword, user.getPassword())) {
-            return "Password lama tidak sesuai";
-        }
-
-        // Implementasikan validasi password baru di sini sesuai kebutuhan Anda
-
-        // Meng-hash password baru dan menyimpannya
-        String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
-        user.setPassword(hashedPassword);
-        userRepository.save(user);
-
-        return "Password berhasil diubah";
-    }
-
 }
 
