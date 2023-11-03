@@ -20,9 +20,6 @@ public class CIF {
     @Column(nullable = false, unique = true)
     private long id_cif;
 
-    @Column(name = "id_user",nullable = false, unique = true)
-    private String id_user;
-
     @Column(name = "nik",nullable = false, unique = true)
     private String nik;
 
@@ -43,7 +40,8 @@ public class CIF {
     private Date created_cif;
 
     @OneToOne(mappedBy = "cif")
-    private Users users;
+    @JoinColumn(name = "id_users")
+    private Users id_users;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipe_rekening")
