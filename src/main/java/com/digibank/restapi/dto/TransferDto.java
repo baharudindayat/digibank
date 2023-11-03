@@ -1,12 +1,21 @@
 package com.digibank.restapi.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class TransferDto {
 
     private long id;
 
-    private String noRekeningTujuan;
+    private long noRekeningTujuan;
 
-    private String noRekeningSumber;
+    private long noRekeningSumber;
 
     private Long nominal;
 

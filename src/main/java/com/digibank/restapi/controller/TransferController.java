@@ -10,4 +10,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("digibank/api/v1/transfer")
 public class TransferController {
 
+
 }
