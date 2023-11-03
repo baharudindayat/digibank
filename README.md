@@ -64,7 +64,7 @@ Response Body (failed) :
 
 ```json
 {
-    "status"  : 200,
+    "status"  : 400,
     "message" : "Email Sudah Terdaftar"
 }
 ```
@@ -97,7 +97,7 @@ Response Body (failed) :
 ```json
 {
     "status" : 400,
-    "message" : "Maaf Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi."
+    "message" : "Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi."
 }
 ```
 
