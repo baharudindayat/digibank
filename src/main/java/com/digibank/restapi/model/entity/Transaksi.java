@@ -22,39 +22,33 @@ public class Transaksi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "rekening_asal")
-    private Rekening rekeningAsal;
+    @Column(nullable = false,unique = true)
+    private String rekening_asal;
 
-    @ManyToOne
-    @JoinColumn(name = "rekening_tujuan")
-    private Rekening rekeningTujuan;
+    @Column(nullable = false,unique = true)
+    private String rekening_tujuan;
 
     @Column(nullable = false, unique = true)
-    private Integer kodeBank;
+    private Integer kode_bank;
 
     @Column(nullable = false)
-    private Long Nominal;
+    private Integer Nominal;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp waktuTransaksi;
+    private Timestamp waktu_transaksi;
 
     @Column(nullable = false)
-    private JenisTransaksi jenisTransaksi;
+    private JenisTransaksi jenis_transaksi;
 
     @Column(nullable = false)
     private String catatan;
 
     @Column(nullable = false)
-    private TipeTransaksi tipeTransaksi;
+    private TipeTransaksi tipe_transaksi;
 
     @Column(nullable = false)
-    private String totalTransaksi;
+    private String total_transaksi;
 
-    @PrePersist
-    private void prePersist() {
-        waktuTransaksi = new Timestamp(System.currentTimeMillis());
-    }
 
 }
