@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
 
 @RestController
-@RequestMapping("/digibank/api/v1")
+@RequestMapping("/api/v1")
 public class CifController {
 
     @Autowired
