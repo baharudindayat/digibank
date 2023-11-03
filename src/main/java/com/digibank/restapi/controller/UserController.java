@@ -22,7 +22,7 @@ public class UserController {
     @PostMapping("/users/otp-generate")
     public ResponseEntity<Object> register(@RequestBody OtpDto registerDto) {
         OtpDto newOtp = userService.register(registerDto);
-        return ResponseHandlerOtp.generateResponseCreate("sdsdc", HttpStatus.CREATED, newOtp);
+        return ResponseHandlerOtp.generateResponseCreate("Otp berhasil terkirim", HttpStatus.CREATED, newOtp);
 //                (userService.register(registerDto), HttpStatus.OK);
     }
 
