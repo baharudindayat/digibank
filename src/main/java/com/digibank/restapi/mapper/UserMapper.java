@@ -11,15 +11,4 @@ public interface UserMapper {
     UserMapper MAPPER = Mappers.getMapper(UserMapper.class);
     OtpDto mapToOtpDto(User user);
     User mapToUser(OtpDto otpDto);
-
-    User mapToDto(OtpDto otpDto);
-
-
-//    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-//
-//    @Mapping(target = "id_user", ignore = true)
-//    @Mapping(target = "email", source = "email")
-//    @Mapping(target = "otp", source = "otp")
-//    @Mapping(target = "cretaedOtp", source = "cretaedOtp")
-//    User otpDtoToUser(OtpDto otpDto);
 }
