@@ -29,6 +29,7 @@ public class Users implements UserDetails {
     @NotNull(message = "ID should not be null")
     private long id_user;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
