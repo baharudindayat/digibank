@@ -4,6 +4,7 @@ import com.digibank.restapi.dto.createPassword.CreatePasswordDto;
 import com.digibank.restapi.dto.otp.OtpDto;
 import com.digibank.restapi.service.CreatePasswordService;
 import com.digibank.restapi.service.OtpService;
+import com.digibank.restapi.utils.ResponseHandlerOtp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,18 +20,20 @@ public class UserController {
     private CreatePasswordService createPasswordService;
 
     @PostMapping("/users/otp-generate")
-    public ResponseEntity<String> register(@RequestBody OtpDto registerDto) {
-        return new ResponseEntity<>(userService.register(registerDto), HttpStatus.OK);
+    public ResponseEntity<Object> register(@RequestBody OtpDto registerDto) {
+        OtpDto newOtp = userService.register(registerDto);
+        return ResponseHandlerOtp.generateResponseCreate("sdsdc", HttpStatus.CREATED, newOtp);
+//                (userService.register(registerDto), HttpStatus.OK);
     }
 
     @PutMapping("/users/otp-verification")
-    public ResponseEntity<String> verifyAccount(@RequestParam String email,
+    public ResponseEntity<Object> verifyAccount(@RequestParam String email,
                                                 @RequestParam String otp) {
         return new ResponseEntity<>(userService.verifyAccount(email, otp), HttpStatus.OK);
     }
 
     @PutMapping("/users/otp-regenerate")
-    public ResponseEntity<String> regenerateOtp(@RequestParam String email) {
+    public ResponseEntity<Object> regenerateOtp(@RequestParam String email) {
         return new ResponseEntity<>(userService.regenerateOtp(email), HttpStatus.OK);
     }
 

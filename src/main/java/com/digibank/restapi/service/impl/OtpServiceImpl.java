@@ -1,15 +1,13 @@
 package com.digibank.restapi.service.impl;
 
 import com.digibank.restapi.dto.otp.OtpDto;
-import com.digibank.restapi.exception.OtpException.OtpResponse;
+import com.digibank.restapi.exception.OtpException.OtpFailedException;
 import com.digibank.restapi.mapper.UserMapper;
 import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.service.OtpService;
 import com.digibank.restapi.utils.EmailUtil;
 import com.digibank.restapi.utils.OtpUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,61 +25,50 @@ public class OtpServiceImpl implements OtpService {
     private UserRepository userRepository;
 
     @Override
-    public String register(OtpDto otpDto) {
-        OtpResponse response = new OtpResponse();
+    public OtpDto register(OtpDto otpDto) {
 
-        // Check if the email is already registered
         User existingUser = userRepository.findByEmail(otpDto.getEmail()).orElse(null);
         if (existingUser != null) {
-            response.setStatus(400);
-            response.setMessage("Email Sudah Terdaftar");
-        } else {
-            String otp = otpUtil.generateOtp();
-            try {
-                emailUtil.sendOtpEmail(otpDto.getEmail(), otp);
-            } catch (MessagingException e) {
-                throw new RuntimeException("Unable to send OTP. Please try again.");
-            }
-            User user = UserMapper.INSTANCE.otpDtoToUser(otpDto);
-            user.setOtp(otp);
-            userRepository.save(user);
-
-            response.setStatus(200);
-            response.setId_user(String.valueOf(user.getId_user()));
-            response.setEmail(user.getEmail());
-            response.setOtp(user.getOtp());
+            throw new OtpFailedException("Email Sudah Terdaftar");
         }
 
+        String otp = otpUtil.generateOtp();
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Unable to process response.");
+            emailUtil.sendOtpEmail(otpDto.getEmail(), otp);
+        } catch (MessagingException e) {
+            throw new OtpFailedException("Unable to send OTP. Please try again.");
         }
+
+        User user = UserMapper.MAPPER.mapToUser(otpDto);
+        user.setOtp(otp);
+        User savedOtp = userRepository.save(user);
+
+        return UserMapper.MAPPER.mapToOtpDto(savedOtp);
+
     }
 
     @Override
     public String verifyAccount(String email, String otp) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found with this email: " + email));
+                .orElseThrow(() -> new OtpFailedException("User not found with this email: " + email));
         if (user.getOtp().equals(otp) && Duration.between(user.getCretaedOtp(),
                 LocalDateTime.now()).getSeconds() < (2 * 60)) {
             user.setActive(true);
             userRepository.save(user);
             return "OTP Terverifikasi";
         }
-        return "Maaf Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi.";
+        throw new OtpFailedException("Maaf Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi.");
     }
 
     @Override
     public String regenerateOtp(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Email tidak dapat ditemukan"));
+                .orElseThrow(() -> new OtpFailedException("Email tidak dapat ditemukan"));
         String otp = otpUtil.generateOtp();
         try {
             emailUtil.sendOtpEmail(email, otp);
         } catch (MessagingException e) {
-            throw new RuntimeException("Tidak dapat mengirim otp, silakan coba lagi");
+            throw new OtpFailedException("Tidak dapat mengirim otp, silakan coba lagi");
         }
         user.setOtp(otp);
         user.setCretaedOtp(LocalDateTime.now());
