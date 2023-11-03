@@ -20,6 +20,9 @@ public class CIF {
     @Column(nullable = false, unique = true)
     private long id_cif;
 
+    @Column(name = "id_user",nullable = false, unique = true)
+    private String id_user;
+
     @Column(name = "nik",nullable = false, unique = true)
     private String nik;
 
@@ -38,6 +41,9 @@ public class CIF {
     @Column(name = "created_cif",nullable = false)
     @Temporal(TemporalType.DATE)
     private Date created_cif;
+
+    @OneToOne(mappedBy = "cif")
+    private Users users;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipe_rekening")
