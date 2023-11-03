@@ -2,8 +2,6 @@ package com.digibank.restapi.service;
 
 import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.repository.UserRepository;
-import com.digibank.restapi.utils.EmailUtil;
-import com.digibank.restapi.utils.OtpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -11,10 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CreatePasswordService {
 
-    @Autowired
-    private OtpUtil otpUtil;
-    @Autowired
-    private EmailUtil emailUtil;
     @Autowired
     private UserRepository userRepository;
 
@@ -36,8 +30,6 @@ public class CreatePasswordService {
         if (!BCrypt.checkpw(oldPassword, user.getPassword())) {
             return "Password lama tidak sesuai";
         }
-
-        // Implementasikan validasi password baru di sini sesuai kebutuhan Anda
 
         // Meng-hash password baru dan menyimpannya
         String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
