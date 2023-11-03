@@ -30,9 +30,9 @@ public class Rekening {
     @JoinColumn(name = "id_type")
     private TypeRekening tipe_rekening;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cif")
-    private Set<CIF> cif;
+    private CIF id_cif;
 
     @PrePersist
     public void prePersist() {
