@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("digibank/api/v1/transfer")
+@RequestMapping("api/v1/transfer")
 public class TransferController {
 
 
