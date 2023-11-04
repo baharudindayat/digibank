@@ -3,6 +3,8 @@ package com.digibank.restapi.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,4 +21,7 @@ public class Bank {
 
     @Column(nullable = false, unique = true,name = "nama_bank")
     private String NamaBank;
+
+    @OneToMany(mappedBy = "bank")
+    private List<BankUser> bankUsers;
 }
