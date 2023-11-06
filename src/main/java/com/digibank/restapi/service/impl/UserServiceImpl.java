@@ -1,6 +1,9 @@
 package com.digibank.restapi.service.impl;
 
+<<<<<<< HEAD
 import com.digibank.restapi.dto.login.JwtAuthenticationResponse;
+=======
+>>>>>>> master
 import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+
+public class UserServiceImpl implements UserService{
+
 
     private final UserRepository userRepository;
 
@@ -26,3 +31,4 @@ public class UserServiceImpl implements UserService {
         };
     }
 }
+

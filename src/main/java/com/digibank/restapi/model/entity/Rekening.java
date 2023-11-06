@@ -3,8 +3,9 @@ package com.digibank.restapi.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
-import java.util.Set;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -16,26 +17,22 @@ import java.util.Set;
 public class Rekening {
 
     @Id
-    @Column(nullable = false, unique = true)
-    private long no_rekening;
+    @Column(name = "no_rekening",nullable = false, unique = true)
+    private long noRekening;
 
     @Column(nullable = false)
-    private String saldo;
+    private Double saldo;
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date created_at;
+    @Column(name = "created_at",nullable = false)
+    @CreationTimestamp
+    private Timestamp createdAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_type")
-    private TypeRekening tipe_rekening;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_tipe_rekening")
+    private TypeRekening tipeRekening;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cif")
-    private Set<CIF> cif;
+    private CIF idCif;
 
-    @PrePersist
-    public void prePersist() {
-        created_at = new Date();
-    }
 }
