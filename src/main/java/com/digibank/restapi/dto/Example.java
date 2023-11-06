@@ -1,4 +1,4 @@
 package com.digibank.restapi.dto;
 
-public class CifDto {
+public class Example {
 }

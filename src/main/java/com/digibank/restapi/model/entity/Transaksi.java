@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
@@ -20,35 +21,39 @@ public class Transaksi {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "kode_transaksi")
+    private long kodeTransaksi;
 
-    @Column(nullable = false,unique = true)
-    private String rekening_asal;
+    @ManyToOne
+    @JoinColumn(name = "rekening_asal")
+    private Rekening rekeningAsal;
 
-    @Column(nullable = false,unique = true)
-    private String rekening_tujuan;
+    @ManyToOne
+    @JoinColumn(name = "rekening_tujuan")
+    private Rekening rekeningTujuan;
 
-    @Column(nullable = false, unique = true)
-    private Integer kode_bank;
-
-    @Column(nullable = false)
-    private Integer Nominal;
-
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp waktu_transaksi;
+    @ManyToOne()
+    @JoinColumn(name = "kode_bank")
+    private Bank bank;
 
     @Column(nullable = false)
-    private JenisTransaksi jenis_transaksi;
+    private Double Nominal;
+
+    @Column(nullable = false)
+    @CreationTimestamp
+    private Timestamp waktuTransaksi;
+
+    @Column(name="jenis_transaksi", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private JenisTransaksi jenisTransaksi;
 
     @Column(nullable = false)
     private String catatan;
 
-    @Column(nullable = false)
-    private TipeTransaksi tipe_transaksi;
+    @Column(name="tipe_transaksi",nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TipeTransaksi tipeTransaksi;
 
     @Column(nullable = false)
-    private String total_transaksi;
-
-
+    private Double totalTransaksi;
 }
