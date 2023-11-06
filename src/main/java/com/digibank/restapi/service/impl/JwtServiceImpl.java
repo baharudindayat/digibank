@@ -1,6 +1,7 @@
 package com.digibank.restapi.service.impl;
 
 import com.digibank.restapi.service.JwtService;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,11 +11,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 
 @Service
@@ -24,17 +24,18 @@ public class JwtServiceImpl implements JwtService {
     private String jwtLoginKey;
     @Override
     public String extractUserName(String token) {
-        return null;
+        return extractClaim(token, Claims::getSubject);
     }
 
     @Override
     public String generateToken(UserDetails userDetails) {
-        return null;
+        return generateToken(new HashMap<>(), userDetails);
     }
 
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        return false;
+        final String userName = extractUserName(token);
+        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
@@ -42,7 +43,7 @@ public class JwtServiceImpl implements JwtService {
         return claimsResolvers.apply(claims);
     }
 
-    private String generateToken(Map<String, Objects> extraClaims, UserDetails userDetails) {
+    private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
@@ -57,7 +58,6 @@ public class JwtServiceImpl implements JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder().setSigningKey(getLoginKey()).build().parseClaimsJws(token)
                 .getBody();
@@ -67,7 +67,4 @@ public class JwtServiceImpl implements JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(jwtLoginKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
-
 }
-

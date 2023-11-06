@@ -2,8 +2,11 @@ package com.digibank.restapi.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,22 +22,27 @@ public class CIF {
     @Column(nullable = false, unique = true)
     private long id_cif;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "nik",nullable = false, unique = true)
     private String nik;
 
-    @Column(nullable = false)
-    private String nama_lengkap;
+    @Column(name = "nama_lengkap",nullable = false)
+    private String namaLengkap;
 
-    @Column(nullable = false)
+    @Column(name = "alamat",nullable = false)
     private String alamat;
 
-    @Column(nullable = false)
+    @Column(name = "pekerjaan",nullable = false)
     private String pekerjaan;
 
-    @Column(nullable = false)
+    @Column(name = "penghasilan",nullable = false)
     private String penghasilan;
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date created_cif;
+    @Column(name = "created_at",nullable = false)
+    @CreationTimestamp
+    private Timestamp createdAt;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_user")
+    private User idUser;
+
 }
