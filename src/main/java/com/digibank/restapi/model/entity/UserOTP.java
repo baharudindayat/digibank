@@ -6,22 +6,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tipe_rekening", schema = "public")
-public class TypeRekening{
-
+public class UserOTP {
     @Id
-    @Column(name = "id_tipe_rekening")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idTipe;
+    private long idOtp;
 
-    @Column(name = "nama_tipe", nullable = false)
-    private String namaTipe;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_user")
+    private User idUser;
 
-    @Column(name = "limit_transfer", nullable = false)
-    private String limitTransfer;
+    private String otp;
+
+    @Column(name = "created_at")
+    private LocalDateTime cretaedAt;
 }
