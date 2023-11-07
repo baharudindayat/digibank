@@ -106,7 +106,7 @@ Response Body (failed) :
 ### Email Confirmation / OTP Regenerate
 
 
-Endpoint : PUT /users/otp-regenerate?email=budi@gmail.com
+Endpoint : PUT /users/otp-regenerate{id_otp(table userOtp)}
 
 Request Body :
 
