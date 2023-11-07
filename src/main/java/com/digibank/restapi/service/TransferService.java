@@ -1,6 +1,5 @@
 package com.digibank.restapi.service;
 
-import com.digibank.restapi.dto.RekeningNameDto;
 import com.digibank.restapi.dto.TransaksiDto;
 import com.digibank.restapi.dto.TransferDto;
 

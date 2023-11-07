@@ -1,7 +1,6 @@
 package com.digibank.restapi.advice;
 
 import com.digibank.restapi.exception.TransferFailedException;
-import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
