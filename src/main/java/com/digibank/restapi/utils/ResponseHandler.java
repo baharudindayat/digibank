@@ -15,11 +15,16 @@ public class ResponseHandler {
         return new ResponseEntity<>(map,status);
     }
 
-    public static ResponseEntity<Object> getTypeRekening(String message, HttpStatus status, Object res){
+    public static ResponseEntity<Object> getTypeRekening(Object res){
+        Map<Object, Object> map = new HashMap<>();
+        map.put("data",res);
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    public static ResponseEntity<Object> createMpin(String message, HttpStatus status){
         Map<String,Object> map = new HashMap<>();
         map.put("message",message);
         map.put("status",status.value());
-        map.put("data",res);
         return new ResponseEntity<>(map,status);
     }
 }

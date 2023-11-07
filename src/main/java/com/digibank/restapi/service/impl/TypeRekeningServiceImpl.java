@@ -20,8 +20,6 @@ public class TypeRekeningServiceImpl implements TypeRekeningService {
     @Override
     public List<TypeRekening> getAllTypeRekening() {
         @NotNull List<TypeRekening> optionalTypeRekening = typeRekeningRepository.findAll();
-
         return optionalTypeRekening;
-
     }
 }

@@ -20,7 +20,7 @@ public class TipeRekeningController {
 
     @GetMapping("/type-cards")
     public ResponseEntity<Object> getTypeRekening() {
-        return ResponseHandler.getTypeRekening("Succes", HttpStatus.OK, typeRekeningService.getAllTypeRekening());
+        return ResponseHandler.getTypeRekening(typeRekeningService.getAllTypeRekening());
     }
 
 }

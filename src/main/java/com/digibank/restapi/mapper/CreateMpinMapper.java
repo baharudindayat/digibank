@@ -1,0 +1,16 @@
+package com.digibank.restapi.mapper;
+
+import com.digibank.restapi.dto.CreateMpinDto;
+import com.digibank.restapi.model.entity.User;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+@Mapper
+public interface CreateMpinMapper {
+
+    CreateMpinMapper MAPPER = Mappers.getMapper(CreateMpinMapper.class);
+
+    User mapToCreateMpin(CreateMpinDto createMpinDto);
+
+    CreateMpinDto mapToCreateMpinDto(User user);
+}
