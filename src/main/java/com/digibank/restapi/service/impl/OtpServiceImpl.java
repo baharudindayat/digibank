@@ -13,11 +13,16 @@ import com.digibank.restapi.service.OtpService;
 import com.digibank.restapi.utils.EmailUtil;
 import com.digibank.restapi.utils.OtpUtil;
 import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -54,10 +59,7 @@ public class OtpServiceImpl implements OtpService {
         UserOtp userOtp = UserOtpMapper.MAPPER.mapToUserOtp(otpDto);
         userOtp.setOtp(otp);
         userOtp.setIdUser(savedUser);
-
-        // Set createdAt ke waktu sekarang
-        userOtp.setCretaedAt(LocalDateTime.now());
-
+        userOtp.setCreatedAt(new Date()); // Set createdAt ke waktu sekarang
         userOtpRepository.save(userOtp);
 
         // Mengembalikan data DTO
@@ -81,7 +83,9 @@ public class OtpServiceImpl implements OtpService {
 
         // Periksa apakah waktu OTP masih berlaku (2 menit)
         LocalDateTime currentTime = LocalDateTime.now();
-        if (Duration.between(userOtp.getCretaedAt(), currentTime).getSeconds() < (2 * 60)) {
+        LocalDateTime createdAt = userOtp.getCreatedAt();
+        long diffInSeconds = Duration.between(createdAt, currentTime).getSeconds();
+        if (diffInSeconds < (2 * 60)) {
             User user = userOtp.getIdUser();
             Boolean active = user.getActive();
 
@@ -111,20 +115,28 @@ public class OtpServiceImpl implements OtpService {
         }
     }
 
+    // Metode ini akan dijalankan setiap 2 menit
+    @Transactional
+    @Scheduled(fixedRate = 120000)
+    public void deleteExpiredUserOtp() {
+        LocalDateTime twoMinutesAgo = LocalDateTime.now().minusMinutes(2);
+        userOtpRepository.deleteByCreatedAtBefore(twoMinutesAgo);
+    }
 
-//    @Override
-//    public String regenerateOtp(String email) {
-//        User user = userRepository.findByEmail(email)
-//                .orElseThrow(() -> new OtpFailedException("Email tidak dapat ditemukan"));
-//        String otp = otpUtil.generateOtp();
-//        try {
-//            emailUtil.sendOtpEmail(email, otp);
-//        } catch (MessagingException e) {
-//            throw new OtpFailedException("Tidak dapat mengirim otp, silakan coba lagi");
-//        }
-//        user.setOtp(otp);
-//        user.setCretaedOtp(LocalDateTime.now());
-//        userRepository.save(user);
-//        return "OTP Terkirim Kembali";
-//    }
+        //    @Override
+    //    public String regenerateOtp(String email) {
+    //        User user = userRepository.findByEmail(email)
+    //                .orElseThrow(() -> new OtpFailedException("Email tidak dapat ditemukan"));
+    //        String otp = otpUtil.generateOtp();
+    //        try {
+    //            emailUtil.sendOtpEmail(email, otp);
+    //        } catch (MessagingException e) {
+    //            throw new OtpFailedException("Tidak dapat mengirim otp, silakan coba lagi");
+    //        }
+    //        user.setOtp(otp);
+    //        user.setCretaedOtp(LocalDateTime.now());
+    //        userRepository.save(user);
+    //        return "OTP Terkirim Kembali";
+    //}
+
 }
