@@ -54,32 +54,34 @@ Response Body (succes) :
 
 ```json
 {
-    "status" : 200,
-    "id_user" : 1,
-    "email"   : "budi@gmail.com"
-    "otp"     : "1990" 
+    "data": {
+        "id_user": 1,
+        "email": "budi@gmail.com"
+    },
+    "message": "Otp berhasil terkirim",
+    "status": 201
 }
 ```
 Response Body (failed) :
 
 ```json
 {
-    "status"  : 400,
-    "message" : "Email Sudah Terdaftar"
+    "message": "Email Sudah Terdaftar",
+    "status": 404
 }
 ```
 
 ### OTP Verification / OTP Confirmation
 
 
-Endpoint : POST /users/otp-verification?email=test@gmail.com&otp=1938
+Endpoint : POST /users/otp-verification/{id_otp}
 
 Request Body :
 
 ```json
 {
-     "email" : "budi@gmail.com",
-     "otp"   : "1990"
+    "id_user" : "1",
+    "otp": "1956"
 }
 ```
 
@@ -87,8 +89,8 @@ Response Body (succes) :
 
 ```json
 {
-    "status" : 200,
-    "message" : "OTP Terverifikasi"
+    "message": "OTP Terverifikasi",
+    "status": 200
 }
 ```
 
@@ -96,8 +98,8 @@ Response Body (failed) :
 
 ```json
 {
-    "status" : 400,
-    "message" : "Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi."
+    "message": "Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi.",
+    "status": 400
 }
 ```
 
