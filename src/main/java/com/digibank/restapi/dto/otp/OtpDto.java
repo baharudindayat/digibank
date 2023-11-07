@@ -11,6 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OtpDto {
-    private Integer id_user;
+    private Long id_user;
     private String email;
 }

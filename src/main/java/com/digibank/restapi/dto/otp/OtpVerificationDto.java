@@ -7,4 +7,10 @@ import lombok.Setter;
 @Setter
 public class OtpVerificationDto {
     private String message;
+
+
+
+    public OtpVerificationDto(String message) {
+        this.message = message;
+    }
 }

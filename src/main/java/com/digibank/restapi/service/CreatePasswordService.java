@@ -2,14 +2,14 @@ package com.digibank.restapi.service;
 
 import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class CreatePasswordService {
 
-    @Autowired
     private UserRepository userRepository;
 
     public String changePassword(Integer id_user, String password) {

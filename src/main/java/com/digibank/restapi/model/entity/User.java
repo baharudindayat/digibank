@@ -2,12 +2,13 @@ package com.digibank.restapi.model.entity;
 
 import com.digibank.restapi.model.enums.AccountStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.time.LocalDateTime;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Getter
@@ -20,29 +21,29 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull(message = "ID should not be null")
-    private long id_user;
+    @Column(name = "id_user")
+    private long idUser;
 
+    @Column(nullable = false)
     private String email;
 
     private String password;
 
-    private AccountStatus StatusUser;
+    @Column(name = "status_user")
+    private AccountStatus statusUser;
 
     private String mpin;
 
-    @PrimaryKeyJoinColumn(name = "id_cif")
-    @OneToOne(fetch = FetchType.LAZY)
-    private CIF Idcif;
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private Date createdAt;
 
-    @Temporal(TemporalType.DATE)
-    private Date createdUser;
-
-    private Integer CountBlockedMpin;
-
-    private String Otp;
+    @Column(name = "count_blocked_mpin")
+    private Integer countBlockedMpin;
 
     private Boolean active;
 
-    private LocalDateTime cretaedOtp;
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
 }
