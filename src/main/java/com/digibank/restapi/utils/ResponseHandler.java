@@ -15,4 +15,14 @@ public class ResponseHandler {
         map.put("data",res);
         return new ResponseEntity<>(map,status);
     }
+
+    public static ResponseEntity<Object> generateResponseTransfer(String message, HttpStatus status,Object res, Object res2,Object res3){
+        Map<String,Object> map = new HashMap<>();
+        map.put("message",message);
+        map.put("error", "false");
+        map.put("data",res);
+        map.put("pengirim",res2);
+        map.put("penerima",res3);
+        return new ResponseEntity<>(map,status);
+    }
 }

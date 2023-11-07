@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface TransferRepository extends JpaRepository<Rekening, Long> {
-    Optional<Rekening> findByRekening(long rekening);
+    Optional<Rekening> findByNoRekening(long noRekening);
 }

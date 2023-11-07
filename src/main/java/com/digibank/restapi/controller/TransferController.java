@@ -1,14 +1,37 @@
 package com.digibank.restapi.controller;
 
+import com.digibank.restapi.dto.RekeningNameDto;
+import com.digibank.restapi.dto.TransaksiDto;
+import com.digibank.restapi.dto.TransferDto;
+import com.digibank.restapi.service.TransferService;
+import com.digibank.restapi.utils.ResponseHandler;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("digibank/api/v1/transfer")
+@RequestMapping("api/v1/transfer")
 public class TransferController {
 
+    private TransferService transferService;
+
+    @PostMapping("/digibank")
+    public ResponseEntity<Object> transferDigiBank(@RequestBody TransferDto transferDto){
+        TransaksiDto newTransferDto = transferService.createTransfer(transferDto);
+        Object RekeningSumber = transferService.getAccountRekening(transferDto.getNoRekeningSumber());
+        Object RekeningTujuan = transferService.getAccountRekening(transferDto.getNoRekeningTujuan());
+        return ResponseHandler.generateResponseTransfer("Transfer Berhasil", HttpStatus.OK, newTransferDto, RekeningSumber, RekeningTujuan);
+    }
+
+    @PostMapping("/accounts")
+    public ResponseEntity<Object> getAccountRekening(@RequestBody RekeningNameDto id){
+        Object newRekeningNameDto = transferService.getAccountRekening(id.getNoRekening());
+        return ResponseHandler.generateResponseCreate("Rekening Berhasil Ditemukan", HttpStatus.OK, newRekeningNameDto);
+    }
 
 }

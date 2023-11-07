@@ -14,8 +14,9 @@ public class Bank {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "kode_bank")
     private long KodeBank;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true,name = "nama_bank")
     private String NamaBank;
 }
