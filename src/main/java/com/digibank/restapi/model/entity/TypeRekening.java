@@ -20,8 +20,7 @@ public class TypeRekening{
 
     @Id
     @Column(name = "id_tipe_rekening")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idTipe;
+    private Long idTipe;
 
     @Column(name = "nama_tipe", nullable = false)
     private String namaTipe;
