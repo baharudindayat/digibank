@@ -19,11 +19,7 @@ public class CIF {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, unique = true)
     private long id_cif;
-
-    @Column(name = "id_user",nullable = false, unique = true)
-    private String id_user;
 
     @Column(name = "nik",nullable = false, unique = true)
     private String nik;
@@ -46,9 +42,7 @@ public class CIF {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
-    private User idUser;
+    private User idUsers;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_tipe_rekening")
-    private Set<Rekening> cif;
+
 }
