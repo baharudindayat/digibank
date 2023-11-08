@@ -1,20 +1,21 @@
 package com.digibank.restapi.service.impl;
 
-import com.digibank.restapi.dto.login.JwtAuthenticationResponse;
-import com.digibank.restapi.dto.login.LoginRequest;
-import com.digibank.restapi.exception.LoginFailedException;
+import com.digibank.restapi.dto.login.LoginResDto;
+import com.digibank.restapi.dto.login.LoginReqDto;
+import com.digibank.restapi.exception.ResponseUnauthorizationException;
+import com.digibank.restapi.mapper.LoginResMapper;
+import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.service.AuthenticationService;
 import com.digibank.restapi.service.JwtService;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,16 +25,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     @Transactional
     @Override
-    public JwtAuthenticationResponse login(LoginRequest req) {
+    public LoginResDto login(LoginReqDto req) {
 //        authenticationManager.authenticate(
 //                new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword()));
         var user = userRepository.findByEmail(req.getEmail())
-                .orElseThrow(() -> new LoginFailedException("Invalid email or password."));
+                .orElseThrow(() -> new ResponseUnauthorizationException("Invalid email or password."));
         if(BCrypt.checkpw(req.getPassword(), user.getPassword())) {
             var jwt = jwtService.generateToken(user);
-            return JwtAuthenticationResponse.builder().token(jwt).build();
+            var loginResDto = LoginResDto.builder().token(jwt).idUser(user.getIdUser()).build();
+            return LoginResMapper.MAPPER.mapToLoginResDto(loginResDto);
         } else {
-            throw new LoginFailedException("Invalid email or password.");
+            throw new ResponseUnauthorizationException("Invalid email or password.");
         }
     }
 }

@@ -10,7 +10,7 @@ public interface CreateMpinMapper {
 
     CreateMpinMapper MAPPER = Mappers.getMapper(CreateMpinMapper.class);
 
-    User mapToCreateMpin(CreateMpinDto createMpinDto);
-
     CreateMpinDto mapToCreateMpinDto(User user);
+
+
 }

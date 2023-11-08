@@ -11,6 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class CreateMpinDto {
-
     private String mpin;
 }
