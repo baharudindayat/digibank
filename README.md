@@ -200,13 +200,12 @@ Response Body (success) :
 ### Create Password
 
 
-Endpoint : POST /users/{id}/password
+Endpoint : POST /users/{id_user}
 
 Request Body :
 
 ```json
 {
-    "id_cif" : 1
     "password" : "rahasia1"
 }
 ```
