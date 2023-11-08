@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 public interface UserOtpMapper {
     UserOtpMapper MAPPER = Mappers.getMapper(UserOtpMapper.class);
 
-//    OtpDto mapToOtpDto(UserOtp userOtp);
+    //    OtpDto mapToOtpDto(UserOtp userOtp);
 
     UserOtp mapToUserOtp(OtpDto otpDto);
 }

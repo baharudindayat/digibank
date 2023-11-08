@@ -20,9 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -73,12 +71,12 @@ public class OtpServiceImpl implements OtpService {
     public OtpVerificationDto verifyOtp(Long id_otp, OtpDto otpDto) {
         // Cari UserOtp berdasarkan id_otp
         UserOtp userOtp = userOtpRepository.findById(id_otp)
-                .orElseThrow(() -> new OtpFailedException("Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi."));
+                .orElseThrow(() -> new OtpFailedException("Kode OTP yang dimasukkan tidak valid"));
 
         // Pastikan id_user cocok dengan yang ditemukan
         Long id_user = otpDto.getId_user();
         if (id_user != null && userOtp.getIdUser().getIdUser() != id_user) {
-            throw new OtpFailedException("Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi.");
+            throw new OtpFailedException("Kode OTP yang dimasukkan tidak valid");
         }
 
         // Periksa apakah waktu OTP masih berlaku (2 menit)
@@ -111,7 +109,7 @@ public class OtpServiceImpl implements OtpService {
             userOtpRepository.delete(userOtp);
 
             // Mengembalikan respons dengan status 400 dan pesan error
-            throw new OtpFailedException("Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi.");
+            throw new OtpFailedException("Kode OTP yang dimasukkan tidak valid");
         }
     }
 
@@ -123,7 +121,7 @@ public class OtpServiceImpl implements OtpService {
         userOtpRepository.deleteByCreatedAtBefore(twoMinutesAgo);
     }
 
-        //    @Override
+    //    @Override
     //    public String regenerateOtp(String email) {
     //        User user = userRepository.findByEmail(email)
     //                .orElseThrow(() -> new OtpFailedException("Email tidak dapat ditemukan"));

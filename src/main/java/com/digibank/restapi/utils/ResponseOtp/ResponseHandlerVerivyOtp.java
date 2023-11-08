@@ -1,4 +1,4 @@
-package com.digibank.restapi.utils;
+package com.digibank.restapi.utils.ResponseOtp;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
