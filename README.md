@@ -223,7 +223,7 @@ Response Body (failed) :
 
 ```json
 {
-    "status" : 400,
+    "status" : 404,
     "message" : "Maaf! Kata Sandi gagal disimpan!" 
 }
 ```
