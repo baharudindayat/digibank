@@ -8,8 +8,7 @@ import com.digibank.restapi.dto.otp.OtpResponseDto;
 import com.digibank.restapi.dto.otp.OtpVerificationDto;
 import com.digibank.restapi.exception.OtpException.FailedException;
 import com.digibank.restapi.model.entity.User;
-import com.digibank.restapi.service.OtpService;
-import com.digibank.restapi.service.PasswordService;
+import com.digibank.restapi.service.*;
 import com.digibank.restapi.utils.ResponseOtp.ResponseHandlerOtp;
 import com.digibank.restapi.utils.ResponseOtp.ResponseHandlerVerivyOtp;
 import lombok.AllArgsConstructor;
@@ -19,8 +18,6 @@ import org.springframework.http.HttpStatus;
 import com.digibank.restapi.dto.CreateMpinDto;
 import com.digibank.restapi.dto.login.LoginResDto;
 import com.digibank.restapi.dto.login.LoginReqDto;
-import com.digibank.restapi.service.AuthenticationService;
-import com.digibank.restapi.service.CreateMpinService;
 import com.digibank.restapi.utils.ResponseHandler;
 import org.springframework.http.ResponseEntity;
 
@@ -38,6 +35,13 @@ public class UserController {
     private OtpService userService;
     private PasswordService passwordService;
 
+    private TypeRekeningService typeRekeningService;
+
+    @GetMapping("/cards")
+    public ResponseEntity<Object> getTypeRekening() {
+        return ResponseHandler.getTypeRekening(typeRekeningService.getAllTypeRekening());
+    }
+    
     @PostMapping("/otp-generate")
     public ResponseEntity<Object> register(@RequestBody OtpDto registerDto) {
         OtpResponseDto newOtp = userService.register(registerDto);
