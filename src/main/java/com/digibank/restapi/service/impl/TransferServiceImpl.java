@@ -50,10 +50,12 @@ public class TransferServiceImpl implements TransferService {
         if (rekeningTujuan.isEmpty()) {
             throw new TransferFailedException("Rekening Tujuan Tidak Ditemukan");
         }
+        AccountStatus accountStatusTujuan = rekeningTujuan.get().getCif().getIdUser().getStatusUser();
+        if (accountStatusTujuan.equals(AccountStatus.TERBLOOKIR)) {
+            throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");
+        }
 
         String matcherRekeningAsal = rekeningAsal.get().getCif().getIdUser().getMpin();
-
-
 
         if (mpinRekeningRequest.equals(matcherRekeningAsal)) {
 
@@ -153,13 +155,20 @@ public class TransferServiceImpl implements TransferService {
 
         RekeningNameDto rekeningNameDto = new RekeningNameDto();
         if (getAccount.isPresent()) {
+            AccountStatus getUser = getAccount.get().getCif().getIdUser().getStatusUser();
+            if (getUser.equals(AccountStatus.TERBLOOKIR)) {
+                throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");
+            }
+
             rekeningNameDto.setNoRekening(getAccount.get().getNoRekening());
             rekeningNameDto.setNama(getAccount.get().getCif().getNamaLengkap());
             rekeningNameDto.setNamaBank("DigiBank");
             return rekeningNameDto;
 
         } else {
-            throw new TransferFailedException("Rekening Tidak Ditemukan");
+            throw new TransferFailedException("Maaf! Nomor Rekening yang dituju" +
+                    "tidak terdaftar. Pastikan memasukkan" +
+                    "Nomor Rekening yang benar ");
         }
     }
 
