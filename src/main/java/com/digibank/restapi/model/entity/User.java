@@ -36,6 +36,7 @@ public class User implements UserDetails {
     private String password;
 
     @Column(name = "status_user")
+    @Enumerated(EnumType.STRING)
     private AccountStatus statusUser;
 
     private String mpin;

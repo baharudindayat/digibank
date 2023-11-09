@@ -1,15 +1,12 @@
 package com.digibank.restapi.service.impl;
 
-import com.digibank.restapi.dto.otp.OtpDto;
-import com.digibank.restapi.dto.otp.OtpRegenerateDto;
-import com.digibank.restapi.dto.otp.OtpResponseDto;
-import com.digibank.restapi.dto.otp.OtpVerificationDto;
+import com.digibank.restapi.dto.otp.*;
 import com.digibank.restapi.exception.OtpException.FailedException;
 import com.digibank.restapi.mapper.UserMapper;
 import com.digibank.restapi.mapper.UserOtpMapper;
 import com.digibank.restapi.model.entity.User;
-import com.digibank.restapi.model.entity.UserBank;
 import com.digibank.restapi.model.entity.UserOTP;
+import com.digibank.restapi.model.enums.AccountStatus;
 import com.digibank.restapi.repository.UserOtpRepository;
 import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.service.OtpService;
@@ -18,13 +15,13 @@ import com.digibank.restapi.utils.OtpUtil;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -57,11 +54,13 @@ public class OtpServiceImpl implements OtpService {
 
         // Simpan pengguna ke dalam database
         User user = UserMapper.MAPPER.mapToUser(otpDto);
+        user.setStatusUser(AccountStatus.INACTIVE);
         User savedUser = userRepository.save(user);
 
         // Simpan OTP ke dalam tabel UserOtp
         UserOTP userOtp = UserOtpMapper.MAPPER.mapToUserOtp(otpDto);
         userOtp.setOtp(otp);
+
         userOtp.setIdUser(savedUser);
         userOtp.setCreatedAt(new Date()); // Set createdAt ke waktu sekarang
         userOtpRepository.save(userOtp);
@@ -74,7 +73,7 @@ public class OtpServiceImpl implements OtpService {
     }
 
     @Override
-    public OtpVerificationDto verifyOtp(User idUser, OtpDto otpDto) {
+    public OtpVerificationDto verifyOtp(User idUser, OtpVerificationDto otpVerificationDto) {
         // Cari UserOtp berdasarkan id_otp
 //        UserOTP userOtp = userOtpRepository.findById(id_otp)
 //                .orElseThrow(() -> new FailedException("Kode OTP yang dimasukkan tidak valid"));
@@ -87,6 +86,9 @@ public class OtpServiceImpl implements OtpService {
         LocalDateTime currentTime = LocalDateTime.now();
         LocalDateTime createdAt = userOTP.get().getCreatedAt();
         long diffInSeconds = Duration.between(createdAt, currentTime).getSeconds();
+        if(!Objects.equals(userOTP.get().getOtp(), otpVerificationDto.getOtp())) {
+            throw  new FailedException("Kode OTP yang dimasukkan tidak valid");
+        }
         if (diffInSeconds < (2 * 60)) {
             User user = userOTP.get().getIdUser();
             Boolean active = user.getActive();
@@ -101,13 +103,14 @@ public class OtpServiceImpl implements OtpService {
                 active = true;
             }
             user.setActive(active);
+            user.setStatusUser(AccountStatus.ACTIVE);
             userRepository.save(user);
 
             // Hapus kolom id_otp dari entitas UserOtp
             userOtpRepository.delete(userOTP.get());
 
             // Mengembalikan respons sukses
-            return new OtpVerificationDto("OTP Terverifikasi");
+            return otpVerificationDto;
         } else {
             // Verifikasi gagal, hapus entitas UserOtp
             userOtpRepository.delete(userOTP.get());
@@ -115,6 +118,8 @@ public class OtpServiceImpl implements OtpService {
             // Mengembalikan respons dengan status 400 dan pesan error
             throw new FailedException("Kode OTP yang dimasukkan tidak valid");
         }
+
+
     }
 
     // Metode ini akan dijalankan setiap 2 menit

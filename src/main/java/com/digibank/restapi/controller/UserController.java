@@ -2,18 +2,13 @@ package com.digibank.restapi.controller;
 
 import com.digibank.restapi.dto.changePassword.ChangePasswordDto;
 import com.digibank.restapi.dto.createPassword.CreatePasswordDto;
-import com.digibank.restapi.dto.otp.OtpDto;
-import com.digibank.restapi.dto.otp.OtpRegenerateDto;
-import com.digibank.restapi.dto.otp.OtpResponseDto;
-import com.digibank.restapi.dto.otp.OtpVerificationDto;
+import com.digibank.restapi.dto.otp.*;
 import com.digibank.restapi.exception.OtpException.FailedException;
 import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.service.*;
 import com.digibank.restapi.utils.ResponseOtp.ResponseHandlerOtp;
 import com.digibank.restapi.utils.ResponseOtp.ResponseHandlerVerivyOtp;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.mapstruct.control.MappingControl;
 import org.springframework.http.HttpStatus;
 
 import com.digibank.restapi.dto.CreateMpinDto;
@@ -50,16 +45,9 @@ public class UserController {
     }
 
     @PutMapping("/{idUser}/otp-verification")
-    public ResponseEntity<Object> verifyOtp(@PathVariable User idUser, @RequestBody OtpDto otpDto) {
-        try {
-            OtpVerificationDto verificationResult = userService.verifyOtp(idUser, otpDto);
-
-            // Verifikasi OTP berhasil
-            return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, verificationResult.getMessage());
-        } catch (FailedException e) {
-            // Verifikasi OTP gagal
-            return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
+    public ResponseEntity<Object> verifyOtp(@PathVariable(required = false) User idUser, @RequestBody OtpVerificationDto otpVerificationDto) {
+        userService.verifyOtp(idUser, otpVerificationDto);
+        return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, "OTP terverifikasi");
     }
 
     @PutMapping("/{idUser}/otp-regenerate")
@@ -69,35 +57,27 @@ public class UserController {
         return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, message);
     }
 
-    @PutMapping("/{id_user}/password")
+    @PutMapping("/{idUser}/password")
     public ResponseEntity<Object> changePassword(
-            @PathVariable Long id_user,
+            @PathVariable(required = false) Long idUser,
             @RequestBody CreatePasswordDto createPasswordRequest) {
-            CreatePasswordDto response = passwordService.changePassword(id_user, createPasswordRequest);
+            CreatePasswordDto response = passwordService.changePassword(idUser, createPasswordRequest);
             return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Disimpan");
     }
 
-    @PutMapping("/{idUser}/change-password")
-    public ResponseEntity<Object> changePassword(
-            @RequestBody ChangePasswordDto changePasswordDto,
-            @PathVariable Long idUser
-    ) {
-        passwordService.changePasswordWithValidation(idUser, changePasswordDto);
-        return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Diupdate");
-    }
 
 
     @PutMapping("/{idUser}/mpin")
     public ResponseEntity<Object> createMpin(
-            @RequestBody CreateMpinDto createMpinDto, @PathVariable Long idUser) {
+            @RequestBody CreateMpinDto createMpinDto, @PathVariable(required = false) Long idUser) {
         createMpinService.createMpin(idUser, createMpinDto);
         return ResponseHandler.createMpin("MPIN berhasil dibuat", HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/confirm-mpin")
+    @PostMapping("/{idUser}/confirm-mpin")
     public ResponseEntity<Object> confirmMpin(
-            @RequestBody CreateMpinDto createMpinDto, @PathVariable Long id) {
-        createMpinService.confirmMpin(id, createMpinDto);
+            @RequestBody CreateMpinDto createMpinDto, @PathVariable(required = false) Long idUser) {
+        createMpinService.confirmMpin(idUser, createMpinDto);
         return ResponseHandler.createMpin("MPIN terkonfimasi", HttpStatus.OK);
     }
 

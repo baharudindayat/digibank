@@ -24,8 +24,6 @@ public class CreateMpinServiceImpl implements CreateMpinService {
 
     @Override
     public CreateMpinDto createMpin(Long idUser, CreateMpinDto createMpinDto) {
-
-
         User user = userRepository.findById(idUser)
                 .orElseThrow(() -> new ResponseUnauthorizationException( "Id User tidak ditemukan"));
 
