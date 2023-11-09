@@ -13,6 +13,7 @@ public class ResponseCifHandler {
         Map<String, Object>map = new HashMap<>();
         map.put("message", message);
         map.put("status", status);
+        map.put("data", res);
 
         return new ResponseEntity<>(map, status);
 

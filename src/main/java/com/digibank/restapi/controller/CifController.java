@@ -1,7 +1,9 @@
 package com.digibank.restapi.controller;
 
 import com.digibank.restapi.dto.CifDto;
+import com.digibank.restapi.dto.CifResponseDto;
 import com.digibank.restapi.service.CifService;
+import com.digibank.restapi.utils.NoRekGenerator;
 import com.digibank.restapi.utils.ResponseCifHandler;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,10 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class CifController {
 
     private CifService cifService;
+    private NoRekGenerator noRekGenerator;
 
     @PostMapping("/users/cif")
-    public ResponseEntity<Object> createCif(@RequestBody CifDto cifDto) {
-        CifDto newCif = cifService.createCif(cifDto);
-        return ResponseCifHandler.generateResponseCif("CIF Berhasil Dibuat", HttpStatus.OK, newCif);
+    public ResponseEntity<Object> createCif(@RequestBody CifDto cifDto, CifResponseDto cifResponseDto) {
+
+        CifResponseDto newCif = cifService.createCif(cifDto);
+
+        String noRekening = noRekGenerator.generateRekening();
+
+        cifResponseDto.setIdCif(newCif.getIdCif());
+        cifResponseDto.setNoRekening(noRekening);
+
+        return ResponseCifHandler.generateResponseCif("CIF Berhasil Dibuat", HttpStatus.OK, cifResponseDto);
     }
 }

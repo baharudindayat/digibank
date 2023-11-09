@@ -1,9 +1,9 @@
 package com.digibank.restapi.service;
 
 import com.digibank.restapi.dto.CifDto;
+import com.digibank.restapi.dto.CifResponseDto;
 
 public interface CifService {
-
-    CifDto createCif(CifDto cifDto);
+    CifResponseDto createCif(CifDto cifDto);
 
 }
