@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.Comment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,11 +18,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.security.Security;
+
 
 @Component
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter  extends OncePerRequestFilter{
+public class JwtAuthenticationFilter extends OncePerRequestFilter{
+
     private final JwtService jwtService;
     private final UserService userService;
     @Override
@@ -37,6 +37,7 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter{
         final String userEmail;
         if(StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, "Bearer ")) {
             filterChain.doFilter(request, response);
+//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Login dulu masbro");
             return;
         }
         jwt = authHeader.substring(7);

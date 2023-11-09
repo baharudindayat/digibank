@@ -1,5 +1,6 @@
 package com.digibank.restapi.dto.login;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequest {
+public class LoginReqDto {
     private String email;
     private String password;
 }

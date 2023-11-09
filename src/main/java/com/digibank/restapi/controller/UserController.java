@@ -14,21 +14,27 @@ import com.digibank.restapi.utils.ResponseOtp.ResponseHandlerVerivyOtp;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-import com.digibank.restapi.dto.login.JwtAuthenticationResponse;
-import com.digibank.restapi.dto.login.LoginRequest;
+import com.digibank.restapi.dto.CreateMpinDto;
+import com.digibank.restapi.dto.login.LoginResDto;
+import com.digibank.restapi.dto.login.LoginReqDto;
 import com.digibank.restapi.service.AuthenticationService;
-
+import com.digibank.restapi.service.CreateMpinService;
+import com.digibank.restapi.utils.ResponseHandler;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/users")
 public class UserController {
 
+    private final AuthenticationService authenticationService;
+    private final CreateMpinService createMpinService;
+
     private OtpService userService;
     private PasswordService passwordService;
-    private final AuthenticationService authenticationService;
 
     @PostMapping("/users/otp-generate")
     public ResponseEntity<Object> register(@RequestBody OtpDto registerDto) {
@@ -70,10 +76,27 @@ public class UserController {
             @PathVariable Integer idUser
     ) {
         passwordService.changePasswordWithValidation(idUser, changePasswordDto);
-        return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Diupdate");    }
+        return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Diupdate");
+    }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthenticationResponse> login(@RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authenticationService.login(request));
+    public ResponseEntity<Object> login(@RequestBody LoginReqDto request) {
+        LoginResDto newResponse = authenticationService.login(request);
+        return ResponseHandler.loginResponse("Login Berhasil", HttpStatus.OK, newResponse);
+    }
+
+    @PutMapping("/{id}/mpin")
+    public ResponseEntity<Object> createMpin(
+            @RequestBody CreateMpinDto createMpinDto, @PathVariable Long id) {
+        createMpinService.createMpin(id, createMpinDto);
+        return ResponseHandler.createMpin("MPIN berhasil dibuat", HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/confirm-mpin")
+    public ResponseEntity<Object> confirmMpin(
+            @RequestBody CreateMpinDto createMpinDto, @PathVariable Long id) {
+        createMpinService.confirmMpin(id, createMpinDto);
+        return ResponseHandler.createMpin("MPIN terkonfimasi", HttpStatus.OK);
     }
 }
+

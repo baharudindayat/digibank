@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class DigibankApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(DigibankApplication.class, args);
 	}

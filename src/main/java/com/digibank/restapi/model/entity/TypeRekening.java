@@ -1,8 +1,10 @@
 package com.digibank.restapi.model.entity;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,9 +19,13 @@ import lombok.Setter;
 public class TypeRekening{
 
     @Id
-    private Integer id_type;
+    @Column(name = "id_tipe_rekening")
+    private Long idTipe;
 
-    private String nama_type;
+    @Column(name = "nama_tipe", nullable = false)
+    private String namaTipe;
 
-    private String limit_transfer;
+    @Column(name = "limit_transfer", nullable = false)
+    private String limitTransfer;
+
 }
