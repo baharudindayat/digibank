@@ -13,6 +13,7 @@ import com.digibank.restapi.utils.ResponseOtp.ResponseHandlerOtp;
 import com.digibank.restapi.utils.ResponseOtp.ResponseHandlerVerivyOtp;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.control.MappingControl;
 import org.springframework.http.HttpStatus;
 
 import com.digibank.restapi.dto.CreateMpinDto;
@@ -48,10 +49,10 @@ public class UserController {
         return ResponseHandlerOtp.generateResponseCreate(HttpStatus.CREATED, "Otp berhasil terkirim", newOtp);
     }
 
-    @PutMapping("/{id_otp}/otp-verification")
-    public ResponseEntity<Object> verifyOtp(@PathVariable Long id_otp, @RequestBody OtpDto otpDto) {
+    @PutMapping("/{idUser}/otp-verification")
+    public ResponseEntity<Object> verifyOtp(@PathVariable User idUser, @RequestBody OtpDto otpDto) {
         try {
-            OtpVerificationDto verificationResult = userService.verifyOtp(id_otp, otpDto);
+            OtpVerificationDto verificationResult = userService.verifyOtp(idUser, otpDto);
 
             // Verifikasi OTP berhasil
             return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, verificationResult.getMessage());
@@ -68,7 +69,7 @@ public class UserController {
         return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, message);
     }
 
-    @PutMapping("/{id_user}")
+    @PutMapping("/{id_user}/password")
     public ResponseEntity<Object> changePassword(
             @PathVariable Long id_user,
             @RequestBody CreatePasswordDto createPasswordRequest) {
@@ -84,7 +85,6 @@ public class UserController {
         passwordService.changePasswordWithValidation(idUser, changePasswordDto);
         return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Diupdate");
     }
-
 
 
     @PutMapping("/{idUser}/mpin")
