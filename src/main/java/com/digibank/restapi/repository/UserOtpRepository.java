@@ -1,7 +1,7 @@
 package com.digibank.restapi.repository;
 
 import com.digibank.restapi.model.entity.User;
-import com.digibank.restapi.model.entity.UserOtp;
+import com.digibank.restapi.model.entity.UserOTP;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserOtpRepository extends JpaRepository<UserOtp, Long> {
-    List<UserOtp> findByCreatedAtBefore(LocalDateTime dateTime);
+public interface UserOtpRepository extends JpaRepository<UserOTP, Long> {
+    List<UserOTP> findByCreatedAtBefore(LocalDateTime dateTime);
 
-    Optional<UserOtp> findByIdUser(User idUser);
+    Optional<UserOTP> findByIdUser(User idUser);
     void deleteByCreatedAtBefore(LocalDateTime twoMinutesAgo);
 }
 

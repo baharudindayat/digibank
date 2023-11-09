@@ -25,8 +25,8 @@ public class CreateMpinServiceImpl implements CreateMpinService {
     @Override
     public CreateMpinDto createMpin(Long idUser, CreateMpinDto createMpinDto) {
 
-        int idUserInt = idUser.intValue();
-        User user = userRepository.findById(idUserInt)
+
+        User user = userRepository.findById(idUser)
                 .orElseThrow(() -> new ResponseUnauthorizationException( "Id User tidak ditemukan"));
 
 //        User mpin = CreateMpinMapper.MAPPER.mapToCreateMpin(createMpinDto);
@@ -40,8 +40,8 @@ public class CreateMpinServiceImpl implements CreateMpinService {
     @Override
     public CreateMpinDto confirmMpin(Long idUser, CreateMpinDto createMpinDto) {
 
-        int idUserInt = idUser.intValue();
-        User user = userRepository.findById(idUserInt)
+
+        User user = userRepository.findById(idUser)
                 .orElseThrow(() -> new ResponseUnauthorizationException( "Id User tidak ditemukan"));
         if (Objects.equals(createMpinDto.getMpin(), user.getMpin())) {
             return CreateMpinMapper.MAPPER.mapToCreateMpinDto(user);

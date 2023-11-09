@@ -2,12 +2,13 @@ package com.digibank.restapi.service.impl;
 
 import com.digibank.restapi.dto.otp.OtpDto;
 import com.digibank.restapi.dto.otp.OtpRegenerateDto;
+import com.digibank.restapi.dto.otp.OtpResponseDto;
 import com.digibank.restapi.dto.otp.OtpVerificationDto;
 import com.digibank.restapi.exception.OtpException.FailedException;
 import com.digibank.restapi.mapper.UserMapper;
 import com.digibank.restapi.mapper.UserOtpMapper;
 import com.digibank.restapi.model.entity.User;
-import com.digibank.restapi.model.entity.UserOtp;
+import com.digibank.restapi.model.entity.UserOTP;
 import com.digibank.restapi.repository.UserOtpRepository;
 import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.service.OtpService;
@@ -16,7 +17,6 @@ import com.digibank.restapi.utils.OtpUtil;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @Service
+//@RequiredArgsConstructor
 @AllArgsConstructor
 public class OtpServiceImpl implements OtpService {
 
@@ -35,7 +36,7 @@ public class OtpServiceImpl implements OtpService {
     private UserOtpRepository userOtpRepository;
 
     @Override
-    public OtpDto register(OtpDto otpDto) {
+    public OtpResponseDto register(OtpDto otpDto) {
         // Cari apakah pengguna dengan email tersebut sudah ada
         User existingUser = userRepository.findByEmail(otpDto.getEmail()).orElse(null);
         if (existingUser != null) {
@@ -57,15 +58,15 @@ public class OtpServiceImpl implements OtpService {
         User savedUser = userRepository.save(user);
 
         // Simpan OTP ke dalam tabel UserOtp
-        UserOtp userOtp = UserOtpMapper.MAPPER.mapToUserOtp(otpDto);
+        UserOTP userOtp = UserOtpMapper.MAPPER.mapToUserOtp(otpDto);
         userOtp.setOtp(otp);
         userOtp.setIdUser(savedUser);
         userOtp.setCreatedAt(new Date()); // Set createdAt ke waktu sekarang
         userOtpRepository.save(userOtp);
 
         // Mengembalikan data DTO
-        OtpDto responseDto = UserMapper.MAPPER.mapToOtpDto(savedUser);
-        responseDto.setId_user(savedUser.getIdUser());
+        OtpResponseDto responseDto = UserMapper.MAPPER.mapToOtpDto(savedUser);
+        responseDto.setIdUser(savedUser.getIdUser());
 
         return responseDto;
     }
@@ -73,14 +74,11 @@ public class OtpServiceImpl implements OtpService {
     @Override
     public OtpVerificationDto verifyOtp(Long id_otp, OtpDto otpDto) {
         // Cari UserOtp berdasarkan id_otp
-        UserOtp userOtp = userOtpRepository.findById(id_otp)
+        UserOTP userOtp = userOtpRepository.findById(id_otp)
                 .orElseThrow(() -> new FailedException("Kode OTP yang dimasukkan tidak valid"));
 
         // Pastikan id_user cocok dengan yang ditemukan
-        Long id_user = otpDto.getId_user();
-        if (id_user != null && userOtp.getIdUser().getIdUser() != id_user) {
-            throw new FailedException("Kode OTP yang dimasukkan tidak valid");
-        }
+
 
         // Periksa apakah waktu OTP masih berlaku (2 menit)
         LocalDateTime currentTime = LocalDateTime.now();
@@ -127,7 +125,7 @@ public class OtpServiceImpl implements OtpService {
     @Override
     public String regenerateOtp(OtpRegenerateDto otpRegenerateDto, User idUser) {
 
-        Optional<UserOtp> userOtp = Optional.ofNullable(userOtpRepository.findByIdUser(idUser)
+        Optional<UserOTP> userOtp = Optional.ofNullable(userOtpRepository.findByIdUser(idUser)
                 .orElseThrow(() -> new FailedException("ID user tidak ditemukan")));
 
 

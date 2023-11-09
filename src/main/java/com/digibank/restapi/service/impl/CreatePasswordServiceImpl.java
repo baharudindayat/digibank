@@ -19,7 +19,7 @@ public class CreatePasswordServiceImpl implements PasswordService {
     private final UserRepository userRepository;
 
     @Override
-    public CreatePasswordDto changePassword(Integer id_user, CreatePasswordDto request) {
+    public CreatePasswordDto changePassword(Long id_user, CreatePasswordDto request) {
         User user = userRepository.findById(id_user)
                 .orElseThrow(() -> new FailedException("Maaf! Kata Sandi gagal disimpan"));
 
@@ -30,8 +30,9 @@ public class CreatePasswordServiceImpl implements PasswordService {
         return request;
     }
 
+
     @Override
-    public CreatePasswordDto changePasswordWithValidation(Integer id_user, ChangePasswordDto changePasswordDto) {
+    public CreatePasswordDto changePasswordWithValidation(Long id_user, ChangePasswordDto changePasswordDto) {
 
         User user = userRepository.findById(id_user)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + id_user));

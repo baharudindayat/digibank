@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -25,5 +27,9 @@ public class UserOTP {
     private String otp;
 
     @Column(name = "created_at")
-    private LocalDateTime cretaedAt;
+    private LocalDateTime createdAt;
+
+    public void setCreatedAt(Date date) {
+        this.createdAt = new Timestamp(date.getTime()).toLocalDateTime();
+    }
 }
