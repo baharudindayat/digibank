@@ -28,6 +28,8 @@ public class CreateMpinServiceImpl implements CreateMpinService {
         int idUserInt = idUser.intValue();
         User user = userRepository.findById(idUserInt)
                 .orElseThrow(() -> new ResponseUnauthorizationException( "Id User tidak ditemukan"));
+
+//        User mpin = CreateMpinMapper.MAPPER.mapToCreateMpin(createMpinDto);
         user.setMpin(createMpinDto.getMpin());
         User savedMpin = userRepository.save(user);
 

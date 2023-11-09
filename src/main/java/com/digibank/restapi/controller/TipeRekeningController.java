@@ -18,7 +18,7 @@ public class TipeRekeningController {
 
     private TypeRekeningService typeRekeningService;
 
-    @GetMapping("/type-cards")
+    @GetMapping("/cards")
     public ResponseEntity<Object> getTypeRekening() {
         return ResponseHandler.getTypeRekening(typeRekeningService.getAllTypeRekening());
     }
