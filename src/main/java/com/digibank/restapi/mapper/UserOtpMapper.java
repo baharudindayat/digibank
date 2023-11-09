@@ -12,4 +12,6 @@ public interface UserOtpMapper {
     //    OtpDto mapToOtpDto(UserOtp userOtp);
 
     UserOtp mapToUserOtp(OtpDto otpDto);
+
+
 }

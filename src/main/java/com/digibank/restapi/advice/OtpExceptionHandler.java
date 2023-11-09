@@ -1,6 +1,6 @@
 package com.digibank.restapi.advice;
 
-import com.digibank.restapi.exception.OtpException.OtpFailedException;
+import com.digibank.restapi.exception.OtpException.FailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,9 +13,9 @@ import java.util.Map;
 @ControllerAdvice
 public class OtpExceptionHandler {
 
-    @ExceptionHandler(OtpFailedException.class)
+    @ExceptionHandler(FailedException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Map<String, Object>> handleOtpFailedException(OtpFailedException ex) {
+    public ResponseEntity<Map<String, Object>> handleOtpFailedException(FailedException ex) {
         Map<String, Object> response = new HashMap<>();
         response.put("status", HttpStatus.NOT_FOUND.value());
         response.put("message", ex.getMessage());

@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OtpRegenerate {
+public class OtpRegenerateDto {
+    private Long idUser;
     private String email;
 }
