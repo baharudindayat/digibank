@@ -33,4 +33,9 @@ public class Rekening {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cif")
     private Set<CIF> cif;
+
+    @PrePersist
+    public void prePersist() {
+        created_at = new Date();
+    }
 }

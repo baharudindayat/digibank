@@ -13,15 +13,22 @@ import com.digibank.restapi.utils.ResponseOtp.ResponseHandlerOtp;
 import com.digibank.restapi.utils.ResponseOtp.ResponseHandlerVerivyOtp;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+
+import com.digibank.restapi.dto.login.JwtAuthenticationResponse;
+import com.digibank.restapi.dto.login.LoginRequest;
+import com.digibank.restapi.service.AuthenticationService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/api/users")
 public class UserController {
 
     private OtpService userService;
     private PasswordService passwordService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/users/otp-generate")
     public ResponseEntity<Object> register(@RequestBody OtpDto registerDto) {
@@ -64,4 +71,9 @@ public class UserController {
     ) {
         passwordService.changePasswordWithValidation(idUser, changePasswordDto);
         return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Diupdate");    }
+
+    @PostMapping("/login")
+    public ResponseEntity<JwtAuthenticationResponse> login(@RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authenticationService.login(request));
+    }
 }
