@@ -15,8 +15,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class CifDto {
 
-    private CIF idCif;
-
     private  String nik;
 
     private  String namaLengkap;

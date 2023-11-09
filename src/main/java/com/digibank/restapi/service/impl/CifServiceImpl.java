@@ -18,19 +18,23 @@ import java.util.Optional;
 public class CifServiceImpl implements CifService {
 
     private final CifRepository repository;
-    private final AutoCifMapper autoCifMapper;
     private final NoRekGenerator noRekGenerator;
 
     @Override
     public CifResponseDto createCif(CifDto cifDto) {
-        CIF cif = autoCifMapper.MAPPER.mapToCif(cifDto);
 
-        cif.setIdUsers(cifDto.getIdUsers());
+        CIF cif = AutoCifMapper.MAPPER.mapToCif(cifDto);
+        CifResponseDto cifResponseDto = AutoCifMapper.MAPPER.mapToCifResponseDto(cif);
 
-        CIF savedCif = repository.save(cif);
+        repository.save(cif);
+
+        Optional<CIF> idCif = repository.findByNik(cifDto.getNik());
 
         String noRekening = noRekGenerator.generateRekening();
 
-        return autoCifMapper.MAPPER.mapToCifResponseDto(savedCif, noRekening);
+        cifResponseDto.setIdCif(idCif.get().getId_cif());
+        cifResponseDto.setNoRekening(noRekening);
+
+        return cifResponseDto;
     }
 }

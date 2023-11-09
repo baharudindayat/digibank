@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface CifRepository extends JpaRepository<CIF, Long> {
 
+    Optional<CIF> findByNik(String nik);
+
 }

@@ -19,18 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CifController {
 
     private CifService cifService;
-    private NoRekGenerator noRekGenerator;
+//    private NoRekGenerator noRekGenerator;
 
     @PostMapping("/users/cif")
-    public ResponseEntity<Object> createCif(@RequestBody CifDto cifDto, CifResponseDto cifResponseDto) {
+    public ResponseEntity<Object> createCif(@RequestBody CifDto cifDto) {
 
         CifResponseDto newCif = cifService.createCif(cifDto);
 
-        String noRekening = noRekGenerator.generateRekening();
-
-        cifResponseDto.setIdCif(newCif.getIdCif());
-        cifResponseDto.setNoRekening(noRekening);
-
-        return ResponseCifHandler.generateResponseCif("CIF Berhasil Dibuat", HttpStatus.OK, cifResponseDto);
+        return ResponseCifHandler.generateResponseCif("CIF Berhasil Dibuat", HttpStatus.OK, newCif);
     }
 }
