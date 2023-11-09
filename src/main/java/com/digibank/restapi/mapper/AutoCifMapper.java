@@ -11,9 +11,8 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 public interface AutoCifMapper {
 
-    CifDto mapToCifDto(CIF cif);
     CIF mapToCif(CifDto cifDto);
-    CifResponseDto mapToCifResponseDto(CIF cif); // Menambahkan nomor rekening
+    CifResponseDto mapToCifResponseDto(CIF cif);
 
     AutoCifMapper MAPPER = Mappers.getMapper(AutoCifMapper.class);
 }
