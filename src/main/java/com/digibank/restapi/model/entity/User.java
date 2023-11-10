@@ -10,6 +10,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
 import java.util.Date;
 
 @Getter
@@ -23,7 +25,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
-    private long idUser;
+    private long idUsers;
 
     @Column(nullable = false)
     private String email;
@@ -47,4 +49,18 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+
+    public void setOtp(String otp) {
+    }
+
+    public void setCretaedOtp(LocalDateTime now) {
+    }
+
+    public Object getOtp() {
+        return null;
+    }
+
+    public Temporal getCretaedOtp() {
+        return null;
+    }
 }

@@ -26,8 +26,8 @@ public class Transaksi {
 
     @ManyToOne
     @JoinColumn(name = "rekening_asal")
-    private Rekening rekeningAsal;
 
+    private Rekening rekeningAsal;
     @ManyToOne
     @JoinColumn(name = "rekening_tujuan")
     private Rekening rekeningTujuan;

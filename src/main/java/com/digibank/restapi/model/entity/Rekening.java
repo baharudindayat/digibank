@@ -1,5 +1,6 @@
 package com.digibank.restapi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,10 +29,12 @@ public class Rekening {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipe_rekening")
+    @JsonIgnore
     private TypeRekening tipeRekening;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cif")
+    @JsonIgnore
     private CIF idCif;
 
 }
