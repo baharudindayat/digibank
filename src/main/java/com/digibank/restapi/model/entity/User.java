@@ -39,7 +39,6 @@ public class User implements UserDetails {
     private AccountStatus statusUser;
 
     private String mpin;
-
     @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
