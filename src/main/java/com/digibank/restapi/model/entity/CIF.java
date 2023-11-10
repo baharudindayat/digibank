@@ -1,12 +1,11 @@
 package com.digibank.restapi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -19,7 +18,7 @@ public class CIF {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_cif;
+    private Long id_cif;
 
     @Column(name = "nik",nullable = false, unique = true)
     private String nik;
@@ -42,6 +41,7 @@ public class CIF {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
+    @JsonIgnore
     private User idUsers;
 
 
