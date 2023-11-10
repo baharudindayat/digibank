@@ -9,15 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransferDto {
+public class BankDto {
+    private long KodeBank;
 
-    private long noRekeningTujuan;
-
-    private long noRekeningSumber;
-
-    private Double nominal;
-
-    private String catatan;
-
-    private String mpin;
+    private String NamaBank;
 }

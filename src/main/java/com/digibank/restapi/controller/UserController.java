@@ -33,11 +33,17 @@ public class UserController {
     public ResponseEntity<Object> getTypeRekening() {
         return ResponseHandler.getTypeRekening(typeRekeningService.getAllTypeRekening());
     }
-    
+
     @PostMapping("/otp-generate")
     public ResponseEntity<Object> register(@RequestBody OtpDto registerDto) {
         OtpResponseDto newOtp = userService.register(registerDto);
         return ResponseHandlerOtp.generateResponseCreate(HttpStatus.CREATED, "Otp berhasil terkirim", newOtp);
+    }
+    private CifService cifService;
+    @PostMapping("/cif")
+    public ResponseEntity<Object> createCif(@RequestBody CifDto cifDto) {
+        String newCif = cifService.createCif(cifDto);
+        return ResponseCifHandler.generateResponseCif("CIF Berhasil Dibuat", HttpStatus.OK, newCif);
     }
 
     @PutMapping("/{idUser}/otp-verification")
@@ -81,4 +87,3 @@ public class UserController {
         return ResponseHandler.loginResponse("Login Berhasil!", HttpStatus.OK, newResponse);
     }
 }
-
