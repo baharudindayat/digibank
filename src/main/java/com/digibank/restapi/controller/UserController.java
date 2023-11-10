@@ -1,5 +1,6 @@
 package com.digibank.restapi.controller;
 
+import com.digibank.restapi.dto.CifDto;
 import com.digibank.restapi.dto.CreateMpinDto;
 import com.digibank.restapi.dto.createPassword.CreatePasswordDto;
 import com.digibank.restapi.dto.login.LoginReqDto;
@@ -11,8 +12,6 @@ import com.digibank.restapi.dto.otp.OtpVerificationDto;
 import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.service.*;
 import com.digibank.restapi.utils.ResponseHandler;
-import com.digibank.restapi.utils.ResponseOtp.ResponseHandlerOtp;
-import com.digibank.restapi.utils.ResponseOtp.ResponseHandlerVerivyOtp;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +27,7 @@ public class UserController {
     private OtpService userService;
     private PasswordService passwordService;
     private TypeRekeningService typeRekeningService;
+    private CifService cifService;
 
     @GetMapping("/cards")
     public ResponseEntity<Object> getTypeRekening() {
@@ -37,26 +37,21 @@ public class UserController {
     @PostMapping("/otp-generate")
     public ResponseEntity<Object> register(@RequestBody OtpDto registerDto) {
         OtpResponseDto newOtp = userService.register(registerDto);
-        return ResponseHandlerOtp.generateResponseCreate(HttpStatus.CREATED, "Otp berhasil terkirim", newOtp);
+        return ResponseHandler.generateResponseCreate(HttpStatus.CREATED, "Otp berhasil terkirim", newOtp);
     }
-    private CifService cifService;
-    @PostMapping("/cif")
-    public ResponseEntity<Object> createCif(@RequestBody CifDto cifDto) {
-        String newCif = cifService.createCif(cifDto);
-        return ResponseCifHandler.generateResponseCif("CIF Berhasil Dibuat", HttpStatus.OK, newCif);
-    }
+
 
     @PutMapping("/{idUser}/otp-verification")
     public ResponseEntity<Object> verifyOtp(@PathVariable(required = false) User idUser, @RequestBody OtpVerificationDto otpVerificationDto) {
         userService.verifyOtp(idUser, otpVerificationDto);
-        return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, "OTP terverifikasi");
+        return ResponseHandler.generateResponseVerivyOtp(HttpStatus.OK, "OTP terverifikasi");
     }
 
     @PutMapping("/{idUser}/otp-regenerate")
     public ResponseEntity<Object> regenerateOtp(@RequestBody OtpRegenerateDto regenerateDto, @PathVariable(required = false) User idUser) {
 
         String message =  userService.regenerateOtp(regenerateDto, idUser);
-        return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, message);
+        return ResponseHandler.generateResponseVerivyOtp(HttpStatus.OK, message);
     }
 
     @PutMapping("/{idUser}/password")
@@ -64,7 +59,13 @@ public class UserController {
             @PathVariable(required = false) Long idUser,
             @RequestBody CreatePasswordDto createPasswordRequest) {
             CreatePasswordDto response = passwordService.changePassword(idUser, createPasswordRequest);
-            return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Disimpan");
+            return ResponseHandler.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Disimpan");
+    }
+
+    @PostMapping("/cif")
+    public ResponseEntity<Object> createCif(@RequestBody CifDto cifDto) {
+        String newCif = cifService.createCif(cifDto);
+        return ResponseHandler.generateResponseCif("CIF Berhasil Dibuat", HttpStatus.OK, newCif);
     }
 
     @PutMapping("/{idUser}/mpin")

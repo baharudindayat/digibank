@@ -1,6 +1,6 @@
 package com.digibank.restapi.advice;
 
-import com.digibank.restapi.exception.OtpException.FailedException;
+import com.digibank.restapi.exception.FailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

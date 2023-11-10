@@ -1,7 +1,7 @@
 package com.digibank.restapi.service.impl;
 
 import com.digibank.restapi.dto.otp.*;
-import com.digibank.restapi.exception.OtpException.FailedException;
+import com.digibank.restapi.exception.FailedException;
 import com.digibank.restapi.mapper.UserMapper;
 import com.digibank.restapi.mapper.UserOtpMapper;
 import com.digibank.restapi.model.entity.User;

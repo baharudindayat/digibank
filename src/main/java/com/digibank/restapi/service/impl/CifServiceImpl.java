@@ -7,7 +7,7 @@ import com.digibank.restapi.model.entity.Rekening;
 import com.digibank.restapi.repository.CifRepository;
 import com.digibank.restapi.repository.RekeningRepository;
 import com.digibank.restapi.service.CifService;
-import com.digibank.restapi.utils.NoRekGenerator;
+import com.digibank.restapi.utils.NoRekUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import java.util.Optional;
 public class CifServiceImpl implements CifService {
 
     private final CifRepository repository;
-    private final NoRekGenerator noRekGenerator;
+    private final NoRekUtil noRekUtil;
     private final RekeningRepository rekeningRepository;
 
     @Override
@@ -31,7 +31,7 @@ public class CifServiceImpl implements CifService {
 
         Optional<CIF> idCif = repository.findByNik(cifDto.getNik());
 
-        String noRekening = noRekGenerator.generateRekening();
+        String noRekening = noRekUtil.generateRekening();
 
 
         Rekening rekening = new Rekening();

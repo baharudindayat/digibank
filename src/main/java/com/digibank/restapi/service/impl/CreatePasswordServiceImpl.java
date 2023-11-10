@@ -2,7 +2,7 @@ package com.digibank.restapi.service.impl;
 
 import com.digibank.restapi.dto.changePassword.ChangePasswordDto;
 import com.digibank.restapi.dto.createPassword.CreatePasswordDto;
-import com.digibank.restapi.exception.OtpException.FailedException;
+import com.digibank.restapi.exception.FailedException;
 import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.service.PasswordService;

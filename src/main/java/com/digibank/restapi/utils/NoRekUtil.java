@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-public class NoRekGenerator {
+public class NoRekUtil {
     public String generateRekening() {
         Random random = new Random();
         int randomNumber = 10000000 + random.nextInt(90000000);

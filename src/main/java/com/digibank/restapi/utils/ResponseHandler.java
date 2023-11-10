@@ -1,20 +1,22 @@
 package com.digibank.restapi.utils;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.digibank.restapi.utils.ResponseOtp.ResponseHandlerOtp.getObjectResponseEntity;
-
 public class ResponseHandler {
 
-    public static ResponseEntity<Object> generateResponseCreate(String message, HttpStatus status, Object res){
-        Map<String,Object> map = new HashMap<>();
-        map.put("message",message);
-        map.put("status",status.value());
-        map.put("data",res);
-        return new ResponseEntity<>(map,status);
+    public static ResponseEntity<Object> generateResponseCif(String message, HttpStatus status, String norek) {
+
+        Map<String, Object>map = new HashMap<>();
+        map.put("message", message);
+        map.put("status", status.value());
+        map.put("norek", norek);
+
+        return new ResponseEntity<>(map, status);
+
     }
 
     public static ResponseEntity<Object> loginResponse(String message, HttpStatus status, Object res){
@@ -32,6 +34,26 @@ public class ResponseHandler {
         Map<String,Object> map = new HashMap<>();
         map.put("message",message);
         map.put("status",status.value());
+        return new ResponseEntity<>(map,status);
+    }
+
+    public static ResponseEntity<Object> generateResponseCreate(HttpStatus status, String message, Object res){
+        return getObjectResponseEntity(status, message, res);
+    }
+
+    @NotNull
+    public static ResponseEntity<Object> getObjectResponseEntity(HttpStatus status, String message, Object res) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("status",status.value());
+        map.put("message",message);
+        map.put("data",res);
+        return new ResponseEntity<>(map,status);
+    }
+
+    public static ResponseEntity<Object> generateResponseVerivyOtp(HttpStatus status, String message){
+        Map<String,Object> map = new HashMap<>();
+        map.put("status",status.value());
+        map.put("message",message);
         return new ResponseEntity<>(map,status);
     }
 }
