@@ -9,7 +9,7 @@ Base URL: http://digibank/api/v1
 
 Setelah user pilih kartu, data tipe rekening ditampung di fe, nantinya akan dipost ketika user klik button lanjut pada isi data diri/cif
 
-Endpoint : GET/users/cards
+Endpoint : GET/api/users/cards
 
 Response : 
 
@@ -18,19 +18,19 @@ Response :
     "status" : 200,
     "data" :[
         {
-            "id" : 1,
+            "idTipe" : 1,
             "nama" : "Silver",
-            "limit_transfer" : "5 Juta"
+            "limitTransfer" : "5 Juta"
         },
         {
-            "id" : 2,
+            "idTipe" : 2,
             "nama" : "Gold",
-            "limit_transfer" : "10 Juta"
+            "limitTransfer" : "10 Juta"
         },
         {    
-            "id" : 3,
+            "idTipe" : 3,
             "nama" : "Platinum",
-            "limit_transfer" : "15 Juta"
+            "limitTransfer" : "15 Juta"
         },
     ]
 }
@@ -39,8 +39,7 @@ Response :
 
 ### Email Confirmation / OTP Generate
 
-
-Endpoint : POST/users/otp-generate
+Endpoint : POST/api/users/otp-generate
 
 Request Body :
 
@@ -73,14 +72,12 @@ Response Body (failed) :
 
 ### OTP Verification / OTP Confirmation
 
-
-Endpoint : POST /users/otp-verification/{id_otp}
+Endpoint : PUT/api/users/{id_user}/otp-verification
 
 Request Body :
 
 ```json
 {
-    "id_user" : "1",
     "otp": "1956"
 }
 ```
@@ -98,7 +95,21 @@ Response Body (failed) :
 
 ```json
 {
-    "message": "Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi.",
+    "message": "Kode OTP yang dimasukkan tidak valid",
+    "status": 400
+}
+```
+
+```json
+{
+    "message": "User tidak ditemukkan",
+    "status": 400
+}
+```
+
+```json
+{
+    "message": "Akun sudah terverifikasi",
     "status": 400
 }
 ```
@@ -106,7 +117,7 @@ Response Body (failed) :
 ### Email Confirmation / OTP Regenerate
 
 
-Endpoint : PUT /users/otp-regenerate{id_otp(table userOtp)}
+Endpoint : PUT/api/users/{id_user}/otp-regenerate
 
 Request Body :
 
@@ -130,6 +141,20 @@ Response Body (failed) :
 ```json
 {
     "status" : 400,
+    "otp"    : "User tidak ditemukann"
+}
+```
+
+```json
+{
+    "status" : 400,
+    "otp"    : "Email tidak dapat ditemukan"
+}
+```
+
+```json
+{
+    "status" : 400,
     "otp"    : "Email tidak dapat ditemukan"
 }
 ```
@@ -139,7 +164,7 @@ Response Body (failed) :
 ```json
 {
     "status" : 400,
-    "otp"    : "Tidak dapat mengirim otp, silakan coba lagi"
+    "otp"    : "Gagal mengirim OTP, Silahkan Coba lagi"
 }
 ```
 
@@ -195,18 +220,15 @@ Response Body (success) :
 }
 ```
 
-
-
 ### Create Password
 
-
-Endpoint : POST /users/{id_user}
+Endpoint : PUT/api/users/{id_user}/password
 
 Request Body :
 
 ```json
 {
-    "password" : "rahasia1"
+    "password" : "rahasia123"
 }
 ```
 
@@ -223,16 +245,14 @@ Response Body (failed) :
 
 ```json
 {
-    "status" : 404,
-    "message" : "Maaf! Kata Sandi gagal disimpan!" 
+    "status" : 400,
+    "message" : "User tidak ditemukan" 
 }
 ```
 
-
 ### Create MPIN
 
-
-Endpoint : POST /users/{id}pin
+Endpoint : PUT/api/users/{id_user}/mpin
 
 Request Body :
 
@@ -247,18 +267,60 @@ Response Body (success) :
 ```json
 {
     "status" : 200,
-    "message" : "Selamat! Akun Berhasil dibuat. Silakan Melakukan Login." 
+    "message" : "Selamat Akun Berhasil dibuat Silahkan Masuk Akun" 
+}
+```
+Response Body (failed) :
+
+```json
+{
+    "status" : 400,
+    "message" : "User tidak ditemukan" 
 }
 ```
 
+### MPIN Confirmation
+
+Endpoint : POST/api/users/{id_user}/confirm-mpin
+
+Request Body :
+
+```json
+{
+    "mpin" : "123456"
+}
+```
+
+Response Body (success) :
+
+```json
+{
+    "status" : 200,
+    "message" : "MPIN terkonfimasi" 
+}
+```
+Response Body (failed) :
+
+```json
+{
+    "status" : 400,
+    "message" : "User tidak ditemukan" 
+}
+```
+
+```json
+{
+    "status" : 400,
+    "message" : "MPIN tidak sama" 
+}
+```
 
 ## Belum punya akun & sudah punya rekening
 
 
 ### Email Confirmation / OTP Generate
 
-
-Endpoint : POST/users/otp-generate
+Endpoint : POST/api/users/otp-generate
 
 Request Body :
 
@@ -272,21 +334,32 @@ Response Body (succes) :
 
 ```json
 {
-    "status" : 200,
-    "id_user" : 1,
+    "data": {
+        "id_user": 1,
+        "email": "budi@gmail.com"
+    },
+    "message": "Otp berhasil terkirim",
+    "status": 201
+}
+```
+Response Body (failed) :
+
+```json
+{
+    "message": "Email Sudah Terdaftar",
+    "status": 404
 }
 ```
 
 ### OTP Verification / OTP Confirmation
 
-
-Endpoint : POST /users/{id}/otp-verification
+Endpoint : PUT/api/users/{id_user}/otp-verification
 
 Request Body :
 
 ```json
 {
-     "otp" : "1234"
+    "otp": "1956"
 }
 ```
 
@@ -294,8 +367,8 @@ Response Body (succes) :
 
 ```json
 {
-    "status" : 200,
-    "message" : "Success"
+    "message": "OTP Terverifikasi",
+    "status": 200
 }
 ```
 
@@ -303,8 +376,22 @@ Response Body (failed) :
 
 ```json
 {
-    "status" : 400,
-    "message" : "Maaf Kode OTP yang dimasukkan tidak valid. Silahkan coba lagi."
+    "message": "Kode OTP yang dimasukkan tidak valid",
+    "status": 400
+}
+```
+
+```json
+{
+    "message": "User tidak ditemukkan",
+    "status": 400
+}
+```
+
+```json
+{
+    "message": "Akun sudah terverifikasi",
+    "status": 400
 }
 ```
 
@@ -340,7 +427,6 @@ Response Body (failed) :
 }
 ```
 
-
 ### Konfirmasi CIF
 
 Endpoint : GET /users/{id_cif}/confirm-cif
@@ -358,15 +444,13 @@ Response Body (success) :
 
 ### Create Password
 
-
-Endpoint : POST /users/{id}/password
+Endpoint : PUT/api/users/{id_user}/password
 
 Request Body :
 
 ```json
 {
-    "id_cif" : 1
-    "password" : "rahasia1"
+    "password" : "rahasia123"
 }
 ```
 
@@ -383,16 +467,14 @@ Response Body (failed) :
 
 ```json
 {
-    "status" : 408,
-    "message" : "Maaf! Kata Sandi gagal disimpan. Silakan masukkan ulang Kata Sandi" 
+    "status" : 400,
+    "message" : "User tidak ditemukan" 
 }
 ```
 
-
 ### Create MPIN
 
-
-Endpoint : POST /users/{id}pin
+Endpoint : PUT/api/users/{id_user}/mpin
 
 Request Body :
 
@@ -407,23 +489,64 @@ Response Body (success) :
 ```json
 {
     "status" : 200,
-    "message" : "Selamat! Akun Berhasil dibuat. Silakan Melakukan Login." 
+    "message" : "Selamat Akun Berhasil dibuat Silahkan Masuk Akun" 
+}
+```
+Response Body (failed) :
+
+```json
+{
+    "status" : 400,
+    "message" : "User tidak ditemukan" 
+}
+```
+### MPIN Confirmation
+
+Endpoint : POST/api/users/{id_user}/confirm-mpin
+
+Request Body :
+
+```json
+{
+    "mpin" : "123456"
 }
 ```
 
+Response Body (success) :
 
+```json
+{
+    "status" : 200,
+    "message" : "MPIN terkonfimasi" 
+}
+```
+Response Body (failed) :
+
+```json
+{
+    "status" : 400,
+    "message" : "User tidak ditemukan" 
+}
+```
+
+```json
+{
+    "status" : 400,
+    "message" : "MPIN tidak sama" 
+}
+```
 
 ### User Login
 
 
-Endpoint : POST /users/login
+Endpoint : POST/api/users/login
 
 Request Body :
 
 ```json
 {
     "email" : "fahrizalshofyanaziz@gmail.com"
-    "password" : "rahasia1"
+    "password" : "rahasia123"
 }
 ```
 
@@ -447,5 +570,37 @@ Response Body (failed email&password) :
 }
 ```
 
+## Profiling
 
+### Change Password
 
+Endpoint : PUT/api/users/{id_user}/password
+
+Request Body :
+
+```json
+{
+    "oldPassword" : "rahasia123",
+    "newPassword" : "12345678",
+    "confirmPassword" : "12345678"
+     "accessToken":       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiYTQzNjUzYjEtMjk2Ni00NDY1LWE0YjktZjRmYmM0OTE3NzVhIiwiaWF0IjoxNjg2MzIxMzQ0LCJleHAiOjE2ODYzMjE2NDR9.mzHMPKXzlOkHpRFAq3Sol5ALtc5TH0l_o4aN4YZxLMA"
+}
+```
+
+Response Body (success) :
+
+```json
+{
+    "status" : 200,
+    "message" : "Kata Sandi Berhasil Diubah" 
+}
+```
+
+Response Body (failed) :
+
+```json
+{
+    "status" : 400,
+    "message" : "Password tidak sesuai" 
+}
+```
