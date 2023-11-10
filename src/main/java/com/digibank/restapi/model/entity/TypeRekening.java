@@ -1,6 +1,5 @@
 package com.digibank.restapi.model.entity;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -27,5 +26,4 @@ public class TypeRekening{
 
     @Column(name = "limit_transfer", nullable = false)
     private String limitTransfer;
-
 }

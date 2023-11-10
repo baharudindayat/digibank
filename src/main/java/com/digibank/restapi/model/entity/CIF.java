@@ -3,11 +3,7 @@ package com.digibank.restapi.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Set;
-
 
 @Getter
 @Setter
@@ -45,6 +41,4 @@ public class CIF {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
     private User idUser;
-
-
 }

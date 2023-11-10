@@ -7,10 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import org.hibernate.annotations.CreationTimestamp;
-
-
 import java.sql.Timestamp;
 
 @Getter
@@ -59,6 +56,5 @@ public class Transaksi {
 
     @Column(nullable = false)
     private Double totalTransaksi;
-
 }
 

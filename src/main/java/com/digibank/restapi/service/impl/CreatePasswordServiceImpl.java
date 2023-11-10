@@ -9,7 +9,6 @@ import com.digibank.restapi.service.PasswordService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
-
 import java.util.Objects;
 
 @Service
@@ -21,7 +20,7 @@ public class CreatePasswordServiceImpl implements PasswordService {
     @Override
     public CreatePasswordDto changePassword(Long id_user, CreatePasswordDto request) {
         User user = userRepository.findById(id_user)
-                .orElseThrow(() -> new FailedException("Maaf! Kata Sandi gagal disimpan"));
+                .orElseThrow(() -> new FailedException("User tidak ditemukan"));
 
         String newPassword = request.getPassword();
         user.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
@@ -30,14 +29,12 @@ public class CreatePasswordServiceImpl implements PasswordService {
         return request;
     }
 
-
     @Override
     public CreatePasswordDto changePasswordWithValidation(Long id_user, ChangePasswordDto changePasswordDto) {
 
         User user = userRepository.findById(id_user)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id_user));
+                .orElseThrow(() -> new RuntimeException("User tidak ditemukan"));
 
-        // Memeriksa apakah password lama sesuai
         if (!BCrypt.checkpw(changePasswordDto.getOldPassword(), user.getPassword())) {
             throw  new FailedException("Password tidak sesuai");
         }
@@ -46,15 +43,10 @@ public class CreatePasswordServiceImpl implements PasswordService {
             throw  new FailedException("Password tidak sesuai");
         }
 
-        // Meng-hash password baru dan menyimpannya
         String hashedPassword = BCrypt.hashpw(changePasswordDto.getNewPassword(), BCrypt.gensalt());
         user.setPassword(hashedPassword);
         userRepository.save(user);
 
         return null;
     }
-
-//    public CreatePasswordDto changePasswordWithValidation(Integer id_user, CreatePasswordDto createPasswordDto) {
-//
-//    }
 }

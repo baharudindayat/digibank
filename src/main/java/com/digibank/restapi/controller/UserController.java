@@ -1,24 +1,22 @@
 package com.digibank.restapi.controller;
 
-import com.digibank.restapi.dto.changePassword.ChangePasswordDto;
+import com.digibank.restapi.dto.CreateMpinDto;
 import com.digibank.restapi.dto.createPassword.CreatePasswordDto;
-import com.digibank.restapi.dto.otp.*;
-import com.digibank.restapi.exception.OtpException.FailedException;
+import com.digibank.restapi.dto.login.LoginReqDto;
+import com.digibank.restapi.dto.login.LoginResDto;
+import com.digibank.restapi.dto.otp.OtpDto;
+import com.digibank.restapi.dto.otp.OtpRegenerateDto;
+import com.digibank.restapi.dto.otp.OtpResponseDto;
+import com.digibank.restapi.dto.otp.OtpVerificationDto;
 import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.service.*;
+import com.digibank.restapi.utils.ResponseHandler;
 import com.digibank.restapi.utils.ResponseOtp.ResponseHandlerOtp;
 import com.digibank.restapi.utils.ResponseOtp.ResponseHandlerVerivyOtp;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-
-import com.digibank.restapi.dto.CreateMpinDto;
-import com.digibank.restapi.dto.login.LoginResDto;
-import com.digibank.restapi.dto.login.LoginReqDto;
-import com.digibank.restapi.utils.ResponseHandler;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 @AllArgsConstructor
@@ -27,10 +25,8 @@ public class UserController {
 
     private final AuthenticationService authenticationService;
     private final CreateMpinService createMpinService;
-
     private OtpService userService;
     private PasswordService passwordService;
-
     private TypeRekeningService typeRekeningService;
 
     @GetMapping("/cards")
@@ -65,13 +61,11 @@ public class UserController {
             return ResponseHandlerVerivyOtp.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Disimpan");
     }
 
-
-
     @PutMapping("/{idUser}/mpin")
     public ResponseEntity<Object> createMpin(
             @RequestBody CreateMpinDto createMpinDto, @PathVariable(required = false) Long idUser) {
         createMpinService.createMpin(idUser, createMpinDto);
-        return ResponseHandler.createMpin("MPIN berhasil dibuat", HttpStatus.OK);
+        return ResponseHandler.createMpin("Selamat Akun Berhasil dibuat Silahkan Masuk Akun", HttpStatus.OK);
     }
 
     @PostMapping("/{idUser}/confirm-mpin")
@@ -84,7 +78,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody LoginReqDto request) {
         LoginResDto newResponse = authenticationService.login(request);
-        return ResponseHandler.loginResponse("Login Berhasil", HttpStatus.OK, newResponse);
+        return ResponseHandler.loginResponse("Login Berhasil!", HttpStatus.OK, newResponse);
     }
 }
 

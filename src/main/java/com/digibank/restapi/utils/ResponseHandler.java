@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.digibank.restapi.utils.ResponseOtp.ResponseHandlerOtp.getObjectResponseEntity;
+
 public class ResponseHandler {
 
     public static ResponseEntity<Object> generateResponseCreate(String message, HttpStatus status, Object res){
@@ -16,11 +18,7 @@ public class ResponseHandler {
     }
 
     public static ResponseEntity<Object> loginResponse(String message, HttpStatus status, Object res){
-        Map<String, Object> map = new HashMap<>();
-        map.put("status", status.value());
-        map.put("message", message);
-        map.put("data",res);
-        return new ResponseEntity<>(map, status);
+        return getObjectResponseEntity(status, message, res);
     }
 
     public static ResponseEntity<Object> getTypeRekening(Object res){
