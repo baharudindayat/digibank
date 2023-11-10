@@ -1,14 +1,13 @@
 package com.digibank.restapi.service;
 
-import com.digibank.restapi.model.entity.Transaksi;
-import org.springframework.stereotype.Service;
+import com.digibank.restapi.dto.response.TransactionResposneDto;
+import com.digibank.restapi.dto.response.transaction.list.TransactionListResponseDto;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.sql.Timestamp;
 
 public interface TransactionService {
 
-    Transaksi getTransactionById(int id);
+    TransactionResposneDto getTransactionById(int id);
 
-    List<Transaksi> getListTransction(boolean isDebit, boolean isKredit, LocalDate tanggalMulai,LocalDate tanggalAkhir);
+    TransactionListResponseDto getFilteredListTransction(boolean isDebit, boolean isKredit, Timestamp tanggalMulai, Timestamp tanggalAkhir, int page, int size);
 }

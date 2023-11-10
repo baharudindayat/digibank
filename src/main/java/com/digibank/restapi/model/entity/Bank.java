@@ -3,8 +3,6 @@ package com.digibank.restapi.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,11 +15,8 @@ public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "kode_bank")
-    private long KodeBank;
+    private long kodeBank;
 
     @Column(nullable = false, unique = true,name = "nama_bank")
-    private String NamaBank;
-
-    @OneToMany(mappedBy = "bank")
-    private List<BankUser> bankUsers;
+    private String namaBank;
 }

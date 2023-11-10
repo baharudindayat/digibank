@@ -2,6 +2,7 @@ package com.digibank.restapi.model.entity;
 
 import com.digibank.restapi.model.enums.JenisTransaksi;
 import com.digibank.restapi.model.enums.TipeTransaksi;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,15 +25,17 @@ public class Transaksi {
     @Column(name = "kode_transaksi")
     private long kodeTransaksi;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rekening_asal")
+    @JsonIgnore
     private Rekening rekeningAsal;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rekening_tujuan")
+    @JsonIgnore
     private Rekening rekeningTujuan;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "kode_bank")
     private Bank bank;
 

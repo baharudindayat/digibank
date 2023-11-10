@@ -1,16 +1,20 @@
 package com.digibank.restapi.repository;
 
 import com.digibank.restapi.model.entity.Transaksi;
+import com.digibank.restapi.model.enums.TipeTransaksi;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.sql.Timestamp;
 
 @Repository
-public interface TransactionsRepository extends JpaRepository<Transaksi, Long> {
-    @Query("SELECT t FROM Transaksi t WHERE (t.jenisTransaksi = 'DEBIT' AND :isDebit = true) OR (t.jenisTransaksi = 'KREDIT' AND :isKredit = true) " +
-            "AND t.waktuTransaksi >= :tanggalMulai AND t.waktuTransaksi <= :tanggalAkhir")
-    List<Transaksi> findFilteredTransactions(boolean isDebit, boolean isKredit, LocalDate tanggalMulai, LocalDate tanggalAkhir);
+public interface TransactionsRepository extends JpaRepository<Transaksi, Long>, JpaSpecificationExecutor<Transaksi> {
+    Page<Transaksi> findAllByTipeTransaksi(TipeTransaksi tipeTransaksi, Pageable pageable);
+
+    Page<Transaksi> findAllByTipeTransaksiAndWaktuTransaksiBetween(TipeTransaksi tipeTransaksi,Timestamp startDate,Timestamp endDate,Pageable pageable);
+
+    Page<Transaksi> findAllByWaktuTransaksiBetween(Timestamp startDate, Timestamp endDate, Pageable pageable);
 }

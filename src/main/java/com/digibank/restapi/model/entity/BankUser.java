@@ -19,7 +19,7 @@ public class BankUser {
 
     private String nama;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kode_bank")
     private Bank bank;
 }
