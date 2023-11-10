@@ -32,6 +32,6 @@ public class Rekening {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cif")
-    private CIF cif;
+    private CIF idCif;
 
 }
