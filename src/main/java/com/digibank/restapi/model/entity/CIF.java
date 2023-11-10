@@ -18,7 +18,8 @@ public class CIF {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_cif;
+    @Column(nullable = false, unique = true)
+    private long id_cif;
 
     @Column(name = "nik",nullable = false, unique = true)
     private String nik;

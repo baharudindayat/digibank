@@ -8,11 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,12 +22,12 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "user", schema = "public")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
-    private long idUsers;
+    private long idUser;
 
     @Column(nullable = false)
     private String email;
@@ -33,6 +35,7 @@ public class User {
     private String password;
 
     @Column(name = "status_user")
+    @Enumerated(EnumType.STRING)
     private AccountStatus statusUser;
 
     private String mpin;
@@ -50,17 +53,33 @@ public class User {
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
-    public void setOtp(String otp) {
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("USER"));
     }
 
-    public void setCretaedOtp(LocalDateTime now) {
+    @Override
+    public String getUsername() {
+        return email;
     }
 
-    public Object getOtp() {
-        return null;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public Temporal getCretaedOtp() {
-        return null;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

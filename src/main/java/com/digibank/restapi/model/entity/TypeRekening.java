@@ -1,5 +1,8 @@
 package com.digibank.restapi.model.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +19,6 @@ public class TypeRekening{
 
     @Id
     @Column(name = "id_tipe_rekening")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTipe;
 
     @Column(name = "nama_tipe", nullable = false)
