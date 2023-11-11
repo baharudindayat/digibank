@@ -56,7 +56,7 @@ Response Body (succes) :
         "idUser": 1,
         "email": "budi@gmail.com"
     },
-    "message": "Otp berhasil terkirim",
+    "message": "OTP berhasil terkirim",
     "status": 201
 }
 ```
@@ -73,7 +73,7 @@ Response Body (failed) :
 
 Endpoint : PUT /api/users/{id}/otp-verification
 
-Path variable = idUser
+Path variable : idUser
 
 Request Body :
 
@@ -120,7 +120,7 @@ Response Body (failed) :
 
 Endpoint : PUT /api/users/{id}/otp-regenerate
 
-Path variable = idUser
+Path variable : idUser
 
 Response Body (succes) :
 
@@ -393,7 +393,7 @@ Response Body (success) :
     "status" : 200,
     "message" : "Sukses"
     "data": {
-        "namaLengkap": "Suparman,
+        "namaLengkap": "Suparman",
         "nik": "1234567891012345"
     },
     
