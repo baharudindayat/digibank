@@ -339,7 +339,7 @@ Response Body (succes) :
 ```json
 {
     "data": {
-        "id_user": 1,
+        "idUser": 1,
         "email": "budi@gmail.com"
     },
     "message": "Otp berhasil terkirim",
