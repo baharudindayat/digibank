@@ -593,7 +593,7 @@ Response Body (failed email&password) :
 
 ### Change Password
 
-Endpoint : PUT /api/users/{idUser}/password
+Endpoint : PUT /api/profiling/{id}/change-password
 
 Path variable : idUser
 
