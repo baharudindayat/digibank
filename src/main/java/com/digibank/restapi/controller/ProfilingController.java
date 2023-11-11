@@ -20,7 +20,7 @@ public class ProfilingController {
             @PathVariable(required = false) Long idUser
     ) {
         passwordService.changePasswordWithValidation(idUser, changePasswordDto);
-        return ResponseHandler.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Diupdate");
+        return ResponseHandler.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Diubah");
     }
 
 }

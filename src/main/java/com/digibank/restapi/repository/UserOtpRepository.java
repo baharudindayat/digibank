@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserOtpRepository extends JpaRepository<UserOTP, Long> {
-    List<UserOTP> findByCreatedAtBefore(LocalDateTime dateTime);
+
 
     Optional<UserOTP> findByIdUser(User idUser);
     void deleteByCreatedAtBefore(LocalDateTime twoMinutesAgo);

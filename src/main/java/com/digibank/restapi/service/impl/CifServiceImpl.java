@@ -1,13 +1,15 @@
 package com.digibank.restapi.service.impl;
 
 import com.digibank.restapi.dto.CifDto;
-import com.digibank.restapi.exception.FailedException;
-import com.digibank.restapi.mapper.AutoCifMapper;
+import com.digibank.restapi.exception.ResponseBadRequestException;
+import com.digibank.restapi.exception.ResponseUnauthorizationException;
 import com.digibank.restapi.model.entity.CIF;
 import com.digibank.restapi.model.entity.Rekening;
+import com.digibank.restapi.model.entity.TypeRekening;
 import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.repository.CifRepository;
 import com.digibank.restapi.repository.RekeningRepository;
+import com.digibank.restapi.repository.TypeRekeningRepository;
 import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.service.CifService;
 import com.digibank.restapi.utils.NoRekUtil;
@@ -25,13 +27,14 @@ public class CifServiceImpl implements CifService {
     private final CifRepository repository;
     private final NoRekUtil noRekUtil;
     private final RekeningRepository rekeningRepository;
+    private final TypeRekeningRepository typeRekeningRepository;
 
     @Override
     public String createCif(CifDto cifDto) {
-
-        Optional<User> idUser = Optional.ofNullable(userRepository.findById(cifDto.getIdUser().getIdUser())
-                .orElseThrow(() -> new FailedException("User tidak ditemukan")));
-//        CIF cif = AutoCifMapper.MAPPER.mapToCif(cifDto);
+        Optional<User> idUser = Optional.ofNullable(userRepository.findById(cifDto.getIdUser())
+                .orElseThrow(() -> new ResponseUnauthorizationException("User tidak ditemukan")));
+        Optional<TypeRekening> typeRekening = Optional.ofNullable(typeRekeningRepository.findById(cifDto.getIdTipe())
+                .orElseThrow(() -> new ResponseBadRequestException("Tipe rekening tidak ditemukan")));
         CIF cif = new CIF();
         cif.setNik(cifDto.getNik());
         cif.setAlamat(cifDto.getAlamat());
@@ -40,12 +43,13 @@ public class CifServiceImpl implements CifService {
         cif.setPenghasilan(cifDto.getPenghasilan());
         cif.setIdUsers(idUser.get());
         repository.save(cif);
-        Optional<CIF> idCif = repository.findByNik(cifDto.getNik());
+        Optional<CIF> idCif = Optional.ofNullable(repository.findByNik(cifDto.getNik())
+                .orElseThrow(() -> new ResponseUnauthorizationException("NIK tidak ditemukan")));
         String noRekening = noRekUtil.generateRekening();
         Rekening rekening = new Rekening();
         rekening.setNoRekening(Long.parseLong(noRekening));
         rekening.setIdCif(idCif.get());
-        rekening.setTipeRekening(cifDto.getIdTipe());
+        rekening.setTipeRekening(typeRekening.get());
         rekening.setSaldo(0.0);
         rekeningRepository.save(rekening);
         return noRekening;

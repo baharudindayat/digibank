@@ -12,7 +12,6 @@ public interface CreateMpinMapper {
 
     CreateMpinDto mapToCreateMpinDto(User user);
 
-    User mapToCreateMpin(CreateMpinDto createMpinDto);
 
 
 }

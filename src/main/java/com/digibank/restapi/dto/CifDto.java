@@ -24,8 +24,8 @@ public class CifDto {
 
     private  String penghasilan;
 
-    private User idUser;
+    private Long idUser;
 
-    private TypeRekening idTipe;
+    private Long idTipe;
 
 }

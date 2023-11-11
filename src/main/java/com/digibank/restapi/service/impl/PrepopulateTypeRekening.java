@@ -18,19 +18,19 @@ public class PrepopulateTypeRekening implements CommandLineRunner {
     public void run(String... args) {
         List<TypeRekening> typeRekenings = new ArrayList<>();
         TypeRekening typeRekening = new TypeRekening();
-        typeRekening.setIdTipe(1L);
+        typeRekening.setIdTipe(1);
         typeRekening.setNamaTipe("Silver");
         typeRekening.setLimitTransfer("5 Juta");
         typeRekenings.add(typeRekening);
         typeRekeningRepository.saveAll(typeRekenings);
 
-        typeRekening.setIdTipe(2L);
+        typeRekening.setIdTipe(2);
         typeRekening.setNamaTipe("Gold");
         typeRekening.setLimitTransfer("10 Juta");
         typeRekenings.add(typeRekening);
         typeRekeningRepository.saveAll(typeRekenings);
 
-        typeRekening.setIdTipe(3L);
+        typeRekening.setIdTipe(3);
         typeRekening.setNamaTipe("Platinum");
         typeRekening.setLimitTransfer("15 Juta");
         typeRekenings.add(typeRekening);

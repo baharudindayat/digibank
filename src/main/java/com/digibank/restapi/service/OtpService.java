@@ -6,6 +6,6 @@ import com.digibank.restapi.model.entity.User;
 public interface OtpService {
     OtpResponseDto register(OtpDto otpDto);
     OtpVerificationDto verifyOtp(User idUser, OtpVerificationDto otpVerificationDto);
-    String regenerateOtp(OtpRegenerateDto otpRegenerateDto, User idUser);
+    String regenerateOtp(User idUser);
 
 }
