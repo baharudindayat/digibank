@@ -1,6 +1,6 @@
 # Auth API Documentation
 
-Base URL: http://digibank/api/v1
+Base URL: https://digibank.com
 
 
 ## Belum punya akun & Rekening
@@ -9,13 +9,12 @@ Base URL: http://digibank/api/v1
 
 Setelah user pilih kartu, data tipe rekening ditampung di fe, nantinya akan dipost ketika user klik button lanjut pada isi data diri/cif
 
-Endpoint : GET/api/users/cards
+Endpoint : GET /api/users/cards
 
 Response : 
 
 ```json
 {
-    "status" : 200,
     "data" :[
         {
             "idTipe" : 1,
@@ -39,7 +38,7 @@ Response :
 
 ### Email Confirmation / OTP Generate
 
-Endpoint : POST/api/users/otp-generate
+Endpoint : POST /api/users/otp-generate
 
 Request Body :
 
@@ -54,7 +53,7 @@ Response Body (succes) :
 ```json
 {
     "data": {
-        "id_user": 1,
+        "idUser": 1,
         "email": "budi@gmail.com"
     },
     "message": "Otp berhasil terkirim",
@@ -72,7 +71,9 @@ Response Body (failed) :
 
 ### OTP Verification / OTP Confirmation
 
-Endpoint : PUT/api/users/{id_user}/otp-verification
+Endpoint : PUT /api/users/{id}/otp-verification
+
+Path variable = idUser
 
 Request Body :
 
@@ -86,7 +87,7 @@ Response Body (succes) :
 
 ```json
 {
-    "message": "OTP Terverifikasi",
+    "message": "Email berhasil diverifikasi",
     "status": 200
 }
 ```
@@ -109,7 +110,7 @@ Response Body (failed) :
 
 ```json
 {
-    "message": "Akun sudah terverifikasi",
+    "message": "Email sudah terverifikasi",
     "status": 400
 }
 ```
@@ -117,15 +118,9 @@ Response Body (failed) :
 ### Email Confirmation / OTP Regenerate
 
 
-Endpoint : PUT/api/users/{id_user}/otp-regenerate
+Endpoint : PUT /api/users/{id}/otp-regenerate
 
-Request Body :
-
-```json
-{
-    "email" : "budi@gmail.com"
-}
-```
+Path variable = idUser
 
 Response Body (succes) :
 
@@ -168,20 +163,21 @@ Response Body (failed) :
 }
 ```
 
-### CIF
+### CIF & Accounts
 
-Endpoint : POST /users/cif
+Endpoint : POST /api/users/cif
 
 Request Body :
 
 ```json
 {
-    "nik" : "123456",
+    "nik" : "1234567891012345",
     "alamat" : "Maguwo 12",
-    "nama_lengkap" : "Suparman"
+    "namaLengkap" : "Suparman"
     "pekerjaan" : "Pegawai Negeri Sipil (PNS)",
     "penghasilan" : "0 - 5.000.000",
-   
+    "idUser" : 1,
+    "idTipe" : 3
 }
 ```
 
@@ -190,39 +186,16 @@ Response Body (success) :
 ```json
 {
     "status" : 200,
-    "message" : "success",
-    "id_cif" : 1,
-    "no_rek" : "12345678"
-}
-```
-
-### Create Rekening
-
-
-Endpoint : POST /users/account
-
-Request Body :
-
-```json
-{
-    "no_rek" : "12345678",
-    "id_cif" : 1,
-    "id_tipe_rekening" : 3 // post id tipe rekening yang sudah ditampung
-}
-```
-
-Response Body (success) :
-
-```json
-{
-    "status" : 200,
-    "message" : "success",
+    "message" : "CIF berhasil dibuat",
+    "no_rek" : "7712345683214745"
 }
 ```
 
 ### Create Password
 
-Endpoint : PUT/api/users/{id_user}/password
+Endpoint : PUT /api/users/{id}/password
+
+Path variable : idUser
 
 Request Body :
 
@@ -252,7 +225,40 @@ Response Body (failed) :
 
 ### Create MPIN
 
-Endpoint : PUT/api/users/{id_user}/mpin
+Endpoint : PUT /api/users/{id}/mpin
+
+Path variable : idUser
+
+Request Body :
+
+```json
+{
+    "mpin" : "123456"
+}
+```
+
+Response Body (success) :
+
+```json
+{
+    "status" : 200,
+    "message" : "MPIN berhasil dibuat" 
+}
+```
+Response Body (failed) :
+
+```json
+{
+    "status" : 400,
+    "message" : "User tidak ditemukan" 
+}
+```
+
+### MPIN Confirmation
+
+Endpoint : POST /api/users/{id}/confirm-mpin
+
+Path variable : idUser
 
 Request Body :
 
@@ -279,35 +285,6 @@ Response Body (failed) :
 }
 ```
 
-### MPIN Confirmation
-
-Endpoint : POST/api/users/{id_user}/confirm-mpin
-
-Request Body :
-
-```json
-{
-    "mpin" : "123456"
-}
-```
-
-Response Body (success) :
-
-```json
-{
-    "status" : 200,
-    "message" : "MPIN terkonfimasi" 
-}
-```
-Response Body (failed) :
-
-```json
-{
-    "status" : 400,
-    "message" : "User tidak ditemukan" 
-}
-```
-
 ```json
 {
     "status" : 400,
@@ -320,7 +297,7 @@ Response Body (failed) :
 
 ### Email Confirmation / OTP Generate
 
-Endpoint : POST/api/users/otp-generate
+Endpoint : POST /api/users/otp-generate
 
 Request Body :
 
@@ -353,7 +330,9 @@ Response Body (failed) :
 
 ### OTP Verification / OTP Confirmation
 
-Endpoint : PUT/api/users/{id_user}/otp-verification
+Endpoint : PUT /api/users/{id}/otp-verification
+
+Path variable : idUser
 
 Request Body :
 
@@ -397,7 +376,7 @@ Response Body (failed) :
 
 ### Konfirmasi Rekening
 
-Endpoint : POST /users/confirm-accounts
+Endpoint : POST api/users/confirm-accounts
 
 Request Body :
 
@@ -412,8 +391,12 @@ Response Body (success) :
 ```json
 {
     "status" : 200,
-    "message" : "Success"
-    "id_cif" : 1
+    "message" : "Sukses"
+    "data": {
+        "namaLengkap": "Suparman,
+        "nik": "1234567891012345"
+    },
+    
 }
 ```
 
@@ -421,30 +404,16 @@ Response Body (failed) :
 
 ```json
 {
-    "status" : 401,
-    "message" : "Nomor Rekening tidak terdaftar"
-    "id_cif" : null
+    "status" : 400,
+    "message" : "Nomor rekening belum terdaftar"
 }
 ```
-
-### Konfirmasi CIF
-
-Endpoint : GET /users/{id_cif}/confirm-cif
-
-
-Response Body (success) :
-
-```json
-{
-    "nik" : "1234567887654321",
-    "nama_lengkap" : "Suparman"
-}
-```
-
 
 ### Create Password
 
-Endpoint : PUT/api/users/{id_user}/password
+Endpoint : PUT /api/users/{id}/password
+
+Path variable : idUser
 
 Request Body :
 
@@ -474,7 +443,37 @@ Response Body (failed) :
 
 ### Create MPIN
 
-Endpoint : PUT/api/users/{id_user}/mpin
+Endpoint : PUT /api/users/{id}/mpin
+
+Path variabel : idUser
+
+Request Body :
+
+```json
+{
+    "mpin" : "123456"
+}
+```
+
+Response Body (success) :
+
+```json
+{
+    "status" : 200,
+    "message" : "MPIN berhasil dibuat" 
+}
+```
+Response Body (failed) :
+
+```json
+{
+    "status" : 400,
+    "message" : "User tidak ditemukan" 
+}
+```
+### MPIN Confirmation
+
+Endpoint : POST /api/users/{id_user}/confirm-mpin
 
 Request Body :
 
@@ -500,34 +499,6 @@ Response Body (failed) :
     "message" : "User tidak ditemukan" 
 }
 ```
-### MPIN Confirmation
-
-Endpoint : POST/api/users/{id_user}/confirm-mpin
-
-Request Body :
-
-```json
-{
-    "mpin" : "123456"
-}
-```
-
-Response Body (success) :
-
-```json
-{
-    "status" : 200,
-    "message" : "MPIN terkonfimasi" 
-}
-```
-Response Body (failed) :
-
-```json
-{
-    "status" : 400,
-    "message" : "User tidak ditemukan" 
-}
-```
 
 ```json
 {
@@ -539,7 +510,7 @@ Response Body (failed) :
 ### User Login
 
 
-Endpoint : POST/api/users/login
+Endpoint : POST /api/users/login
 
 Request Body :
 
@@ -554,10 +525,12 @@ Response Body (success) :
 
 ```json
 {
-    "status" : 200,
-    "message" : "Login Berhasil!"
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiYTQzNjUzYjEtMjk2Ni00NDY1LWE0YjktZjRmYmM0OTE3NzVhIiwiaWF0IjoxNjg2MzIxMzQ0LCJleHAiOjE2ODYzMjE2NDR9.mzHMPKXzlOkHpRFAq3Sol5ALtc5TH0l_o4aN4YZxLMA"
-    
+    "data": {
+        "idUser": 1,
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYWhyaXphbHNob2Z5YW5heml6QGdtYWlsLmNvbSIsImlhdCI6MTY5OTY3MDE0NSwiZXhwIjoxNjk5NjcxNTg1fQ.-X6w9Wipej5jf8JvIm7xt5z7TyQowSNtqWhFBjON0Zw"
+    },
+    "message": "Login Berhasil!",
+    "status": 200
 }
 ```
 
@@ -574,7 +547,11 @@ Response Body (failed email&password) :
 
 ### Change Password
 
-Endpoint : PUT/api/users/{id_user}/password
+Endpoint : PUT /api/users/{idUser}/password
+
+Path variable : idUser
+
+Authorization Type Bearer Token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiYTQzNjUzYjEtMjk2Ni00NDY1LWE0YjktZjRmYmM0OTE3NzVhIiwiaWF0IjoxNjg2MzIxMzQ0LCJleHAiOjE2ODYzMjE2NDR9.mzHMPKXzlOkHpRFAq3Sol5ALtc5TH0l_o4aN4YZxLMA" 
 
 Request Body :
 
@@ -582,8 +559,7 @@ Request Body :
 {
     "oldPassword" : "rahasia123",
     "newPassword" : "12345678",
-    "confirmPassword" : "12345678"
-     "accessToken":       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiYTQzNjUzYjEtMjk2Ni00NDY1LWE0YjktZjRmYmM0OTE3NzVhIiwiaWF0IjoxNjg2MzIxMzQ0LCJleHAiOjE2ODYzMjE2NDR9.mzHMPKXzlOkHpRFAq3Sol5ALtc5TH0l_o4aN4YZxLMA"
+    "confirmPassword" : "12345678"    
 }
 ```
 
