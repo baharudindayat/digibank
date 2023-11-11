@@ -18,17 +18,17 @@ Response :
     "data" :[
         {
             "idTipe" : 1,
-            "nama" : "Silver",
+            "namaTipe" : "Silver",
             "limitTransfer" : "5 Juta"
         },
         {
             "idTipe" : 2,
-            "nama" : "Gold",
+            "namaTipe" : "Gold",
             "limitTransfer" : "10 Juta"
         },
         {    
             "idTipe" : 3,
-            "nama" : "Platinum",
+            "namaTipe" : "Platinum",
             "limitTransfer" : "15 Juta"
         },
     ]
@@ -39,6 +39,9 @@ Response :
 ### Email Confirmation / OTP Generate
 
 Endpoint : POST /api/users/otp-generate
+
+Tipe data Body:
+- email -> String
 
 Request Body :
 
@@ -74,6 +77,9 @@ Response Body (failed) :
 Endpoint : PUT /api/users/{id}/otp-verification
 
 Path variable : idUser
+
+Tipe data Body:
+- otp -> String
 
 Request Body :
 
@@ -167,6 +173,15 @@ Response Body (failed) :
 
 Endpoint : POST /api/users/cif
 
+Tipe data Body:
+- nik -> String
+- alamat -> String
+- namaLengkap -> String
+- pekerjaan -> String
+- penghasilan -> String
+- idUser -> Long
+- idTipe -> Long
+
 Request Body :
 
 ```json
@@ -187,7 +202,7 @@ Response Body (success) :
 {
     "status" : 200,
     "message" : "CIF berhasil dibuat",
-    "no_rek" : "7712345683214745"
+    "norek" : "7712345683214745"
 }
 ```
 
@@ -196,6 +211,9 @@ Response Body (success) :
 Endpoint : PUT /api/users/{id}/password
 
 Path variable : idUser
+
+Tipe data Body:
+- password -> String
 
 Request Body :
 
@@ -229,6 +247,9 @@ Endpoint : PUT /api/users/{id}/mpin
 
 Path variable : idUser
 
+Tipe data Body:
+- mpin -> String
+
 Request Body :
 
 ```json
@@ -259,6 +280,9 @@ Response Body (failed) :
 Endpoint : POST /api/users/{id}/confirm-mpin
 
 Path variable : idUser
+
+Tipe data Body:
+- mpin -> String
 
 Request Body :
 
@@ -299,6 +323,9 @@ Response Body (failed) :
 
 Endpoint : POST /api/users/otp-generate
 
+Tipe data Body:
+- email -> String
+
 Request Body :
 
 ```json
@@ -333,6 +360,9 @@ Response Body (failed) :
 Endpoint : PUT /api/users/{id}/otp-verification
 
 Path variable : idUser
+
+Tipe data Body:
+- otp -> String
 
 Request Body :
 
@@ -378,11 +408,14 @@ Response Body (failed) :
 
 Endpoint : POST api/users/confirm-accounts
 
+Tipe data Body:
+- noRekening -> Long
+
 Request Body :
 
 ```json
 {
-    "nomor_rekening" : "12345678"
+    "noRekening" : 7712345683214745
 }
 ```
 
@@ -414,6 +447,9 @@ Response Body (failed) :
 Endpoint : PUT /api/users/{id}/password
 
 Path variable : idUser
+
+Tipe data Body:
+- password -> String
 
 Request Body :
 
@@ -447,6 +483,9 @@ Endpoint : PUT /api/users/{id}/mpin
 
 Path variabel : idUser
 
+Tipe data Body:
+- mpin -> String
+
 Request Body :
 
 ```json
@@ -474,6 +513,9 @@ Response Body (failed) :
 ### MPIN Confirmation
 
 Endpoint : POST /api/users/{id_user}/confirm-mpin
+
+Tipe data Body:
+- mpin -> String
 
 Request Body :
 
@@ -512,6 +554,10 @@ Response Body (failed) :
 
 Endpoint : POST /api/users/login
 
+Tipe data Body:
+- email -> String
+- password -> String
+  
 Request Body :
 
 ```json
@@ -550,6 +596,11 @@ Response Body (failed email&password) :
 Endpoint : PUT /api/users/{idUser}/password
 
 Path variable : idUser
+
+Tipe data Body:
+- oldPassword -> String
+- newPassword -> String
+- confirmPassword -> String
 
 Authorization Type Bearer Token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiYTQzNjUzYjEtMjk2Ni00NDY1LWE0YjktZjRmYmM0OTE3NzVhIiwiaWF0IjoxNjg2MzIxMzQ0LCJleHAiOjE2ODYzMjE2NDR9.mzHMPKXzlOkHpRFAq3Sol5ALtc5TH0l_o4aN4YZxLMA" 
 
