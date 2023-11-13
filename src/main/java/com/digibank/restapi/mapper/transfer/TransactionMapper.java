@@ -5,9 +5,11 @@ import com.digibank.restapi.dto.response.transaction.detail.TransactionDetailDto
 import com.digibank.restapi.dto.response.transaction.list.TransactionDto;
 import com.digibank.restapi.model.entity.Rekening;
 import com.digibank.restapi.model.entity.Transaksi;
+import com.digibank.restapi.model.enums.JenisTransaksi;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Mapper(
@@ -21,28 +23,36 @@ public interface TransactionMapper {
 
     @Mapping(target = "kodeTransaksi", source = "kodeTransaksi")
     @Mapping(target = "tipeTransaksi", source = "tipeTransaksi")
-    @Mapping(target = "biayaAdmin", expression = "java(getBiayaAdmin())")
+    @Mapping(target = "biayaAdmin", expression = "java(getBiayaAdmin(transaksi))")
     @Mapping(target = "totalTransaksi", expression = "java(calculateTotalTransaction(transaksi))")
     @Mapping(target = "catatan", source = "catatan")
     TransactionDetailDto transactionToTransactionDetailDto(Transaksi transaksi);
 
-    default Double calculateTotalTransaction(Transaksi transaksi) {
+    default String calculateTotalTransaction(Transaksi transaksi) {
         if (transaksi == null) {
             return null;
         }
         double nominal = transaksi.getNominal() != null ? transaksi.getNominal() : 0.0;
-        double biayaAdmin = 6500.0; // Biaya admin yang tetap
-        return nominal + biayaAdmin;
+        double biayaAdmin = getBiayaAdmin(transaksi);
+        double totalTransaction =  nominal + biayaAdmin;
+        return new BigDecimal(totalTransaction).toPlainString();
     }
 
-    default Integer getBiayaAdmin() {
+    default Integer getBiayaAdmin(Transaksi transaksi) {
+        if(transaksi.getJenisTransaksi() == JenisTransaksi.PINDAHBUKU) {
+            return 0;
+        }
         return 6500;
+    }
+
+    default String getTotalTransaction(double totalTransaction){
+        return new BigDecimal(totalTransaction).toPlainString();
     }
 
     @Mapping(target = "kodeTransaksi", source = "transaction.kodeTransaksi")
     @Mapping(target = "tipeTransaksi", source = "transaction.tipeTransaksi")
     @Mapping(target = "nama", source = "transaction.rekeningTujuan.idCif.namaLengkap")
-    @Mapping(target = "jumlahTransaksi", source = "transaction.totalTransaksi")
+    @Mapping(target = "jumlahTransaksi", expression = "java(getTotalTransaction(transaction.getTotalTransaksi()))")
     @Mapping(target = "tanggal", source = "transaction.waktuTransaksi")
     TransactionDto transactionToTransactionDto(Transaksi transaction);
 

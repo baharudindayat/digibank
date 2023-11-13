@@ -10,6 +10,6 @@ public class TransactionDto {
     private int kodeTransaksi;
     private TipeTransaksi tipeTransaksi;
     private String nama;
-    private Double jumlahTransaksi;
+    private String jumlahTransaksi;
     private Timestamp tanggal;
 }

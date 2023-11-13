@@ -61,7 +61,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionListResponseDto getFilteredListTransction(boolean isDebit, boolean isKredit, Timestamp tanggalMulai, Timestamp tanggalAkhir, int pageNumber, int size) {
-        Pageable pageable = PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.ASC, "waktuTransaksi"));
+        Pageable pageable = PageRequest.of(((pageNumber > 0) ? pageNumber - 1 : pageNumber), size, Sort.by(Sort.Direction.ASC, "waktuTransaksi"));
         Page<Transaksi> filteredTransactions = null;
 
         TipeTransaksi tipeTransaksi;
