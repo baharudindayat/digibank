@@ -51,7 +51,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
         cifDevano.setAlamat("example address");
         cifDevano.setPekerjaan("example job");
         cifDevano.setPenghasilan("2000000");
-        cifDevano.setIdUser(userDevano);
+        cifDevano.setIdUsers(userDevano);
         entityManager.persist(cifDevano);
 
         CIF cifKepin = new CIF();
@@ -60,7 +60,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
         cifKepin.setAlamat("example address");
         cifKepin.setPekerjaan("example job");
         cifKepin.setPenghasilan("2000000");
-        cifKepin.setIdUser(userKepin);
+        cifKepin.setIdUsers(userKepin);
         entityManager.persist(cifKepin);
 
         //tipe rekening
