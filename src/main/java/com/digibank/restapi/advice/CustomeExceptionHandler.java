@@ -1,9 +1,7 @@
 package com.digibank.restapi.advice;
 
 
-import com.digibank.restapi.exception.ResponseBadRequestException;
-import com.digibank.restapi.exception.ResponseRequestTimeoutException;
-import com.digibank.restapi.exception.ResponseUnauthorizationException;
+import com.digibank.restapi.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -39,6 +37,7 @@ public class CustomeExceptionHandler {
                 "status", HttpStatus.REQUEST_TIMEOUT.value()
         );
     }
+
 
 
 
