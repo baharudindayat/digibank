@@ -64,9 +64,12 @@ public class UserController {
             return ResponseHandler.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Disimpan");
     }
 
-    @PostMapping("/cif")
-    public ResponseEntity<Object> createCif(@RequestBody CifDto cifDto) {
-        String newCif = cifService.createCif(cifDto);
+    @PostMapping("{idUser}/tipe-rekening/{idTipe}/cif")
+    public ResponseEntity<Object> createCif(
+            @RequestBody CifDto cifDto,
+            @PathVariable long idUser,
+            @PathVariable long idTipe) {
+        String newCif = cifService.createCif(cifDto, idUser, idTipe);
         return ResponseHandler.generateResponseCif("CIF Berhasil Dibuat", HttpStatus.OK, newCif);
     }
 

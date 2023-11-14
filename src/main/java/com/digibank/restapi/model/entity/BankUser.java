@@ -13,9 +13,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "user_bank")
 public class BankUser {
     @Id
-    @GenericGenerator(name = "rekening-generator", type = com.digibank.restapi.utils.transfer.NoRekeningGenerator.class)
-    @GeneratedValue(generator = "rekening-generator",strategy = GenerationType.IDENTITY)
-    private String noRekening;
+//    @GenericGenerator(name = "rekening-generator", type = com.digibank.restapi.utils.transfer.NoRekeningGenerator.class)
+//    @GeneratedValue(generator = "rekening-generator",strategy = GenerationType.IDENTITY)
+    private long noRekening;
 
     private String nama;
 
