@@ -16,7 +16,7 @@ public class TransactionDetailDto {
     private Integer biayaAdmin;
 
     @JsonProperty("total_transaksi")
-    private Double totalTransaksi;
+    private String totalTransaksi;
 
     @JsonProperty("catatan")
     private String catatan;
