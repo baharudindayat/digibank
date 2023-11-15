@@ -192,7 +192,7 @@ Request Body :
     "alamat" : "Maguwo 12",
     "namaLengkap" : "Suparman"
     "pekerjaan" : "Pegawai Negeri Sipil (PNS)",
-    "penghasilan" : "0 - 5.000.000",
+    "penghasilan" : "0 - 5.000.000"
 }
 ```
 
