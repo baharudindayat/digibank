@@ -171,7 +171,9 @@ Response Body (failed) :
 
 ### CIF & Accounts
 
-Endpoint : POST /api/users/cif
+Endpoint : POST /api/users/{id}/tipe-rekening/{idTipe}/cif
+
+Path variable : idUser, idTipe
 
 Tipe data Body:
 - nik -> String
@@ -191,8 +193,6 @@ Request Body :
     "namaLengkap" : "Suparman"
     "pekerjaan" : "Pegawai Negeri Sipil (PNS)",
     "penghasilan" : "0 - 5.000.000",
-    "idUser" : 1,
-    "idTipe" : 3
 }
 ```
 
