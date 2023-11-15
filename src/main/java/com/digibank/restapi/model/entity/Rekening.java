@@ -17,7 +17,6 @@ import java.sql.Timestamp;
 public class Rekening {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "no_rekening",nullable = false, unique = true)
     private long noRekening;
 
