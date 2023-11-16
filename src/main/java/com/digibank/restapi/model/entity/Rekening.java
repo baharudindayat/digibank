@@ -21,7 +21,7 @@ public class Rekening {
     private long noRekening;
 
     @Column(nullable = false)
-    private Double saldo;
+    private Double saldo = 0.0;
 
     @Column(name = "created_at",nullable = false)
     @CreationTimestamp
