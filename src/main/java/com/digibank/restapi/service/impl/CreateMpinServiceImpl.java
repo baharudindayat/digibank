@@ -23,6 +23,7 @@ public class CreateMpinServiceImpl implements CreateMpinService {
                 .orElseThrow(() -> new ResponseUnauthorizationException( "User tidak ditemukan"));
 
         user.setMpin(createMpinDto.getMpin());
+        user.setCountBlockedMpin(0);
         User savedMpin = userRepository.save(user);
 
         return CreateMpinMapper.MAPPER.mapToCreateMpinDto(savedMpin);
