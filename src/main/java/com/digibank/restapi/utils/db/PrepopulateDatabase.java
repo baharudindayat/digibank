@@ -27,7 +27,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
         //user
         User userDevano = new User();
         userDevano.setEmail("devanozaidan@gmail.com");
-        userDevano.setPassword("12345");
+        userDevano.setPassword("$2y$10$3YzNIboVlFXGZkjzdsswLuEM.XOBRWAMCtFNGBKgZ7UisIykPTtqy");
         userDevano.setStatusUser(AccountStatus.ACTIVE);
         userDevano.setMpin("898725");
         userDevano.setActive(true);
@@ -36,7 +36,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
 
         User userKepin = new User();
         userKepin.setEmail("kevin@gmail.com");
-        userKepin.setPassword("12345");
+        userKepin.setPassword("$2y$10$3YzNIboVlFXGZkjzdsswLuEM.XOBRWAMCtFNGBKgZ7UisIykPTtqy");
         userKepin.setStatusUser(AccountStatus.ACTIVE);
         userKepin.setMpin("898725");
         userKepin.setActive(true);
