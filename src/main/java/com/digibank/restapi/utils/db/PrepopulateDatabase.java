@@ -66,8 +66,18 @@ public class PrepopulateDatabase implements CommandLineRunner {
         //tipe rekening
         TypeRekening tipeRekeningGold = new TypeRekening();
         tipeRekeningGold.setNamaTipe("GOLD");
-        tipeRekeningGold.setLimitTransfer("200000000");
+        tipeRekeningGold.setLimitTransfer("500000000");
         entityManager.persist(tipeRekeningGold);
+
+        TypeRekening tipeRekeningSilver = new TypeRekening();
+        tipeRekeningSilver.setNamaTipe("SILVER");
+        tipeRekeningSilver.setLimitTransfer("1000000000");
+        entityManager.persist(tipeRekeningSilver);
+
+        TypeRekening tipeRekeningPlatinum = new TypeRekening();
+        tipeRekeningPlatinum.setNamaTipe("PLATINUM");
+        tipeRekeningPlatinum.setLimitTransfer("1500000000");
+        entityManager.persist(tipeRekeningPlatinum);
 
         //rekening
         Rekening devano = new Rekening();
