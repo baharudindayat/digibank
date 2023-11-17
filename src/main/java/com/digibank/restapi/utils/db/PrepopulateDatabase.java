@@ -71,12 +71,14 @@ public class PrepopulateDatabase implements CommandLineRunner {
 
         //rekening
         Rekening devano = new Rekening();
+        devano.setNoRekening(7727272726678L);
         devano.setSaldo(3000000.0);
         devano.setTipeRekening(tipeRekeningGold);
         devano.setIdCif(cifDevano);
         entityManager.persist(devano);
 
         Rekening kepin = new Rekening();
+        kepin.setNoRekening(7727272726677L);
         kepin.setSaldo(2000000.0);
         kepin.setTipeRekening(tipeRekeningGold);
         kepin.setIdCif(cifKepin);
