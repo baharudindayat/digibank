@@ -24,26 +24,18 @@ public class GetAccountsServiceImpl implements GetAccountsService {
 
     @Override
     public GetAccountsDto getAccounts(User idUser) {
-
         CIF cif = cifRepository.findByidUsers(idUser)
                 .orElseThrow(() -> new ResponseUnauthorizationException("User tidak ditemukan"));
         User user = userRepository.findById(idUser.getIdUser())
                 .orElseThrow(() -> new ResponseUnauthorizationException("User tidak ditemukan"));
-//        Rekening rekening = rekeningRepository.findByidCif(cif)
-//                .orElseThrow(() -> new ResponseUnauthorizationException("Rekening tidak ditemukan"));
         GetAccountsDto getAccountsDto = new GetAccountsDto();
         getAccountsDto.setNik(cif.getNik());
         getAccountsDto.setEmail(user.getEmail());
         getAccountsDto.setRekening(getAllRekening(cif));
-
         return getAccountsDto;
     }
 
     public List<Rekening> getAllRekening(CIF cif) {
-//        RekeningResponse rekeningResponse = new RekeningResponse();
-        List<Rekening> rekening = rekeningRepository.findByidCif(cif);
-
-//        @NotNull List<Rekening> optionalRekening = (List<Rekening>) rekening.get();
-        return rekening;
+        return rekeningRepository.findByidCif(cif);
     }
 }
