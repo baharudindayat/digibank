@@ -24,5 +24,4 @@ public class CifDto {
 
     private  String penghasilan;
 
-
 }
