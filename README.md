@@ -17,19 +17,19 @@ Response :
 {
     "data" :[
         {
-            "idTipe" : 0,
-            "namaTipe" : "Silver",
-            "limitTransfer" : "5 Juta"
+            "idTipe" : 1,
+            "namaTipe" : "SILVER",
+            "limitTransfer" : "5000000"
         },
         {
-            "idTipe" : 1,
-            "namaTipe" : "Gold",
-            "limitTransfer" : "10 Juta"
+            "idTipe" : 2,
+            "namaTipe" : "GOLD",
+            "limitTransfer" : "10000000"
         },
         {    
-            "idTipe" : 2,
-            "namaTipe" : "Platinum",
-            "limitTransfer" : "15 Juta"
+            "idTipe" : 3,
+            "namaTipe" : "PLATINUM",
+            "limitTransfer" : "15000000"
         },
     ]
 }
