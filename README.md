@@ -631,3 +631,47 @@ Response Body (failed) :
     "message" : "Password tidak sesuai" 
 }
 ```
+
+### Get Accounts
+
+Endpoint : GET /api/profiling/{id}/accounts
+
+Path variable : idUser
+
+Authorization Type Bearer Token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiYTQzNjUzYjEtMjk2Ni00NDY1LWE0YjktZjRmYmM0OTE3NzVhIiwiaWF0IjoxNjg2MzIxMzQ0LCJleHAiOjE2ODYzMjE2NDR9.mzHMPKXzlOkHpRFAq3Sol5ALtc5TH0l_o4aN4YZxLMA" 
+
+
+Response Body (success) :
+
+```json
+{
+    "data": {
+        "nik": "1231231231312315",
+        "email": "kevin@gmail.com",
+        "rekening": [
+            {
+                "noRekening": 7727272726677,
+                "saldo": 2000000.0,
+                "createdAt": "2023-11-20T08:39:57.878+00:00",
+                "tipeRekening": {
+                    "idTipe": 1,
+                    "namaTipe": "GOLD",
+                    "limitTransfer": "500000000"
+                }
+            }
+        ]
+    },
+    "message": "Sukses",
+    "status": 200
+}
+```
+
+Response Body (failed) :
+
+```json
+{
+    "status" : 400,
+    "message" : "User tidak ditemukan" 
+}
+```
+
