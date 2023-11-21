@@ -7,15 +7,25 @@ import com.digibank.restapi.exception.ResponseUnauthorizationException;
 import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.service.PasswordService;
+import com.digibank.restapi.utils.TokenDecoder;
+import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 @Service
-@AllArgsConstructor
 public class CreatePasswordServiceImpl implements PasswordService {
-    private final UserRepository userRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Value("${token.login.key}")
+    private String secretKey;
+
+
     @Override
     public CreatePasswordDto changePassword(Long id_user, CreatePasswordDto request) {
         User user = userRepository.findById(id_user)
@@ -28,10 +38,14 @@ public class CreatePasswordServiceImpl implements PasswordService {
     }
 
     @Override
-    public CreatePasswordDto changePasswordWithValidation(Long id_user, ChangePasswordDto changePasswordDto) {
+    public CreatePasswordDto changePasswordWithValidation(String token, ChangePasswordDto changePasswordDto) {
 
-        User user = userRepository.findById(id_user)
+        Claims claims = TokenDecoder.decodeToken(token, secretKey);
+        String email = claims.getSubject();
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseUnauthorizationException("User tidak ditemukan"));
+
+
 
         if (!BCrypt.checkpw(changePasswordDto.getOldPassword(), user.getPassword())) {
             throw  new ResponseBadRequestException("Password tidak sesuai");

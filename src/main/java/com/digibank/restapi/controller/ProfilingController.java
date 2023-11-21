@@ -19,20 +19,22 @@ public class ProfilingController {
     private PasswordService passwordService;
     private GetAccountsService getAccountsService;
 
-    @PutMapping("/{idUser}/change-password")
+    @PutMapping("/change-password")
     public ResponseEntity<Object> changePassword(
-            @RequestBody ChangePasswordDto changePasswordDto,
-            @PathVariable(required = false) Long idUser
+            @RequestHeader("Authorization") String token,
+            @RequestBody ChangePasswordDto changePasswordDto
     ) {
-        passwordService.changePasswordWithValidation(idUser, changePasswordDto);
+        String authToken = token.substring(7);
+        passwordService.changePasswordWithValidation(authToken, changePasswordDto);
         return ResponseHandler.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Diubah");
     }
 
-    @GetMapping("/{idUser}/accounts")
+    @GetMapping("/accounts")
     public ResponseEntity<Object> getAccounts(
-            @PathVariable(required = false) User idUser
+            @RequestHeader("Authorization") String token
     ){
-        GetAccountsDto newGetAccounts = getAccountsService.getAccounts(idUser);
+        String authToken = token.substring(7);
+        GetAccountsDto newGetAccounts = getAccountsService.getAccounts(authToken);
         return ResponseHandler.getAccounts("Sukses", HttpStatus.OK, newGetAccounts);
     }
 

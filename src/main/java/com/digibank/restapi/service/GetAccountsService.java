@@ -5,5 +5,5 @@ import com.digibank.restapi.model.entity.User;
 
 public interface GetAccountsService {
 
-    GetAccountsDto getAccounts(User idUser);
+    GetAccountsDto getAccounts( String token);
 }
