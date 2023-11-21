@@ -31,8 +31,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
         if(BCrypt.checkpw(req.getPassword(), user.getPassword()) ) {
             var jwt = jwtService.generateToken(user);
-            var loginResDto = LoginResDto.builder().token(jwt).idUser(user.getIdUser()).build();
-            return LoginResMapper.MAPPER.mapToLoginResDto(loginResDto);
+            return LoginResDto.builder().token(jwt).build();
         } else {
             throw new ResponseBadRequestException("Maaf Email dan Kata Sandi dimasukkan salah Pastikan Email dan Kata Sandi benar.");
         }

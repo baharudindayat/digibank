@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/profiling")
+@RequestMapping("api/v1/profiling")
 public class ProfilingController {
 
     private PasswordService passwordService;

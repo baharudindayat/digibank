@@ -6,6 +6,7 @@ import com.digibank.restapi.exception.ResponseBadRequestException;
 import com.digibank.restapi.exception.ResponseUnauthorizationException;
 import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.repository.UserRepository;
+import com.digibank.restapi.service.JwtService;
 import com.digibank.restapi.service.PasswordService;
 import com.digibank.restapi.utils.TokenDecoder;
 import io.jsonwebtoken.Claims;
@@ -17,13 +18,11 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 @Service
+@AllArgsConstructor
 public class CreatePasswordServiceImpl implements PasswordService {
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Value("${token.login.key}")
-    private String secretKey;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
 
 
     @Override
@@ -40,13 +39,10 @@ public class CreatePasswordServiceImpl implements PasswordService {
     @Override
     public CreatePasswordDto changePasswordWithValidation(String token, ChangePasswordDto changePasswordDto) {
 
-        Claims claims = TokenDecoder.decodeToken(token, secretKey);
-        String email = claims.getSubject();
+
+        String email = jwtService.extractUserName(token);
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseUnauthorizationException("User tidak ditemukan"));
-
-
-
         if (!BCrypt.checkpw(changePasswordDto.getOldPassword(), user.getPassword())) {
             throw  new ResponseBadRequestException("Password tidak sesuai");
         }
@@ -54,7 +50,6 @@ public class CreatePasswordServiceImpl implements PasswordService {
         if (!Objects.equals(changePasswordDto.getConfirmPassword(), changePasswordDto.getNewPassword())) {
             throw  new ResponseBadRequestException("Password tidak sesuai");
         }
-
         String hashedPassword = BCrypt.hashpw(changePasswordDto.getNewPassword(), BCrypt.gensalt());
         user.setPassword(hashedPassword);
         userRepository.save(user);
