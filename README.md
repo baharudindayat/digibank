@@ -481,7 +481,7 @@ Response Body (failed) :
 
 Endpoint : PUT /api/users/{id}/mpin
 
-Path variabel : idUser
+Path variable : idUser
 
 Tipe data Body:
 - mpin -> String
@@ -512,7 +512,9 @@ Response Body (failed) :
 ```
 ### MPIN Confirmation
 
-Endpoint : POST /api/users/{id_user}/confirm-mpin
+Endpoint : POST /api/users/{id}/confirm-mpin
+
+Path Variable = idUser
 
 Tipe data Body:
 - mpin -> String
