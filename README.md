@@ -600,7 +600,7 @@ Tipe data Body:
 - newPassword -> String
 - confirmPassword -> String
 
-Authorization Type Bearer Token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiYTQzNjUzYjEtMjk2Ni00NDY1LWE0YjktZjRmYmM0OTE3NzVhIiwiaWF0IjoxNjg2MzIxMzQ0LCJleHAiOjE2ODYzMjE2NDR9.mzHMPKXzlOkHpRFAq3Sol5ALtc5TH0l_o4aN4YZxLMA" 
+Authorization Type Bearer Token : "USER_TOKEN" 
 
 Request Body :
 
@@ -635,7 +635,7 @@ Response Body (failed) :
 Endpoint : GET /api/profiling/accounts
 
 
-Authorization Type Bearer Token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiYTQzNjUzYjEtMjk2Ni00NDY1LWE0YjktZjRmYmM0OTE3NzVhIiwiaWF0IjoxNjg2MzIxMzQ0LCJleHAiOjE2ODYzMjE2NDR9.mzHMPKXzlOkHpRFAq3Sol5ALtc5TH0l_o4aN4YZxLMA" 
+Authorization Type Bearer Token : "USER_TOKEN" 
 
 
 Response Body (success) :
