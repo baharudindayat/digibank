@@ -572,7 +572,6 @@ Response Body (success) :
 ```json
 {
     "data": {
-        "idUser": 1,
         "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYWhyaXphbHNob2Z5YW5heml6QGdtYWlsLmNvbSIsImlhdCI6MTY5OTY3MDE0NSwiZXhwIjoxNjk5NjcxNTg1fQ.-X6w9Wipej5jf8JvIm7xt5z7TyQowSNtqWhFBjON0Zw"
     },
     "message": "Login Berhasil!",
@@ -593,9 +592,8 @@ Response Body (failed email&password) :
 
 ### Change Password
 
-Endpoint : PUT /api/profiling/{id}/change-password
+Endpoint : PUT /api/profiling/change-password
 
-Path variable : idUser
 
 Tipe data Body:
 - oldPassword -> String
@@ -634,9 +632,8 @@ Response Body (failed) :
 
 ### Get Accounts
 
-Endpoint : GET /api/profiling/{id}/accounts
+Endpoint : GET /api/profiling/accounts
 
-Path variable : idUser
 
 Authorization Type Bearer Token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiYTQzNjUzYjEtMjk2Ni00NDY1LWE0YjktZjRmYmM0OTE3NzVhIiwiaWF0IjoxNjg2MzIxMzQ0LCJleHAiOjE2ODYzMjE2NDR9.mzHMPKXzlOkHpRFAq3Sol5ALtc5TH0l_o4aN4YZxLMA" 
 
