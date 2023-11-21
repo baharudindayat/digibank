@@ -9,7 +9,7 @@ Base URL: https://digibank.com
 
 Setelah user pilih kartu, data tipe rekening ditampung di fe, nantinya akan dipost ketika user klik button lanjut pada isi data diri/cif
 
-Endpoint : GET /api/users/cards
+Endpoint : GET /api/v1/users/cards
 
 Response : 
 
@@ -38,7 +38,7 @@ Response :
 
 ### Email Confirmation / OTP Generate
 
-Endpoint : POST /api/users/otp-generate
+Endpoint : POST /api/v1/users/otp-generate
 
 Tipe data Body:
 - email -> String
@@ -74,7 +74,7 @@ Response Body (failed) :
 
 ### OTP Verification / OTP Confirmation
 
-Endpoint : PUT /api/users/{id}/otp-verification
+Endpoint : PUT /api/v1/users/{id}/otp-verification
 
 Path variable : idUser
 
@@ -124,7 +124,7 @@ Response Body (failed) :
 ### Email Confirmation / OTP Regenerate
 
 
-Endpoint : PUT /api/users/{id}/otp-regenerate
+Endpoint : PUT /api/v1/users/{id}/otp-regenerate
 
 Path variable : idUser
 
@@ -171,7 +171,7 @@ Response Body (failed) :
 
 ### CIF & Accounts
 
-Endpoint : POST /api/users/{id}/tipe-rekening/{idTipe}/cif
+Endpoint : POST /api/v1/users/{id}/tipe-rekening/{idTipe}/cif
 
 Path variable : idUser, idTipe
 
@@ -208,7 +208,7 @@ Response Body (success) :
 
 ### Create Password
 
-Endpoint : PUT /api/users/{id}/password
+Endpoint : PUT /api/v1/users/{id}/password
 
 Path variable : idUser
 
@@ -243,7 +243,7 @@ Response Body (failed) :
 
 ### Create MPIN
 
-Endpoint : PUT /api/users/{id}/mpin
+Endpoint : PUT /api/v1/users/{id}/mpin
 
 Path variable : idUser
 
@@ -277,7 +277,7 @@ Response Body (failed) :
 
 ### MPIN Confirmation
 
-Endpoint : POST /api/users/{id}/confirm-mpin
+Endpoint : POST /api/v1/users/{id}/confirm-mpin
 
 Path variable : idUser
 
@@ -321,7 +321,7 @@ Response Body (failed) :
 
 ### Email Confirmation / OTP Generate
 
-Endpoint : POST /api/users/otp-generate
+Endpoint : POST /api/v1/users/otp-generate
 
 Tipe data Body:
 - email -> String
@@ -357,7 +357,7 @@ Response Body (failed) :
 
 ### OTP Verification / OTP Confirmation
 
-Endpoint : PUT /api/users/{id}/otp-verification
+Endpoint : PUT /api/v1/users/{id}/otp-verification
 
 Path variable : idUser
 
@@ -406,7 +406,7 @@ Response Body (failed) :
 
 ### Konfirmasi Rekening
 
-Endpoint : POST api/users/confirm-accounts
+Endpoint : POST api/v1/users/confirm-accounts
 
 Tipe data Body:
 - noRekening -> Long
@@ -444,7 +444,7 @@ Response Body (failed) :
 
 ### Create Password
 
-Endpoint : PUT /api/users/{id}/password
+Endpoint : PUT /api/v1/users/{id}/password
 
 Path variable : idUser
 
@@ -479,7 +479,7 @@ Response Body (failed) :
 
 ### Create MPIN
 
-Endpoint : PUT /api/users/{id}/mpin
+Endpoint : PUT /api/v1/users/{id}/mpin
 
 Path variable : idUser
 
@@ -512,7 +512,7 @@ Response Body (failed) :
 ```
 ### MPIN Confirmation
 
-Endpoint : POST /api/users/{id}/confirm-mpin
+Endpoint : POST /api/v1/users/{id}/confirm-mpin
 
 Path Variable = idUser
 
@@ -554,7 +554,7 @@ Response Body (failed) :
 ### User Login
 
 
-Endpoint : POST /api/users/login
+Endpoint : POST /api/v1/users/login
 
 Tipe data Body:
 - email -> String
@@ -594,7 +594,7 @@ Response Body (failed email&password) :
 
 ### Change Password
 
-Endpoint : PUT /api/profiling/change-password
+Endpoint : PUT /api/v1/profiling/change-password
 
 
 Tipe data Body:
@@ -634,7 +634,7 @@ Response Body (failed) :
 
 ### Get Accounts
 
-Endpoint : GET /api/profiling/accounts
+Endpoint : GET /api/v1/profiling/accounts
 
 
 Authorization Type Bearer Token : "USER_TOKEN" 
