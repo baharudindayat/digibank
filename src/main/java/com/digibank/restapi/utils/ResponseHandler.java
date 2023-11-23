@@ -72,4 +72,12 @@ public class ResponseHandler {
         map.put("data",res);
         return new ResponseEntity<>(map,status);
     }
+
+    public static ResponseEntity<Object> getAccounts(String message, HttpStatus status, Object res){
+        Map<String,Object> map = new HashMap<>();
+        map.put("message",message);
+        map.put("status",status.value());
+        map.put("data",res);
+        return new ResponseEntity<>(map,status);
+    }
 }
