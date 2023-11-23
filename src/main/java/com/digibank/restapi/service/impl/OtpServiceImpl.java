@@ -51,6 +51,7 @@ public class OtpServiceImpl implements OtpService {
 
         User user = UserMapper.MAPPER.mapToUser(otpDto);
         user.setStatusUser(AccountStatus.INACTIVE);
+        user.setCountBlockedMpin(0);
         User savedUser = userRepository.save(user);
 
         UserOTP userOtp = UserOtpMapper.MAPPER.mapToUserOtp(otpDto);

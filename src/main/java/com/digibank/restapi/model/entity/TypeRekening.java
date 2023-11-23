@@ -16,6 +16,7 @@ import lombok.*;
 public class TypeRekening{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tipe_rekening")
     private long idTipe;
 

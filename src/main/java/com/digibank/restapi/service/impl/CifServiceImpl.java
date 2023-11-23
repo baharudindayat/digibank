@@ -30,10 +30,10 @@ public class CifServiceImpl implements CifService {
     private final TypeRekeningRepository typeRekeningRepository;
 
     @Override
-    public String createCif(CifDto cifDto) {
-        Optional<User> idUser = Optional.ofNullable(userRepository.findById(cifDto.getIdUser())
+    public String createCif(CifDto cifDto, long idUser, long idTipe) {
+        Optional<User> user = Optional.ofNullable(userRepository.findById(idUser)
                 .orElseThrow(() -> new ResponseUnauthorizationException("User tidak ditemukan")));
-        Optional<TypeRekening> typeRekening = Optional.ofNullable(typeRekeningRepository.findById(cifDto.getIdTipe())
+        Optional<TypeRekening> typeRekening = Optional.ofNullable(typeRekeningRepository.findById(idTipe)
                 .orElseThrow(() -> new ResponseBadRequestException("Tipe rekening tidak ditemukan")));
         CIF cif = new CIF();
         cif.setNik(cifDto.getNik());
@@ -41,7 +41,7 @@ public class CifServiceImpl implements CifService {
         cif.setPekerjaan(cifDto.getPekerjaan());
         cif.setNamaLengkap(cifDto.getNamaLengkap());
         cif.setPenghasilan(cifDto.getPenghasilan());
-        cif.setIdUsers(idUser.get());
+        cif.setIdUsers(user.get());
         repository.save(cif);
         Optional<CIF> idCif = Optional.ofNullable(repository.findByNik(cifDto.getNik())
                 .orElseThrow(() -> new ResponseUnauthorizationException("NIK tidak ditemukan")));
