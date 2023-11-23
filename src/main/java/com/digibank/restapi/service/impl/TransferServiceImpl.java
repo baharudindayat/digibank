@@ -3,6 +3,7 @@ package com.digibank.restapi.service.impl;
 import com.digibank.restapi.dto.RekeningNameDto;
 import com.digibank.restapi.dto.TransaksiDto;
 import com.digibank.restapi.dto.TransferDto;
+import com.digibank.restapi.exception.AccountNotFoundException;
 import com.digibank.restapi.exception.PinFailedException;
 import com.digibank.restapi.exception.TransferFailedException;
 import com.digibank.restapi.model.entity.Bank;
@@ -161,7 +162,7 @@ public class TransferServiceImpl implements TransferService {
             return rekeningNameDto;
 
         } else {
-            throw new TransferFailedException("Maaf! Nomor Rekening yang dituju" +
+            throw new AccountNotFoundException("Maaf! Nomor Rekening yang dituju" +
                     "tidak terdaftar. Pastikan memasukkan" +
                     "Nomor Rekening yang benar ");
         }
