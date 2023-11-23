@@ -50,7 +50,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
 
         //bank
         Bank bsi = new Bank();
-        bsi.setNamaBank("Bank Syariah Indonesia");
+        bsi.setNamaBank("Digibank");
         entityManager.persist(bsi);
 
         //user
