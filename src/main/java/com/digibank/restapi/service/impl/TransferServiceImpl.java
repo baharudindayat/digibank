@@ -42,7 +42,7 @@ public class TransferServiceImpl implements TransferService {
 
 
         AccountStatus accountStatus = rekeningAsal.get().getIdCif().getIdUsers().getStatusUser();
-        if (accountStatus.equals(AccountStatus.TERBLOOKIR)) {
+        if (accountStatus.equals(AccountStatus.TERBLOKIR)) {
             throw new TransferFailedException("Akun anda Sedang diblokir");
         }
 
@@ -51,7 +51,7 @@ public class TransferServiceImpl implements TransferService {
             throw new TransferFailedException("Rekening Tujuan Tidak Ditemukan");
         }
         AccountStatus accountStatusTujuan = rekeningTujuan.get().getIdCif().getIdUsers().getStatusUser();
-        if (accountStatusTujuan.equals(AccountStatus.TERBLOOKIR)) {
+        if (accountStatusTujuan.equals(AccountStatus.TERBLOKIR)) {
             throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");
         }
 
@@ -96,7 +96,7 @@ public class TransferServiceImpl implements TransferService {
                 userRepository.save(rekeningAsal.get().getIdCif().getIdUsers());
                 throw new PinFailedException("1");
             } else if (getCountMpinWrong >= 2) {
-                rekeningAsal.get().getIdCif().getIdUsers().setStatusUser(AccountStatus.TERBLOOKIR);
+                rekeningAsal.get().getIdCif().getIdUsers().setStatusUser(AccountStatus.TERBLOKIR);
                 rekeningAsal.get().getIdCif().getIdUsers().setCountBlockedMpin(0);
                 userRepository.save(rekeningAsal.get().getIdCif().getIdUsers());
                 throw new TransferFailedException("Maaf! Akun ini telah terblokir karena salah memasukkan MPIN 3 kali, Silahkan hubungi call center terdekat untuk membuka blokir akun");
@@ -151,7 +151,7 @@ public class TransferServiceImpl implements TransferService {
         RekeningNameDto rekeningNameDto = new RekeningNameDto();
         if (getAccount.isPresent()) {
             AccountStatus getUser = getAccount.get().getIdCif().getIdUsers().getStatusUser();
-            if (getUser.equals(AccountStatus.TERBLOOKIR)) {
+            if (getUser.equals(AccountStatus.TERBLOKIR)) {
                 throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");
             }
 
