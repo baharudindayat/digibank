@@ -27,9 +27,8 @@ public class Rekening {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_tipe_rekening")
-    @JsonIgnore
     private TypeRekening tipeRekening;
 
     @ManyToOne(fetch = FetchType.LAZY)
