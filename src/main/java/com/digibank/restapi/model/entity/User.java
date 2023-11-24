@@ -57,6 +57,9 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority("USER"));
     }
 
+    @OneToOne(mappedBy = "idUsers")
+    private CIF cif;
+
     @Override
     public String getUsername() {
         return email;

@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
@@ -40,10 +41,11 @@ public class CIF {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user")
     @JsonIgnore
     private User idUsers;
 
-
+    @OneToMany(mappedBy = "idCif")
+    private List<Rekening> rekeningList;
 }

@@ -6,6 +6,7 @@ import com.digibank.restapi.dto.response.transaction.list.TransactionDto;
 import com.digibank.restapi.model.entity.Rekening;
 import com.digibank.restapi.model.entity.Transaksi;
 import com.digibank.restapi.model.enums.JenisTransaksi;
+import com.digibank.restapi.model.enums.TipeTransaksi;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -51,10 +52,17 @@ public interface TransactionMapper {
 
     @Mapping(target = "kodeTransaksi", source = "transaction.kodeTransaksi")
     @Mapping(target = "tipeTransaksi", source = "transaction.tipeTransaksi")
-    @Mapping(target = "nama", source = "transaction.rekeningTujuan.idCif.namaLengkap")
+    @Mapping(target = "nama", expression = "java(getRekeningByTransactionType(transaction))")
     @Mapping(target = "jumlahTransaksi", expression = "java(getTotalTransaction(transaction.getTotalTransaksi()))")
     @Mapping(target = "tanggal", source = "transaction.waktuTransaksi")
     TransactionDto transactionToTransactionDto(Transaksi transaction);
+
+    default String getRekeningByTransactionType(Transaksi transaksi) {
+        if(transaksi.getTipeTransaksi() == TipeTransaksi.DEBIT){
+            return transaksi.getRekeningAsal().getIdCif().getNamaLengkap();
+        }
+        return transaksi.getRekeningTujuan().getIdCif().getNamaLengkap();
+    }
 
     List<TransactionDto> transactionToTransactionListDto(List<Transaksi> transactions);
 }
