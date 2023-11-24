@@ -8,8 +8,11 @@ import com.digibank.restapi.exception.TransactionNotFoundException;
 import com.digibank.restapi.mapper.transfer.TransactionMapper;
 import com.digibank.restapi.model.entity.Rekening;
 import com.digibank.restapi.model.entity.Transaksi;
+import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.model.enums.TipeTransaksi;
+import com.digibank.restapi.repository.RekeningRepository;
 import com.digibank.restapi.repository.TransactionsRepository;
+import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -27,11 +31,13 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionsRepository transactionsRepository;
     private final TransactionMapper transactionMapper;
 
+    private final UserRepository userRepository;
 
     @Autowired
-    public TransactionServiceImpl(TransactionsRepository transactionsRepository, TransactionMapper transactionMapper) {
+    public TransactionServiceImpl(TransactionsRepository transactionsRepository, TransactionMapper transactionMapper, UserRepository userRepository) {
         this.transactionsRepository = transactionsRepository;
         this.transactionMapper = transactionMapper;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -60,30 +66,41 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionListResponseDto getFilteredListTransction(boolean isDebit, boolean isKredit, Timestamp tanggalMulai, Timestamp tanggalAkhir, int pageNumber, int size) {
+    public TransactionListResponseDto getFilteredListTransction(String email,boolean isDebit, boolean isKredit, Timestamp tanggalMulai, Timestamp tanggalAkhir, int pageNumber, int size) {
         Pageable pageable = PageRequest.of(((pageNumber > 0) ? pageNumber - 1 : pageNumber), size, Sort.by(Sort.Direction.ASC, "waktuTransaksi"));
         Page<Transaksi> filteredTransactions = null;
+
+        Optional<User> opUser = userRepository.findByEmail(email);
+
+        User user;
+        List<Rekening> rekenings;
+        if(opUser.isPresent()){
+            user = opUser.get();
+            rekenings = user.getCif().getRekeningList();
+        }else{
+            throw new TransactionNotFoundException("wrong email");
+        }
 
         TipeTransaksi tipeTransaksi;
         if ((tanggalMulai == null) && (tanggalAkhir == null)) {
             if (isDebit && isKredit) {
-                filteredTransactions = transactionsRepository.findAll(pageable);
+                filteredTransactions = transactionsRepository.findAllByRekeningAsalInOrRekeningTujuanIn(rekenings,rekenings,pageable);
             } else if (isDebit) {
                 tipeTransaksi = TipeTransaksi.DEBIT;
-                filteredTransactions = transactionsRepository.findAllByTipeTransaksi(tipeTransaksi, pageable);
+                filteredTransactions = transactionsRepository.findByTipeTransaksiAndRekeningAsalInOrRekeningTujuanIn(tipeTransaksi,rekenings,rekenings,pageable);
             } else if (isKredit) {
                 tipeTransaksi = TipeTransaksi.KREDIT;
-                filteredTransactions = transactionsRepository.findAllByTipeTransaksi(tipeTransaksi, pageable);
+                filteredTransactions = transactionsRepository.findByTipeTransaksiAndRekeningAsalInOrRekeningTujuanIn(tipeTransaksi,rekenings,rekenings, pageable);
             }
         } else if ((tanggalMulai != null) && (tanggalAkhir != null)) {
             if (isDebit && isKredit) {
-                filteredTransactions = transactionsRepository.findAllByWaktuTransaksiBetween(tanggalMulai, tanggalAkhir, pageable);
+                filteredTransactions = transactionsRepository.findByWaktuTransaksiBetweenAndRekeningAsalInOrRekeningTujuanIn(tanggalMulai, tanggalAkhir,rekenings,rekenings, pageable);
             } else if (isDebit) {
                 tipeTransaksi = TipeTransaksi.DEBIT;
-                filteredTransactions = transactionsRepository.findAllByTipeTransaksiAndWaktuTransaksiBetween(tipeTransaksi, tanggalMulai, tanggalAkhir, pageable);
+                filteredTransactions = transactionsRepository.findByTipeTransaksiAndWaktuTransaksiBetweenAndRekeningAsalInOrRekeningTujuanIn(tipeTransaksi, tanggalMulai, tanggalAkhir,rekenings,rekenings, pageable);
             } else if (isKredit) {
                 tipeTransaksi = TipeTransaksi.KREDIT;
-                filteredTransactions = transactionsRepository.findAllByTipeTransaksiAndWaktuTransaksiBetween(tipeTransaksi, tanggalMulai, tanggalAkhir, pageable);
+                filteredTransactions = transactionsRepository.findByTipeTransaksiAndWaktuTransaksiBetweenAndRekeningAsalInOrRekeningTujuanIn(tipeTransaksi, tanggalMulai, tanggalAkhir,rekenings,rekenings, pageable);
             }
         }
 
