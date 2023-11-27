@@ -632,7 +632,7 @@ Response Body (failed) :
 }
 ```
 
-### Get Accounts
+### Get Accounts & Users
 
 Endpoint : GET /api/v1/profiling/accounts
 
