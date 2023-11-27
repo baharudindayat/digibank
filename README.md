@@ -645,6 +645,7 @@ Response Body (success) :
 ```json
 {
     "data": {
+        "name": "Kevin raihan saleh",
         "nik": "1231231231312315",
         "email": "kevin@gmail.com",
         "rekening": [
