@@ -1,12 +1,22 @@
 package com.digibank.restapi.utils;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ResponseHandler {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class ResponseHandler<T> {
+
+    private String errors;
 
     public static ResponseEntity<Object> generateResponseCif(String message, HttpStatus status, String norek) {
 
