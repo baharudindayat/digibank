@@ -1,4 +1,4 @@
-package com.digibank.restapi.dto;
+package com.digibank.restapi.dto.getAccount;
 
 import com.digibank.restapi.model.entity.Rekening;
 import lombok.AllArgsConstructor;
@@ -17,6 +17,6 @@ public class GetAccountsDto {
     private String name;
     private String nik;
     private String email;
-    private List<Rekening> rekening;
+    private List<ResponseAccount> accounts;
 
 }

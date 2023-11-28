@@ -118,6 +118,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
         devano.setIdCif(cifDevano);
         entityManager.persist(devano);
 
+
         Rekening kepin = new Rekening();
         kepin.setNoRekening(7727272726677L);
         kepin.setSaldo(2000000.0);
@@ -127,7 +128,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
 
         //transaksi
         boolean isDebit = true;
-        Random random = new Random();
+//        Random random = new Random();
         for (int i = 0; i < 100; i++) {
             Transaksi exampleTransaction = new Transaksi();
             exampleTransaction.setNominal(230000000.0 + i);
