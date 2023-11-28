@@ -17,7 +17,7 @@ import java.util.Objects;
 public class CreatePasswordServiceImpl implements PasswordService {
     private final UserRepository userRepository;
     @Override
-    public CreatePasswordDto changePassword(Long id_user, CreatePasswordDto request) {
+    public CreatePasswordDto createPassword(Long id_user, CreatePasswordDto request) {
         User user = userRepository.findById(id_user)
                 .orElseThrow(() -> new ResponseUnauthorizationException("User tidak ditemukan"));
 

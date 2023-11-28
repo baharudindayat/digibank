@@ -57,10 +57,10 @@ public class UserController {
     }
 
     @PutMapping("/{idUser}/password")
-    public ResponseEntity<Object> changePassword(
+    public ResponseEntity<Object> createPassword(
             @PathVariable(required = false) Long idUser,
             @RequestBody CreatePasswordDto createPasswordRequest) {
-            passwordService.changePassword(idUser, createPasswordRequest);
+            passwordService.createPassword(idUser, createPasswordRequest);
             return ResponseHandler.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Disimpan");
     }
 
