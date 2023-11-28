@@ -4,4 +4,5 @@ public enum AccountStatus {
     TERBLOKIR,
     ACTIVE,
     INACTIVE
+
 }
