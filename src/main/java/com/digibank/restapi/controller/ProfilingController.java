@@ -1,8 +1,7 @@
 package com.digibank.restapi.controller;
 
-import com.digibank.restapi.dto.GetAccountsDto;
+import com.digibank.restapi.dto.getAccount.GetAccountsDto;
 import com.digibank.restapi.dto.changePassword.ChangePasswordDto;
-import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.service.GetAccountsService;
 import com.digibank.restapi.service.PasswordService;
 import com.digibank.restapi.utils.ResponseHandler;

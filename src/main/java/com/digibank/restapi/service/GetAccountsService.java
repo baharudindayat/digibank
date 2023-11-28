@@ -1,7 +1,6 @@
 package com.digibank.restapi.service;
 
-import com.digibank.restapi.dto.GetAccountsDto;
-import com.digibank.restapi.model.entity.User;
+import com.digibank.restapi.dto.getAccount.GetAccountsDto;
 
 public interface GetAccountsService {
 

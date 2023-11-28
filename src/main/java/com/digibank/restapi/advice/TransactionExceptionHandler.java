@@ -20,13 +20,13 @@ public class TransactionExceptionHandler {
                 .build();
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    public Map<String, Object> handleGlobalException(Exception ex) {
-        return Map.of(
-                "error", "An error occurred",
-                "message", ex.getMessage(),
-                "status", HttpStatus.INTERNAL_SERVER_ERROR.value()
-        );
-    }
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(Exception.class)
+//    public Map<String, Object> handleGlobalException(Exception ex) {
+//        return Map.of(
+//                "error", "An error occurred",
+//                "message", ex.getMessage(),
+//                "status", HttpStatus.INTERNAL_SERVER_ERROR.value()
+//        );
+//    }
 }

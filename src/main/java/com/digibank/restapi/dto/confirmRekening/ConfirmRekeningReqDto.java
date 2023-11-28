@@ -11,5 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ConfirmRekeningReqDto {
 
-    private long noRekening;
+    private String noRekening;
 }
