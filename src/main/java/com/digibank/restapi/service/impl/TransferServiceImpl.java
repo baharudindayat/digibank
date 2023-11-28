@@ -51,6 +51,11 @@ public class TransferServiceImpl implements TransferService {
         if (rekeningTujuan.isEmpty()) {
             throw new TransferFailedException("Rekening Tujuan Tidak Ditemukan");
         }
+
+        if(rekeningAsal.equals(rekeningTujuan)){
+            throw new TransferFailedException("Rekening Tujuan Tidak Boleh Sama Dengan Rekening Asal");
+        }
+
         AccountStatus accountStatusTujuan = rekeningTujuan.get().getIdCif().getIdUsers().getStatusUser();
         if (accountStatusTujuan.equals(AccountStatus.TERBLOKIR)) {
             throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");
