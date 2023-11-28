@@ -33,6 +33,7 @@ public class GetAccountsServiceImpl implements GetAccountsService {
         CIF cif = cifRepository.findByidUsers(user)
                 .orElseThrow(() -> new ResponseUnauthorizationException("User tidak ditemukan"));
         GetAccountsDto getAccountsDto = new GetAccountsDto();
+        getAccountsDto.setName(cif.getNamaLengkap());
         getAccountsDto.setNik(cif.getNik());
         getAccountsDto.setEmail(user.getEmail());
         getAccountsDto.setRekening(getAllRekening(cif));

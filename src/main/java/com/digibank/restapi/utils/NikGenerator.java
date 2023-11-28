@@ -13,7 +13,7 @@ public class NikGenerator {
     public String generateNik() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         String date = dateFormat.format(new Date());
-        String counterPart = String.format("%06d", counter.getAndIncrement() % 1000000);
+        String counterPart = String.format("%02d", counter.getAndIncrement() % 100);
 
         return date + counterPart;
     }
