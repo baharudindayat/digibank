@@ -12,8 +12,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Component
 public class PrepopulateDatabase implements CommandLineRunner {
@@ -125,6 +127,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
 
         //transaksi
         boolean isDebit = true;
+        Random random = new Random();
         for (int i = 0; i < 100; i++) {
             Transaksi exampleTransaction = new Transaksi();
             exampleTransaction.setNominal(230000000.0 + i);
@@ -132,6 +135,11 @@ public class PrepopulateDatabase implements CommandLineRunner {
             exampleTransaction.setRekeningTujuan(kepin);
             exampleTransaction.setCatatan("sedekah");
             exampleTransaction.setBank(bsi);
+            long offset = Timestamp.valueOf("2023-10-01 00:00:00").getTime();
+            long end = Timestamp.valueOf("2023-12-31 23:59:59").getTime();
+            long diff = end - offset + 1;
+            long randomTime = offset + (long) (Math.random() * diff);
+            exampleTransaction.setWaktuTransaksi(new Timestamp(randomTime));
             exampleTransaction.setJenisTransaksi(JenisTransaksi.PINDAHBUKU);
             exampleTransaction.setTotalTransaksi(exampleTransaction.getNominal() + 6500);
             exampleTransaction.setTipeTransaksi((isDebit) ? TipeTransaksi.DEBIT : TipeTransaksi.KREDIT);
