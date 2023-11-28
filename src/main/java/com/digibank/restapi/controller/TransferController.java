@@ -29,7 +29,7 @@ public class TransferController {
 
     @PostMapping("/accounts")
     public ResponseEntity<Object> getAccountRekening(@RequestBody RekeningNameDto id){
-        Object newRekeningNameDto = transferService.getAccountRekening(id.getNoRekening());
+        Object newRekeningNameDto = transferService.getAccountRekening(Long.parseLong(id.getNoRekening()));
         return ResponseHandler.generateResponseCreate("Rekening Berhasil Ditemukan", HttpStatus.OK, newRekeningNameDto);
     }
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/users/dukcapil")
+@RequestMapping("api/v1/users/dukcapil")
 public class KtpController {
 
 

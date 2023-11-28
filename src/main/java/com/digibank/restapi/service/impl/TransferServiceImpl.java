@@ -156,7 +156,9 @@ public class TransferServiceImpl implements TransferService {
                 throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");
             }
 
-            rekeningNameDto.setNoRekening(getAccount.get().getNoRekening());
+            String noRekening = String.valueOf(getAccount.get().getNoRekening());
+
+            rekeningNameDto.setNoRekening(noRekening);
             rekeningNameDto.setNama(getAccount.get().getIdCif().getNamaLengkap());
             rekeningNameDto.setNamaBank("DigiBank");
             return rekeningNameDto;

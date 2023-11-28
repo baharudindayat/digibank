@@ -11,6 +11,9 @@ import com.digibank.restapi.service.PasswordService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 @Service
@@ -35,7 +38,7 @@ public class CreatePasswordServiceImpl implements PasswordService {
     @Override
     public CreatePasswordDto changePasswordWithValidation(String token, ChangePasswordDto changePasswordDto) {
 
-
+        Date date = new Date();
         String email = jwtService.extractUserName(token);
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseUnauthorizationException("User tidak ditemukan"));
@@ -48,6 +51,7 @@ public class CreatePasswordServiceImpl implements PasswordService {
         }
         String hashedPassword = BCrypt.hashpw(changePasswordDto.getNewPassword(), BCrypt.gensalt());
         user.setPassword(hashedPassword);
+        user.setUpdatedAt(new Timestamp(date.getTime()));
         userRepository.save(user);
 
         return null;

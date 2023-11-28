@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class GetAccountsDto {
 
+    private String name;
     private String nik;
     private String email;
     private List<Rekening> rekening;

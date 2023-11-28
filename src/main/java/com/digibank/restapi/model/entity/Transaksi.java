@@ -42,7 +42,6 @@ public class Transaksi {
     private Double Nominal;
 
     @Column(nullable = false)
-    @CreationTimestamp
     private Timestamp waktuTransaksi;
 
     @Column(name="jenis_transaksi", nullable = false)
