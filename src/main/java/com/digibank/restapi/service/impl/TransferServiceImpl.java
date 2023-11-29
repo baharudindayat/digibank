@@ -157,9 +157,6 @@ public class TransferServiceImpl implements TransferService {
         RekeningNameDto rekeningNameDto = new RekeningNameDto();
         if (getAccount.isPresent()) {
             AccountStatus getUser = getAccount.get().getIdCif().getIdUsers().getStatusUser();
-            if (id == getAccount.get().getNoRekening()) {
-                throw new TransferFailedException("Maaf! Nomor Rekening yang dituju tidak boleh sama");
-            }
             if (getUser.equals(AccountStatus.TERBLOKIR)) {
                 throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");
             }
