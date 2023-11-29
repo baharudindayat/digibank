@@ -1,7 +1,11 @@
 package com.digibank.restapi.service.impl;
 
-import com.digibank.restapi.dto.TransaksiDto;
+import com.digibank.restapi.dto.Bsi.Account.RequestRekeningBsiDto;
+import com.digibank.restapi.dto.Bsi.Account.ResponseRekeningBsi;
+import com.digibank.restapi.dto.Bsi.Transfer.RequestTransferBsiDto;
+import com.digibank.restapi.dto.Bsi.Transfer.ResponseTransferBsi;
 import com.digibank.restapi.dto.TransferDto;
+import com.digibank.restapi.exception.AccountNotFoundException;
 import com.digibank.restapi.exception.PinFailedException;
 import com.digibank.restapi.exception.TransferFailedException;
 import com.digibank.restapi.model.entity.Bank;
@@ -15,7 +19,10 @@ import com.digibank.restapi.repository.TransferRepository;
 import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.service.TransferAntarBankService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
@@ -26,32 +33,16 @@ public class TransferAntarBankServiceImpl implements TransferAntarBankService {
     private TransferRepository transferRepository;
     private UserRepository userRepository;
     private TransaksiRepository transaksiRepository;
-    @Override
-    public TransaksiDto createTransferBsi(TransferDto transferDto) {
-        Optional<Rekening> rekeningAsal = transferRepository.findByNoRekening(transferDto.getNoRekeningSumber());
 
+    @Override
+    public ResponseEntity<?> createTransferBsi(TransferDto transferDto) {
+
+        Optional<Rekening> rekeningAsal = transferRepository.findByNoRekening(transferDto.getNoRekeningSumber());
         String mpinRekeningRequest = transferDto.getMpin();
 
         if (rekeningAsal.isEmpty()) {
             throw new TransferFailedException("Rekening Asal Tidak Ditemukan");
         }
-
-        String targetUrl = "http://localhost:17000/bsi/digibank/transferbsi";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         Integer getCountMpinWrong = rekeningAsal.get().getIdCif().getIdUsers().getCountBlockedMpin();
 
@@ -59,7 +50,9 @@ public class TransferAntarBankServiceImpl implements TransferAntarBankService {
         if (accountStatus.equals(AccountStatus.TERBLOKIR)) {
             throw new TransferFailedException("Akun anda Sedang diblokir");
         }
-
+        if(rekeningAsal.equals(transferDto.getNoRekeningTujuan())){
+            throw new TransferFailedException("Rekening Tujuan Tidak Boleh Sama Dengan Rekening Asal");
+        }
         String matcherRekeningAsal = rekeningAsal.get().getIdCif().getIdUsers().getMpin();
 
         if (mpinRekeningRequest.equals(matcherRekeningAsal)) {
@@ -90,23 +83,6 @@ public class TransferAntarBankServiceImpl implements TransferAntarBankService {
             rekeningAsal.get().setSaldo(rekeningAsal.get().getSaldo() - transferDto.getNominal());
             transferRepository.save(rekeningAsal.get());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             rekeningAsal.get().getIdCif().getIdUsers().setCountBlockedMpin(0);
             rekeningAsal.get().getIdCif().getIdUsers().setStatusUser(AccountStatus.ACTIVE);
             userRepository.save(rekeningAsal.get().getIdCif().getIdUsers());
@@ -127,29 +103,73 @@ public class TransferAntarBankServiceImpl implements TransferAntarBankService {
             }
         }
 
-        Bank bank = new Bank();
-        bank.setKodeBank(1);
 
-        Transaksi transaksi = new Transaksi();
-//        transaksi.setRekeningTujuan();
-        transaksi.setRekeningAsal(rekeningAsal.get());
-        transaksi.setJenisTransaksi(JenisTransaksi.PINDAHBUKU);
-        transaksi.setNominal(transferDto.getNominal());
-        transaksi.setCatatan(transferDto.getCatatan());
-        transaksi.setTipeTransaksi(TipeTransaksi.KREDIT);
-        transaksi.setBank(bank);
-        transaksi.setTotalTransaksi(transferDto.getNominal());
-        transaksiRepository.save(transaksi);
+        RequestTransferBsiDto requestTransferBsiDto = new RequestTransferBsiDto();
+        requestTransferBsiDto.setNoRekeningBsi(transferDto.getNoRekeningTujuan());
+        requestTransferBsiDto.setNoRekeningDigibank(transferDto.getNoRekeningSumber());
+        requestTransferBsiDto.setCatatan(transferDto.getCatatan());
+        requestTransferBsiDto.setNominal(transferDto.getNominal());
+        requestTransferBsiDto.setNominal(transferDto.getNominal());
 
-        TransaksiDto transaksiDto = new TransaksiDto();
-        transaksiDto.setId(transaksi.getKodeTransaksi());
-        transaksiDto.setTimeTransaksi(transaksi.getWaktuTransaksi());
-        transaksiDto.setBiayaAdmin(String.valueOf(0.0));
-        transaksiDto.setTotalTransaksi(String.format("%.0f",transaksi.getTotalTransaksi()));
-        transaksiDto.setCatatan(transaksi.getCatatan());
-        transaksiDto.setJenisTransaksi(transaksi.getJenisTransaksi());
+        String targetUrl = "http://localhost:17000/bsi/digibank/transferbsi";
 
-        return transaksiDto;
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<RequestTransferBsiDto> request = new HttpEntity<>(requestTransferBsiDto, headers);
+
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<ResponseTransferBsi> response = restTemplate.postForEntity(targetUrl, request, ResponseTransferBsi.class);
+
+            Bank bank = new Bank();
+            bank.setKodeBank(1);
+
+            Rekening rekeningTujuan = new Rekening();
+            rekeningTujuan.setNoRekening(transferDto.getNoRekeningTujuan());
+
+            Transaksi transaksi = new Transaksi();
+            transaksi.setRekeningTujuan(null);
+            transaksi.setRekeningAsal(rekeningAsal.get());
+            transaksi.setJenisTransaksi(JenisTransaksi.ANTARBANK);
+            transaksi.setNominal(transferDto.getNominal());
+            transaksi.setCatatan(transferDto.getCatatan());
+            transaksi.setTipeTransaksi(TipeTransaksi.KREDIT);
+            transaksi.setBank(bank);
+            transaksi.setTotalTransaksi(transferDto.getNominal());
+            transaksiRepository.save(transaksi);
+
+            return ResponseEntity.ok(response.getBody());
+
+        }catch (HttpClientErrorException.BadRequest badRequestException){
+            throw new TransferFailedException("Transfer Failed");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
+        }
+    }
+
+    @Override
+    public ResponseEntity<?> getAccountRekening(RequestRekeningBsiDto transferBsiDto) {
+
+        String targetUrl = "http://localhost:17000/bsi/digibank/accountbsi";
+
+        try {
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<RequestRekeningBsiDto> request = new HttpEntity<>(transferBsiDto, headers);
+
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<ResponseRekeningBsi> response = restTemplate.postForEntity(targetUrl, request, ResponseRekeningBsi.class);
+
+            return ResponseEntity.ok(response.getBody());
+
+        } catch (HttpClientErrorException.NotFound notFoundException) {
+            throw new AccountNotFoundException("Account bsi Not Found");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
+        }
     }
 
 

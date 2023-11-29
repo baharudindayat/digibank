@@ -80,4 +80,10 @@ public class ResponseHandler {
         map.put("data",res);
         return new ResponseEntity<>(map,status);
     }
+    public static ResponseEntity<Object> generateTransferAntarBank(Object res,Object res2){
+        Map<String,Object> map = new HashMap<>();
+        map.put("Bank",res);
+        map.put("pengirim",res2);
+        return new ResponseEntity<>(map,HttpStatus.OK);
+    }
 }
