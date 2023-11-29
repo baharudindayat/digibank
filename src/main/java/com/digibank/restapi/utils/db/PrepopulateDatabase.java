@@ -51,9 +51,24 @@ public class PrepopulateDatabase implements CommandLineRunner {
         entityManager.persist(ktp);
 
         //bank
+        Bank digibank = new Bank();
+        digibank.setNamaBank("Digibank");
+        entityManager.persist(digibank);
+
         Bank bsi = new Bank();
-        bsi.setNamaBank("Digibank");
+        bsi.setNamaBank("Bank Syariah Indonesia");
         entityManager.persist(bsi);
+
+        //userBank
+        User userBank = new User();
+        userBank.setEmail("Digibank.digi.co.id");
+        userBank.setPassword("$2y$10$KMII6gfpriF5nawIrKFiIerrafGi4oTbFI4b9ZzXBjn26PBdZS.7O");
+        userBank.setStatusUser(AccountStatus.ACTIVE);
+        userBank.setMpin("898725");
+        userBank.setActive(true);
+        userBank.setCountBlockedMpin(0);
+        entityManager.persist(userBank);
+
 
         //user
         User userDevano = new User();
@@ -73,6 +88,17 @@ public class PrepopulateDatabase implements CommandLineRunner {
         userKepin.setActive(true);
         userKepin.setCountBlockedMpin(0);
         entityManager.persist(userKepin);
+
+        //CIFBank
+        CIF cifBank = new CIF();
+        cifBank.setNik("1231231231312314");
+        cifBank.setNamaLengkap("Digibank");
+        cifBank.setAlamat("example address");
+        cifBank.setPekerjaan("example job");
+        cifBank.setPenghasilan("2000000000000000000000");
+        cifBank.setIdUsers(userBank);
+        entityManager.persist(cifBank);
+
 
 
         //CIF
@@ -109,6 +135,15 @@ public class PrepopulateDatabase implements CommandLineRunner {
         tipeRekeningPlatinum.setNamaTipe("PLATINUM");
         tipeRekeningPlatinum.setLimitTransfer("1500000000");
         entityManager.persist(tipeRekeningPlatinum);
+
+        //rekeningBank
+        Rekening rekeningBank = new Rekening();
+        rekeningBank.setNoRekening(1234567890123456789L);
+        rekeningBank.setSaldo(0.0);
+        rekeningBank.setTipeRekening(tipeRekeningPlatinum);
+        rekeningBank.setIdCif(cifBank);
+        entityManager.persist(rekeningBank);
+        
 
         //rekening
         Rekening devano = new Rekening();

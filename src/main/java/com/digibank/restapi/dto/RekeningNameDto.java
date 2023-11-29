@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RekeningNameDto {
+
     private String noRekening;
 
     private String nama;

@@ -20,7 +20,7 @@ public class TransaksiDto {
 
         private String totalTransaksi;
 
-        private Double biayaAdmin;
+        private String biayaAdmin;
 
         private JenisTransaksi JenisTransaksi;
 
