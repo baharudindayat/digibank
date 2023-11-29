@@ -47,7 +47,6 @@ public class GetAccountsServiceImpl implements GetAccountsService {
 
     public List<ResponseAccount> getAllRekening(CIF cif) {
         List<Rekening> rekeningList = rekeningRepository.findByidCif(cif);
-
         responseAccounts.clear();
         for (Rekening rekening : rekeningList) {
             ResponseAccount responseAccount = new ResponseAccount();
