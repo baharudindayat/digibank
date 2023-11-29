@@ -1,6 +1,6 @@
 package com.digibank.restapi.mapper;
 
-import com.digibank.restapi.dto.BankDto;
+import com.digibank.restapi.dto.transfer.BankDto;
 import com.digibank.restapi.model.entity.Bank;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
