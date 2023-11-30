@@ -1,8 +1,10 @@
 package com.digibank.restapi.service.impl;
 
-import com.digibank.restapi.dto.RekeningNameDto;
-import com.digibank.restapi.dto.TransaksiDto;
-import com.digibank.restapi.dto.TransferDto;
+import com.digibank.restapi.dto.transfer.RekeningNameDto;
+import com.digibank.restapi.dto.transfer.TransaksiDto;
+import com.digibank.restapi.dto.transfer.RequestRekeningNameDto;
+import com.digibank.restapi.dto.transfer.TransferDto;
+import com.digibank.restapi.exception.AccountNotFoundException;
 import com.digibank.restapi.exception.PinFailedException;
 import com.digibank.restapi.exception.TransferFailedException;
 import com.digibank.restapi.model.entity.Bank;
@@ -16,6 +18,7 @@ import com.digibank.restapi.repository.TransferRepository;
 import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.service.TransferService;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -42,7 +45,7 @@ public class TransferServiceImpl implements TransferService {
 
 
         AccountStatus accountStatus = rekeningAsal.get().getIdCif().getIdUsers().getStatusUser();
-        if (accountStatus.equals(AccountStatus.TERBLOOKIR)) {
+        if (accountStatus.equals(AccountStatus.TERBLOKIR)) {
             throw new TransferFailedException("Akun anda Sedang diblokir");
         }
 
@@ -50,8 +53,13 @@ public class TransferServiceImpl implements TransferService {
         if (rekeningTujuan.isEmpty()) {
             throw new TransferFailedException("Rekening Tujuan Tidak Ditemukan");
         }
+
+        if(rekeningAsal.equals(rekeningTujuan)){
+            throw new TransferFailedException("Rekening Tujuan Tidak Boleh Sama Dengan Rekening Asal");
+        }
+
         AccountStatus accountStatusTujuan = rekeningTujuan.get().getIdCif().getIdUsers().getStatusUser();
-        if (accountStatusTujuan.equals(AccountStatus.TERBLOOKIR)) {
+        if (accountStatusTujuan.equals(AccountStatus.TERBLOKIR)) {
             throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");
         }
 
@@ -96,7 +104,7 @@ public class TransferServiceImpl implements TransferService {
                 userRepository.save(rekeningAsal.get().getIdCif().getIdUsers());
                 throw new PinFailedException("1");
             } else if (getCountMpinWrong >= 2) {
-                rekeningAsal.get().getIdCif().getIdUsers().setStatusUser(AccountStatus.TERBLOOKIR);
+                rekeningAsal.get().getIdCif().getIdUsers().setStatusUser(AccountStatus.TERBLOKIR);
                 rekeningAsal.get().getIdCif().getIdUsers().setCountBlockedMpin(0);
                 userRepository.save(rekeningAsal.get().getIdCif().getIdUsers());
                 throw new TransferFailedException("Maaf! Akun ini telah terblokir karena salah memasukkan MPIN 3 kali, Silahkan hubungi call center terdekat untuk membuka blokir akun");
@@ -136,7 +144,7 @@ public class TransferServiceImpl implements TransferService {
         TransaksiDto transaksiDto = new TransaksiDto();
         transaksiDto.setId(transaksi.getKodeTransaksi());
         transaksiDto.setTimeTransaksi(transaksi.getWaktuTransaksi());
-        transaksiDto.setBiayaAdmin(0.0);
+        transaksiDto.setBiayaAdmin(String.valueOf(0L));
         transaksiDto.setTotalTransaksi(String.format("%.0f",transaksi.getTotalTransaksi()));
         transaksiDto.setCatatan(transaksi.getCatatan());
         transaksiDto.setJenisTransaksi(transaksi.getJenisTransaksi());
@@ -145,26 +153,54 @@ public class TransferServiceImpl implements TransferService {
     }
 
     @Override
-    public Object getAccountRekening(long id) {
-        Optional<Rekening> getAccount = transferRepository.findByNoRekening(id);
+    public Object getAccountRekening(RequestRekeningNameDto requestRekeningNameDto) {
+        Optional<Rekening> getAccountTujuan = transferRepository.findByNoRekening(Long.parseLong(requestRekeningNameDto.getNoRekeningTujuan()));
+        Optional<Rekening> getAccountAsal = transferRepository.findByNoRekening(Long.parseLong(requestRekeningNameDto.getNoRekeningAsal()));
 
         RekeningNameDto rekeningNameDto = new RekeningNameDto();
-        if (getAccount.isPresent()) {
-            AccountStatus getUser = getAccount.get().getIdCif().getIdUsers().getStatusUser();
-            if (getUser.equals(AccountStatus.TERBLOOKIR)) {
-                throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");
-            }
+        if (getAccountTujuan.isPresent()) {
 
-            rekeningNameDto.setNoRekening(getAccount.get().getNoRekening());
-            rekeningNameDto.setNama(getAccount.get().getIdCif().getNamaLengkap());
-            rekeningNameDto.setNamaBank("DigiBank");
-            return rekeningNameDto;
+            if (getAccountAsal.equals(getAccountTujuan)){
+                throw new TransferFailedException("Rekening Tujuan Tidak Boleh Sama Dengan Rekening Asal");
+            }
+            return getObject(getAccountTujuan, rekeningNameDto);
 
         } else {
-            throw new TransferFailedException("Maaf! Nomor Rekening yang dituju" +
+            throw new AccountNotFoundException("Maaf! Nomor Rekening yang dituju" +
                     "tidak terdaftar. Pastikan memasukkan" +
                     "Nomor Rekening yang benar ");
         }
+    }
+
+    @Override
+    public Object getAccountRekening(long noRekening) {
+        Optional<Rekening> getAccountTujuan = transferRepository.findByNoRekening(noRekening);
+
+        RekeningNameDto rekeningNameDto = new RekeningNameDto();
+        if (getAccountTujuan.isPresent()) {
+
+            return getObject(getAccountTujuan, rekeningNameDto);
+
+        } else {
+            throw new AccountNotFoundException("Maaf! Nomor Rekening yang dituju" +
+                    "tidak terdaftar. Pastikan memasukkan" +
+                    "Nomor Rekening yang benar ");
+        }
+    }
+
+    @NotNull
+    private Object getObject(Optional<Rekening> getAccountTujuan, RekeningNameDto rekeningNameDto) {
+        AccountStatus getUser = getAccountTujuan.get().getIdCif().getIdUsers().getStatusUser();
+        if (getUser.equals(AccountStatus.TERBLOKIR)) {
+            throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");
+        }
+
+        String numberRekening = String.valueOf(getAccountTujuan.get().getNoRekening());
+
+        rekeningNameDto.setNoRekening(numberRekening);
+        rekeningNameDto.setNama(getAccountTujuan.get().getIdCif().getNamaLengkap());
+        rekeningNameDto.setNamaBank("DigiBank");
+        return rekeningNameDto;
     }
 
 

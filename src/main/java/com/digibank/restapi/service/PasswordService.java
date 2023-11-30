@@ -6,5 +6,5 @@ import com.digibank.restapi.dto.createPassword.CreatePasswordDto;
 public interface PasswordService {
     CreatePasswordDto createPassword(Long id_user, CreatePasswordDto request);
 
-    CreatePasswordDto changePasswordWithValidation(Long id_user, ChangePasswordDto changePasswordDto);
+    CreatePasswordDto changePasswordWithValidation(String token, ChangePasswordDto changePasswordDto);
 }

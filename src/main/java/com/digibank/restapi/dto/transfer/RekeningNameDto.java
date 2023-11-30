@@ -1,4 +1,4 @@
-package com.digibank.restapi.dto;
+package com.digibank.restapi.dto.transfer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RekeningNameDto {
-    private long noRekening;
+    private String noRekening;
 
     private String nama;
 

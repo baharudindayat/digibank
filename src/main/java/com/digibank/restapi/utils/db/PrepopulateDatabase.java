@@ -1,5 +1,6 @@
 package com.digibank.restapi.utils.db;
 
+import com.digibank.restapi.model.entity.dukcapil.Ktp;
 import com.digibank.restapi.model.entity.*;
 import com.digibank.restapi.model.enums.AccountStatus;
 import com.digibank.restapi.model.enums.JenisTransaksi;
@@ -10,6 +11,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 @Component
 public class PrepopulateDatabase implements CommandLineRunner {
 
@@ -19,15 +23,39 @@ public class PrepopulateDatabase implements CommandLineRunner {
     @Transactional
     @Override
     public void run(String... args)  {
+        //ktp
+        Ktp ktp = new Ktp();
+        ktp.setNik("3324062206020003");
+        ktp.setProvinsi("Jawa Barat");
+        ktp.setKota("Bandung");
+        ktp.setNama("John Doe");
+        ktp.setTempat_lahir("Bandung");
+        ktp.setTanggal_lahir(Date.valueOf("2002-06-22"));
+        ktp.setJenis_kelamin("Laki-laki");
+        ktp.setGolongan_darah("O");
+        ktp.setAlamat("Jl. Sudirman No. 1");
+        ktp.setRt("001");
+        ktp.setRw("001");
+        ktp.setKelurahan("Sukajadi");
+        ktp.setKecamatan("Sukajadi");
+        ktp.setAgama("Islam");
+        ktp.setStatus_perkawinan("Belum Kawin");
+        ktp.setPekerjaan("Karyawan");
+        ktp.setKewarganegaraan("Indonesia");
+        ktp.setBerlaku_hingga("Seumur Hidup");
+        ktp.setTanggal_perekaman(Date.valueOf("2021-06-22"));
+
+        entityManager.persist(ktp);
+
         //bank
         Bank bsi = new Bank();
-        bsi.setNamaBank("Bank Syariah Indonesia");
+        bsi.setNamaBank("Digibank");
         entityManager.persist(bsi);
 
         //user
         User userDevano = new User();
         userDevano.setEmail("devanozaidan@gmail.com");
-        userDevano.setPassword("$2y$10$3YzNIboVlFXGZkjzdsswLuEM.XOBRWAMCtFNGBKgZ7UisIykPTtqy");
+        userDevano.setPassword("$2y$10$KMII6gfpriF5nawIrKFiIerrafGi4oTbFI4b9ZzXBjn26PBdZS.7O");
         userDevano.setStatusUser(AccountStatus.ACTIVE);
         userDevano.setMpin("898725");
         userDevano.setActive(true);
@@ -36,7 +64,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
 
         User userKepin = new User();
         userKepin.setEmail("kevin@gmail.com");
-        userKepin.setPassword("$2y$10$3YzNIboVlFXGZkjzdsswLuEM.XOBRWAMCtFNGBKgZ7UisIykPTtqy");
+        userKepin.setPassword("$2y$10$KMII6gfpriF5nawIrKFiIerrafGi4oTbFI4b9ZzXBjn26PBdZS.7O");
         userKepin.setStatusUser(AccountStatus.ACTIVE);
         userKepin.setMpin("898725");
         userKepin.setActive(true);
@@ -87,6 +115,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
         devano.setIdCif(cifDevano);
         entityManager.persist(devano);
 
+
         Rekening kepin = new Rekening();
         kepin.setNoRekening(7727272726677L);
         kepin.setSaldo(2000000.0);
@@ -96,6 +125,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
 
         //transaksi
         boolean isDebit = true;
+//        Random random = new Random();
         for (int i = 0; i < 100; i++) {
             Transaksi exampleTransaction = new Transaksi();
             exampleTransaction.setNominal(230000000.0 + i);
@@ -103,6 +133,11 @@ public class PrepopulateDatabase implements CommandLineRunner {
             exampleTransaction.setRekeningTujuan(kepin);
             exampleTransaction.setCatatan("sedekah");
             exampleTransaction.setBank(bsi);
+            long offset = Timestamp.valueOf("2023-10-01 00:00:00").getTime();
+            long end = Timestamp.valueOf("2023-12-31 23:59:59").getTime();
+            long diff = end - offset + 1;
+            long randomTime = offset + (long) (Math.random() * diff);
+            exampleTransaction.setWaktuTransaksi(new Timestamp(randomTime));
             exampleTransaction.setJenisTransaksi(JenisTransaksi.PINDAHBUKU);
             exampleTransaction.setTotalTransaksi(exampleTransaction.getNominal() + 6500);
             exampleTransaction.setTipeTransaksi((isDebit) ? TipeTransaksi.DEBIT : TipeTransaksi.KREDIT);

@@ -1,4 +1,4 @@
-package com.digibank.restapi.dto;
+package com.digibank.restapi.dto.cif;
 
 
 import com.digibank.restapi.model.entity.TypeRekening;
@@ -23,6 +23,5 @@ public class CifDto {
     private  String pekerjaan;
 
     private  String penghasilan;
-
 
 }

@@ -21,15 +21,14 @@ public class Rekening {
     private long noRekening;
 
     @Column(nullable = false)
-    private Double saldo;
+    private Double saldo = 0.0;
 
-    @Column(name = "created_at",nullable = false)
+    @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_tipe_rekening")
-    @JsonIgnore
     private TypeRekening tipeRekening;
 
     @ManyToOne(fetch = FetchType.LAZY)

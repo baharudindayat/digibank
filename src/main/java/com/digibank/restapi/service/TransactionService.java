@@ -9,5 +9,5 @@ public interface TransactionService {
 
     TransactionResposneDto getTransactionById(int id);
 
-    TransactionListResponseDto getFilteredListTransction(boolean isDebit, boolean isKredit, Timestamp tanggalMulai, Timestamp tanggalAkhir, int page, int size);
+    TransactionListResponseDto getFilteredListTransction(String email,boolean isDebit, boolean isKredit, Timestamp tanggalMulai, Timestamp tanggalAkhir, int page, int size);
 }

@@ -1,6 +1,6 @@
 package com.digibank.restapi.service.impl;
 
-import com.digibank.restapi.dto.CifDto;
+import com.digibank.restapi.dto.cif.CifDto;
 import com.digibank.restapi.exception.ResponseBadRequestException;
 import com.digibank.restapi.exception.ResponseUnauthorizationException;
 import com.digibank.restapi.model.entity.CIF;

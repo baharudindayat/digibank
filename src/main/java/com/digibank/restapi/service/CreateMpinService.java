@@ -1,6 +1,6 @@
 package com.digibank.restapi.service;
 
-import com.digibank.restapi.dto.CreateMpinDto;
+import com.digibank.restapi.dto.mpin.CreateMpinDto;
 
 public interface CreateMpinService {
 

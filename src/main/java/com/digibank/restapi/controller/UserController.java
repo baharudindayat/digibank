@@ -1,7 +1,7 @@
 package com.digibank.restapi.controller;
 
-import com.digibank.restapi.dto.CifDto;
-import com.digibank.restapi.dto.CreateMpinDto;
+import com.digibank.restapi.dto.cif.CifDto;
+import com.digibank.restapi.dto.mpin.CreateMpinDto;
 import com.digibank.restapi.dto.confirmRekening.ConfirmRekeningReqDto;
 import com.digibank.restapi.dto.confirmRekening.ConfirmRekeningResDto;
 import com.digibank.restapi.dto.createPassword.CreatePasswordDto;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     private final AuthenticationService authenticationService;

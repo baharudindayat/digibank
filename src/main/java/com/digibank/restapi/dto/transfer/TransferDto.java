@@ -1,4 +1,4 @@
-package com.digibank.restapi.dto;
+package com.digibank.restapi.dto.transfer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

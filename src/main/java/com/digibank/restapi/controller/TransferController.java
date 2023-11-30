@@ -1,8 +1,8 @@
 package com.digibank.restapi.controller;
 
-import com.digibank.restapi.dto.RekeningNameDto;
-import com.digibank.restapi.dto.TransaksiDto;
-import com.digibank.restapi.dto.TransferDto;
+import com.digibank.restapi.dto.transfer.TransaksiDto;
+import com.digibank.restapi.dto.transfer.RequestRekeningNameDto;
+import com.digibank.restapi.dto.transfer.TransferDto;
 import com.digibank.restapi.service.BankService;
 import com.digibank.restapi.service.TransferService;
 import com.digibank.restapi.utils.ResponseHandler;
@@ -28,8 +28,8 @@ public class TransferController {
     }
 
     @PostMapping("/accounts")
-    public ResponseEntity<Object> getAccountRekening(@RequestBody RekeningNameDto id){
-        Object newRekeningNameDto = transferService.getAccountRekening(id.getNoRekening());
+    public ResponseEntity<Object> getAccountRekening(@RequestBody RequestRekeningNameDto id){
+        Object newRekeningNameDto = transferService.getAccountRekening(id);
         return ResponseHandler.generateResponseCreate("Rekening Berhasil Ditemukan", HttpStatus.OK, newRekeningNameDto);
     }
 

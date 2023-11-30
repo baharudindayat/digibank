@@ -2,6 +2,7 @@ package com.digibank.restapi.controller;
 
 import com.digibank.restapi.dto.response.transaction.list.TransactionListResponseDto;
 import com.digibank.restapi.dto.response.TransactionResposneDto;
+import com.digibank.restapi.service.JwtService;
 import com.digibank.restapi.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,13 +20,17 @@ public class TransactionController {
 
     TransactionService transactionService;
 
+    JwtService jwtService;
+
     @Autowired
-    public TransactionController(TransactionService transactionService) {
+    public TransactionController(TransactionService transactionService, JwtService jwtService) {
         this.transactionService = transactionService;
+        this.jwtService = jwtService;
     }
 
     @GetMapping("/transactions")
     public ResponseEntity<TransactionListResponseDto> getListOfTransaction(
+            @RequestHeader(value = "Authorization") String authorizationHeader,
             @RequestParam(value = "isDebit", defaultValue = "true") boolean isDebit,
             @RequestParam(value = "isKredit", defaultValue = "true") boolean isKredit,
             @RequestParam(value = "tanggalMulai", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
@@ -33,6 +38,10 @@ public class TransactionController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size
     ) {
+        String token = authorizationHeader.substring("Bearer ".length());
+
+        String email = jwtService.extractUserName(token);
+
         TransactionListResponseDto listTransction;
         if ((startDate != null) && (endDate != null)) {
             LocalDateTime startDateLocalDateTime = startDate.atStartOfDay();
@@ -42,11 +51,11 @@ public class TransactionController {
 
 
             listTransction = transactionService.getFilteredListTransction(
-                    isDebit, isKredit, startDateTimeStamp, endDateTimeStamp, page, size
+                    email,isDebit, isKredit, startDateTimeStamp, endDateTimeStamp, page, size
             );
         } else {
             listTransction = transactionService.getFilteredListTransction(
-                    isDebit, isKredit, null, null, page, size
+                    email, isKredit,isDebit, null, null, page, size
             );
 
         }

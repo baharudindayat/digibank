@@ -16,7 +16,7 @@ public class PinExceptionHandler {
     public Map<String, Object> handleBadRequestException(PinFailedException ex) {
         return Map.of(
                 "Count", ex.getMessage(),
-                "message","Pin yang anda masukkan salah",
+                "message","MPIN yang dimasukkan salah, kesempatan tersisa " + ex.getMessage() + " kali",
                 "error", "True"
         );
     }
