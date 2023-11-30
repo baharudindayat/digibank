@@ -1,7 +1,7 @@
 package com.digibank.restapi.controller;
 
-import com.digibank.restapi.dto.DigiBankGetDto;
-import com.digibank.restapi.dto.KtpDto;
+import com.digibank.restapi.dto.dukcapil.DigiBankGetDto;
+import com.digibank.restapi.dto.dukcapil.KtpDto;
 
 import com.digibank.restapi.service.KtpService;
 import com.digibank.restapi.utils.ResponseHandler;

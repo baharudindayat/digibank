@@ -1,4 +1,4 @@
-package com.digibank.restapi.dto;
+package com.digibank.restapi.dto.dukcapil;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;

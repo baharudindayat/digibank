@@ -1,10 +1,10 @@
 package com.digibank.restapi.service.impl;
 
 
-import com.digibank.restapi.dto.KtpDto;
+import com.digibank.restapi.dto.dukcapil.KtpDto;
 import com.digibank.restapi.exception.NikNotFoundException;
 import com.digibank.restapi.mapper.AutoKtpMapper;
-import com.digibank.restapi.model.Ktp;
+import com.digibank.restapi.model.entity.dukcapil.Ktp;
 import com.digibank.restapi.repository.KtpRepository;
 import com.digibank.restapi.service.KtpService;
 import com.digibank.restapi.utils.NikGenerator;

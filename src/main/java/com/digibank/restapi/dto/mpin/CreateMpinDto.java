@@ -1,4 +1,5 @@
-package com.digibank.restapi.dto;
+package com.digibank.restapi.dto.mpin;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +10,6 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class TypeRekenignDto {
-    private Long idTipe;
-    private String namaTipe;
-    private String limitTransfer;
+public class CreateMpinDto {
+    private String mpin;
 }
