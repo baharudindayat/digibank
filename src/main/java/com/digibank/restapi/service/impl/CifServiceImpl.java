@@ -38,8 +38,6 @@ public class CifServiceImpl implements CifService {
         Optional<TypeRekening> typeRekening = Optional.ofNullable(typeRekeningRepository.findById(idTipe)
                 .orElseThrow(() -> new ResponseBadRequestException("Tipe rekening tidak ditemukan")));
 
-        Optional<CIF> idCif = Optional.ofNullable(repository.findByNik(cifDto.getNik())
-                .orElseThrow(() -> new ResponseUnauthorizationException("NIK tidak ditemukan")));
 
         CIF cif = new CIF();
         cif.setNik(cifDto.getNik());
@@ -49,6 +47,10 @@ public class CifServiceImpl implements CifService {
         cif.setPenghasilan(cifDto.getPenghasilan());
         cif.setIdUsers(user.get());
         repository.save(cif);
+
+        Optional<CIF> idCif = Optional.ofNullable(repository.findByNik(cifDto.getNik())
+                .orElseThrow(() -> new ResponseUnauthorizationException("NIK tidak ditemukan")));
+
 
         String noRekening = noRekUtil.generateRekening();
         Rekening rekening = new Rekening();

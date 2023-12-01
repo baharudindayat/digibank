@@ -155,7 +155,7 @@ public class TransferServiceImpl implements TransferService {
     @Override
     public Object getAccountRekening(RequestRekeningNameDto requestRekeningNameDto) {
         Optional<Rekening> getAccountTujuan = transferRepository.findByNoRekening(Long.parseLong(requestRekeningNameDto.getNoRekeningTujuan()));
-        Optional<Rekening> getAccountAsal = transferRepository.findByNoRekening(Long.parseLong(requestRekeningNameDto.getNoRekeningAsal()));
+        Optional<Rekening> getAccountAsal = transferRepository.findByNoRekening(Long.parseLong(requestRekeningNameDto.getNoRekeningSumber()));
 
         RekeningNameDto rekeningNameDto = new RekeningNameDto();
         if (getAccountTujuan.isPresent()) {

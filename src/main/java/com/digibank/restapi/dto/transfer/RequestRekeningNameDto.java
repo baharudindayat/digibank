@@ -10,6 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestRekeningNameDto {
-    private String noRekeningAsal;
+
+    private String noRekeningSumber;
+
     private String noRekeningTujuan;
 }
