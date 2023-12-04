@@ -10,7 +10,6 @@ import com.digibank.restapi.model.entity.Rekening;
 import com.digibank.restapi.model.entity.Transaksi;
 import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.model.enums.TipeTransaksi;
-import com.digibank.restapi.repository.RekeningRepository;
 import com.digibank.restapi.repository.TransactionsRepository;
 import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.service.TransactionService;
@@ -84,23 +83,23 @@ public class TransactionServiceImpl implements TransactionService {
         TipeTransaksi tipeTransaksi;
         if ((tanggalMulai == null) && (tanggalAkhir == null)) {
             if (isDebit && isKredit) {
-                filteredTransactions = transactionsRepository.findAllByRekeningAsalInOrRekeningTujuanIn(rekenings,rekenings,pageable);
+                filteredTransactions = transactionsRepository.findAllByRekeningAsalIn(rekenings, pageable);
             } else if (isDebit) {
                 tipeTransaksi = TipeTransaksi.DEBIT;
-                filteredTransactions = transactionsRepository.findByTipeTransaksiAndRekeningAsalInOrRekeningTujuanIn(tipeTransaksi,rekenings,rekenings,pageable);
+                filteredTransactions = transactionsRepository.findByTipeTransaksiAndRekeningAsalInOrRekeningTujuanIn(tipeTransaksi,rekenings,pageable);
             } else if (isKredit) {
                 tipeTransaksi = TipeTransaksi.KREDIT;
-                filteredTransactions = transactionsRepository.findByTipeTransaksiAndRekeningAsalInOrRekeningTujuanIn(tipeTransaksi,rekenings,rekenings, pageable);
+                filteredTransactions = transactionsRepository.findByTipeTransaksiAndRekeningAsalInOrRekeningTujuanIn(tipeTransaksi,rekenings, pageable);
             }
         } else if ((tanggalMulai != null) && (tanggalAkhir != null)) {
             if (isDebit && isKredit) {
-                filteredTransactions = transactionsRepository.findByWaktuTransaksiBetweenAndRekeningAsalInOrRekeningTujuanIn(tanggalMulai, tanggalAkhir,rekenings,rekenings, pageable);
+                filteredTransactions = transactionsRepository.findByWaktuTransaksiBetweenAndRekeningAsalInOrRekeningTujuanIn(tanggalMulai, tanggalAkhir,rekenings, pageable);
             } else if (isDebit) {
                 tipeTransaksi = TipeTransaksi.DEBIT;
-                filteredTransactions = transactionsRepository.findByTipeTransaksiAndWaktuTransaksiBetweenAndRekeningAsalInOrRekeningTujuanIn(tipeTransaksi, tanggalMulai, tanggalAkhir,rekenings,rekenings, pageable);
+                filteredTransactions = transactionsRepository.findByTipeTransaksiAndWaktuTransaksiBetweenAndRekeningAsalInOrRekeningTujuanIn(tipeTransaksi, tanggalMulai, tanggalAkhir,rekenings, pageable);
             } else if (isKredit) {
                 tipeTransaksi = TipeTransaksi.KREDIT;
-                filteredTransactions = transactionsRepository.findByTipeTransaksiAndWaktuTransaksiBetweenAndRekeningAsalInOrRekeningTujuanIn(tipeTransaksi, tanggalMulai, tanggalAkhir,rekenings,rekenings, pageable);
+                filteredTransactions = transactionsRepository.findByTipeTransaksiAndWaktuTransaksiBetweenAndRekeningAsalInOrRekeningTujuanIn(tipeTransaksi, tanggalMulai, tanggalAkhir,rekenings, pageable);
             }
         }
 
