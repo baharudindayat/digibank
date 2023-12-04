@@ -1,5 +1,6 @@
 package com.digibank.restapi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,18 +21,19 @@ public class Rekening {
     private long noRekening;
 
     @Column(nullable = false)
-    private Double saldo;
+    private Double saldo = 0.0;
 
-    @Column(name = "created_at",nullable = false)
+    @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_tipe_rekening")
     private TypeRekening tipeRekening;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cif")
+    @JsonIgnore
     private CIF idCif;
 
 }

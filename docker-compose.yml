@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  digibank:
+    image: digibankimage:latest
+    ports:
+      - "18000:18000"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db.dvqwjpniojxktevipioi.supabase.co:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: XVC3rprOSUPe6jNx
