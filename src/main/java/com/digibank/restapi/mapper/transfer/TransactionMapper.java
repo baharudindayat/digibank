@@ -40,7 +40,7 @@ public interface TransactionMapper {
     }
 
     default Integer getBiayaAdmin(Transaksi transaksi) {
-        if(transaksi.getJenisTransaksi() == JenisTransaksi.PINDAHBUKU) {
+        if(transaksi.getJenisTransaksi() == JenisTransaksi.ANTARREKENING) {
             return 0;
         }
         return 6500;

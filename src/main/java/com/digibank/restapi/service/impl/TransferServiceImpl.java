@@ -121,7 +121,7 @@ public class TransferServiceImpl implements TransferService {
         Transaksi transaksi = new Transaksi();
         transaksi.setRekeningTujuan(rekeningTujuan.get());
         transaksi.setRekeningAsal(rekeningAsal.get());
-        transaksi.setJenisTransaksi(JenisTransaksi.PINDAHBUKU);
+        transaksi.setJenisTransaksi(JenisTransaksi.ANTARREKENING);
         transaksi.setNominal(transferDto.getNominal());
         transaksi.setCatatan(transferDto.getCatatan());
         transaksi.setTipeTransaksi(TipeTransaksi.KREDIT);
@@ -132,7 +132,7 @@ public class TransferServiceImpl implements TransferService {
         Transaksi transaksiTujuan = new Transaksi();
         transaksiTujuan.setRekeningTujuan(rekeningTujuan.get());
         transaksiTujuan.setRekeningAsal(rekeningAsal.get());
-        transaksiTujuan.setJenisTransaksi(JenisTransaksi.PINDAHBUKU);
+        transaksiTujuan.setJenisTransaksi(JenisTransaksi.ANTARREKENING);
         transaksiTujuan.setNominal(transferDto.getNominal());
         transaksiTujuan.setCatatan(transferDto.getCatatan());
         transaksiTujuan.setTipeTransaksi(TipeTransaksi.DEBIT);
