@@ -121,7 +121,7 @@ public class TransferServiceImpl implements TransferService {
         Transaksi transaksi = new Transaksi();
         transaksi.setRekeningTujuan(rekeningTujuan.get());
         transaksi.setRekeningAsal(rekeningAsal.get());
-        transaksi.setJenisTransaksi(JenisTransaksi.PINDAHBUKU);
+        transaksi.setJenisTransaksi(JenisTransaksi.ANTARREKENING);
         transaksi.setNominal(transferDto.getNominal());
         transaksi.setCatatan(transferDto.getCatatan());
         transaksi.setTipeTransaksi(TipeTransaksi.KREDIT);
