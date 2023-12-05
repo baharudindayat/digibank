@@ -23,6 +23,8 @@ public class PrepopulateDatabase implements CommandLineRunner {
     @Transactional
     @Override
     public void run(String... args)  {
+
+
         //ktp
         Ktp ktp = new Ktp();
         ktp.setNik("3324062206020003");
