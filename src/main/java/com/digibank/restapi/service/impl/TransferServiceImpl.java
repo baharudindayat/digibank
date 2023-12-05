@@ -130,9 +130,9 @@ public class TransferServiceImpl implements TransferService {
         transaksiRepository.save(transaksi);
 
         Transaksi transaksiTujuan = new Transaksi();
-        transaksiTujuan.setRekeningTujuan(rekeningTujuan.get());
-        transaksiTujuan.setRekeningAsal(rekeningAsal.get());
-        transaksiTujuan.setJenisTransaksi(JenisTransaksi.ANTARREKENING);
+        transaksiTujuan.setRekeningTujuan(rekeningAsal.get());
+        transaksiTujuan.setRekeningAsal(rekeningTujuan.get());
+        transaksiTujuan.setJenisTransaksi(JenisTransaksi.PINDAHBUKU);
         transaksiTujuan.setNominal(transferDto.getNominal());
         transaksiTujuan.setCatatan(transferDto.getCatatan());
         transaksiTujuan.setTipeTransaksi(TipeTransaksi.DEBIT);
@@ -190,6 +190,9 @@ public class TransferServiceImpl implements TransferService {
 
     @NotNull
     private Object getObject(Optional<Rekening> getAccountTujuan, RekeningNameDto rekeningNameDto) {
+        if (getAccountTujuan.isEmpty()) {
+            throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");
+        }
         AccountStatus getUser = getAccountTujuan.get().getIdCif().getIdUsers().getStatusUser();
         if (getUser.equals(AccountStatus.TERBLOKIR)) {
             throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");
