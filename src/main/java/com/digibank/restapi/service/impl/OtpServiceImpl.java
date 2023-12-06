@@ -1,6 +1,8 @@
 package com.digibank.restapi.service.impl;
 
-import com.digibank.restapi.dto.otp.*;
+import com.digibank.restapi.dto.otp.OtpDto;
+import com.digibank.restapi.dto.otp.OtpResponseDto;
+import com.digibank.restapi.dto.otp.OtpVerificationDto;
 import com.digibank.restapi.exception.ResponseBadRequestException;
 import com.digibank.restapi.exception.ResponseRequestTimeoutException;
 import com.digibank.restapi.exception.ResponseUnauthorizationException;
@@ -19,6 +21,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -108,6 +111,7 @@ public class OtpServiceImpl implements OtpService {
         LocalDateTime twoMinutesAgo = LocalDateTime.now().minusMinutes(2);
         userOtpRepository.deleteByCreatedAtBefore(twoMinutesAgo);
     }
+
     @Override
     public String regenerateOtp(User idUser) {
 
