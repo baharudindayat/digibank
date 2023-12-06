@@ -21,7 +21,7 @@ public class ConfirmRekeningServiceImpl implements ConfirmRekeningService {
     @Override
     public ConfirmRekeningResDto confirmRekening(ConfirmRekeningReqDto confirmRekeningReqDto) {
 
-        Optional<Rekening> rekening = Optional.ofNullable(rekeningRepository.findById(confirmRekeningReqDto.getNoRekening())
+        Optional<Rekening> rekening = Optional.ofNullable(rekeningRepository.findById(Long.valueOf(confirmRekeningReqDto.getNoRekening()))
                 .orElseThrow(() -> new ResponseBadRequestException("Maaf! Nomor Rekening Tidak Terdaftar Silahkan Daftar Rekening.")));
 
         Optional<CIF> cif = Optional.ofNullable(cifRepository.findById(rekening.get().getIdCif().getId_cif())

@@ -1,4 +1,4 @@
-package com.digibank.restapi.dto;
+package com.digibank.restapi.dto.cif;
 
 
 import com.digibank.restapi.model.entity.TypeRekening;

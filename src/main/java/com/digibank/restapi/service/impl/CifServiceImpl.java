@@ -1,6 +1,6 @@
 package com.digibank.restapi.service.impl;
 
-import com.digibank.restapi.dto.CifDto;
+import com.digibank.restapi.dto.cif.CifDto;
 import com.digibank.restapi.exception.ResponseBadRequestException;
 import com.digibank.restapi.exception.ResponseUnauthorizationException;
 import com.digibank.restapi.model.entity.CIF;
@@ -31,10 +31,16 @@ public class CifServiceImpl implements CifService {
 
     @Override
     public String createCif(CifDto cifDto, long idUser, long idTipe) {
+
         Optional<User> user = Optional.ofNullable(userRepository.findById(idUser)
                 .orElseThrow(() -> new ResponseUnauthorizationException("User tidak ditemukan")));
+
         Optional<TypeRekening> typeRekening = Optional.ofNullable(typeRekeningRepository.findById(idTipe)
                 .orElseThrow(() -> new ResponseBadRequestException("Tipe rekening tidak ditemukan")));
+
+        Optional<CIF> idCif = Optional.ofNullable(repository.findByNik(cifDto.getNik())
+                .orElseThrow(() -> new ResponseUnauthorizationException("NIK tidak ditemukan")));
+
         CIF cif = new CIF();
         cif.setNik(cifDto.getNik());
         cif.setAlamat(cifDto.getAlamat());
@@ -43,8 +49,7 @@ public class CifServiceImpl implements CifService {
         cif.setPenghasilan(cifDto.getPenghasilan());
         cif.setIdUsers(user.get());
         repository.save(cif);
-        Optional<CIF> idCif = Optional.ofNullable(repository.findByNik(cifDto.getNik())
-                .orElseThrow(() -> new ResponseUnauthorizationException("NIK tidak ditemukan")));
+
         String noRekening = noRekUtil.generateRekening();
         Rekening rekening = new Rekening();
         rekening.setNoRekening(Long.parseLong(noRekening));

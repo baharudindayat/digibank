@@ -1,7 +1,7 @@
 package com.digibank.restapi.controller;
 
-import com.digibank.restapi.dto.CifDto;
-import com.digibank.restapi.dto.CreateMpinDto;
+import com.digibank.restapi.dto.cif.CifDto;
+import com.digibank.restapi.dto.mpin.CreateMpinDto;
 import com.digibank.restapi.dto.confirmRekening.ConfirmRekeningReqDto;
 import com.digibank.restapi.dto.confirmRekening.ConfirmRekeningResDto;
 import com.digibank.restapi.dto.createPassword.CreatePasswordDto;
@@ -56,10 +56,10 @@ public class UserController {
     }
 
     @PutMapping("/{idUser}/password")
-    public ResponseEntity<Object> changePassword(
+    public ResponseEntity<Object> createPassword(
             @PathVariable(required = false) Long idUser,
             @RequestBody CreatePasswordDto createPasswordRequest) {
-            passwordService.changePassword(idUser, createPasswordRequest);
+            passwordService.createPassword(idUser, createPasswordRequest);
             return ResponseHandler.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Disimpan");
     }
 

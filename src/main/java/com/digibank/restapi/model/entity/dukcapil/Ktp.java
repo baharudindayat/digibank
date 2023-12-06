@@ -1,4 +1,4 @@
-package com.digibank.restapi.model;
+package com.digibank.restapi.model.entity.dukcapil;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

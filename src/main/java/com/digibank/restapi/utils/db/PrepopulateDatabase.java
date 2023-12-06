@@ -1,6 +1,6 @@
 package com.digibank.restapi.utils.db;
 
-import com.digibank.restapi.model.Ktp;
+import com.digibank.restapi.model.entity.dukcapil.Ktp;
 import com.digibank.restapi.model.entity.*;
 import com.digibank.restapi.model.enums.AccountStatus;
 import com.digibank.restapi.model.enums.JenisTransaksi;
@@ -13,9 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 @Component
 public class PrepopulateDatabase implements CommandLineRunner {
@@ -26,6 +23,8 @@ public class PrepopulateDatabase implements CommandLineRunner {
     @Transactional
     @Override
     public void run(String... args)  {
+
+
         //ktp
         Ktp ktp = new Ktp();
         ktp.setNik("3324062206020003");
@@ -33,7 +32,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
         ktp.setKota("Bandung");
         ktp.setNama("John Doe");
         ktp.setTempat_lahir("Bandung");
-        ktp.setTanggal_lahir(new Date(1990, 1, 1));
+        ktp.setTanggal_lahir(Date.valueOf("2002-06-22"));
         ktp.setJenis_kelamin("Laki-laki");
         ktp.setGolongan_darah("O");
         ktp.setAlamat("Jl. Sudirman No. 1");
@@ -46,7 +45,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
         ktp.setPekerjaan("Karyawan");
         ktp.setKewarganegaraan("Indonesia");
         ktp.setBerlaku_hingga("Seumur Hidup");
-        ktp.setTanggal_perekaman(new Date(2023, 10, 30));
+        ktp.setTanggal_perekaman(Date.valueOf("2021-06-22"));
 
         entityManager.persist(ktp);
 
@@ -118,6 +117,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
         devano.setIdCif(cifDevano);
         entityManager.persist(devano);
 
+
         Rekening kepin = new Rekening();
         kepin.setNoRekening(7727272726677L);
         kepin.setSaldo(2000000.0);
@@ -127,7 +127,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
 
         //transaksi
         boolean isDebit = true;
-        Random random = new Random();
+//        Random random = new Random();
         for (int i = 0; i < 100; i++) {
             Transaksi exampleTransaction = new Transaksi();
             exampleTransaction.setNominal(230000000.0 + i);
@@ -140,7 +140,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
             long diff = end - offset + 1;
             long randomTime = offset + (long) (Math.random() * diff);
             exampleTransaction.setWaktuTransaksi(new Timestamp(randomTime));
-            exampleTransaction.setJenisTransaksi(JenisTransaksi.PINDAHBUKU);
+            exampleTransaction.setJenisTransaksi(JenisTransaksi.ANTARREKENING);
             exampleTransaction.setTotalTransaksi(exampleTransaction.getNominal() + 6500);
             exampleTransaction.setTipeTransaksi((isDebit) ? TipeTransaksi.DEBIT : TipeTransaksi.KREDIT);
             isDebit = !isDebit;

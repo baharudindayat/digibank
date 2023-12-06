@@ -1,6 +1,6 @@
 package com.digibank.restapi.service;
 
-import com.digibank.restapi.dto.KtpDto;
+import com.digibank.restapi.dto.dukcapil.KtpDto;
 import org.springframework.stereotype.Service;
 
 @Service
