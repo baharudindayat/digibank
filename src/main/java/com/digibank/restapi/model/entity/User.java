@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +40,7 @@ public class User implements UserDetails {
     private AccountStatus statusUser;
 
     private String mpin;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
