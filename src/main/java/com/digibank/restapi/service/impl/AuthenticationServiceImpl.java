@@ -29,6 +29,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if(user.getStatusUser() != AccountStatus.ACTIVE) {
             throw new ResponseBadRequestException("Maaf Akun Anda Terblokir");
         }
+
         if(BCrypt.checkpw(req.getPassword(), user.getPassword()) ) {
             var jwt = jwtService.generateToken(user);
             return LoginResDto.builder().token(jwt).build();
