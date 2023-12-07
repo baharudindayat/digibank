@@ -23,7 +23,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CifServiceImpl implements CifService {
 
-    private  final UserRepository userRepository;
+    private final UserRepository userRepository;
     private final CifRepository repository;
     private final NoRekUtil noRekUtil;
     private final RekeningRepository rekeningRepository;

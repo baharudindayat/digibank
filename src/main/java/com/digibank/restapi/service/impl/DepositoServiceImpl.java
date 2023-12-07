@@ -18,13 +18,14 @@ public class DepositoServiceImpl implements DepositoService {
     @Override
     public String addSaldo(DepositoReqDto depositoReqDto) {
 
-        Optional<Rekening> rekening = Optional.ofNullable(rekeningRepository.findById(Long.valueOf(depositoReqDto.getNorek()))
-                .orElseThrow(() -> new ResponseUnauthorizationException("No Rekening tidak terdaftar")));
+        Rekening rekening = rekeningRepository.findById(Long.valueOf(depositoReqDto.getNorek()))
+                .orElseThrow(() -> new ResponseUnauthorizationException("No Rekening tidak terdaftar"));
 
-        var totalSaldo = rekening.get().getSaldo() + depositoReqDto.getNominal();
+        var totalSaldo = rekening.getSaldo() + depositoReqDto.getNominal();
 
-        rekening.get().setSaldo(totalSaldo);
+        rekening.setSaldo(totalSaldo);
+        rekeningRepository.save(rekening);
 
-        return null;
+        return "Saldo berhasil ditambahkan";
     }
 }
