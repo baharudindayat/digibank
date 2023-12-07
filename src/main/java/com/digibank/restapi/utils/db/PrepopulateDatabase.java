@@ -23,6 +23,8 @@ public class PrepopulateDatabase implements CommandLineRunner {
     @Transactional
     @Override
     public void run(String... args)  {
+
+
         //ktp
         Ktp ktp = new Ktp();
         ktp.setNik("3324062206020003");
@@ -138,7 +140,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
             long diff = end - offset + 1;
             long randomTime = offset + (long) (Math.random() * diff);
             exampleTransaction.setWaktuTransaksi(new Timestamp(randomTime));
-            exampleTransaction.setJenisTransaksi(JenisTransaksi.PINDAHBUKU);
+            exampleTransaction.setJenisTransaksi(JenisTransaksi.ANTARREKENING);
             exampleTransaction.setTotalTransaksi(exampleTransaction.getNominal() + 6500);
             exampleTransaction.setTipeTransaksi((isDebit) ? TipeTransaksi.DEBIT : TipeTransaksi.KREDIT);
             isDebit = !isDebit;

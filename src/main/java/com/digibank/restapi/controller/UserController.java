@@ -42,7 +42,6 @@ public class UserController {
         return ResponseHandler.generateResponseCreate(HttpStatus.CREATED, "OTP berhasil terkirim", newOtp);
     }
 
-
     @PutMapping("/{idUser}/otp-verification")
     public ResponseEntity<Object> verifyOtp(@PathVariable(required = false) User idUser, @RequestBody OtpVerificationDto otpVerificationDto) {
         userService.verifyOtp(idUser, otpVerificationDto);
@@ -92,7 +91,6 @@ public class UserController {
         LoginResDto newResponse = authenticationService.login(request);
         return ResponseHandler.loginResponse("Login Berhasil!", HttpStatus.OK, newResponse);
     }
-
 
     @PostMapping("/confirm-accounts")
     public ResponseEntity<Object> confirmRekening(@RequestBody ConfirmRekeningReqDto confirmRekeningReqDto) {

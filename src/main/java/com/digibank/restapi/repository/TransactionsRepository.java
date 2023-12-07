@@ -17,35 +17,31 @@ import java.util.List;
 @Repository
 public interface TransactionsRepository extends JpaRepository<Transaksi, Long>, JpaSpecificationExecutor<Transaksi> {
 
-    Page<Transaksi> findAllByRekeningAsalInOrRekeningTujuanIn(List<Rekening> rekeningAsal,List<Rekening> rekeningTujuan, Pageable pageable);
+    Page<Transaksi> findAllByRekeningAsalIn(List<Rekening> rekeningAsal, Pageable pageable);
 
-    @Query("SELECT t FROM Transaksi t WHERE (t.tipeTransaksi = :tipeTransaksi) AND (t.rekeningAsal IN :rekeningAsal OR t.rekeningTujuan IN :rekeningTujuan)")
+    @Query("SELECT t FROM Transaksi t WHERE (t.tipeTransaksi = :tipeTransaksi) AND (t.rekeningAsal IN :rekeningAsal)")
     Page<Transaksi> findByTipeTransaksiAndRekeningAsalInOrRekeningTujuanIn(
             @Param("tipeTransaksi") TipeTransaksi tipeTransaksi,
             @Param("rekeningAsal") List<Rekening> rekeningAsal,
-            @Param("rekeningTujuan") List<Rekening> rekeningTujuan,
             Pageable pageable);
-
 
     @Query("SELECT t FROM Transaksi t WHERE " +
             "(t.tipeTransaksi = :tipeTransaksi) AND " +
             "(t.waktuTransaksi BETWEEN :startDate AND :endDate) AND " +
-            "(t.rekeningAsal IN :rekeningAsal OR t.rekeningTujuan IN :rekeningTujuan)")
+            "(t.rekeningAsal IN :rekeningAsal)")
     Page<Transaksi> findByTipeTransaksiAndWaktuTransaksiBetweenAndRekeningAsalInOrRekeningTujuanIn(
             @Param("tipeTransaksi") TipeTransaksi tipeTransaksi,
             @Param("startDate") Timestamp startDate,
             @Param("endDate") Timestamp endDate,
             @Param("rekeningAsal") List<Rekening> rekeningAsal,
-            @Param("rekeningTujuan") List<Rekening> rekeningTujuan,
             Pageable pageable);
 
     @Query("SELECT t FROM Transaksi t WHERE " +
             "(t.waktuTransaksi BETWEEN :startDate AND :endDate) AND " +
-            "(t.rekeningAsal IN :rekeningAsal OR t.rekeningTujuan IN :rekeningTujuan)")
+            "(t.rekeningAsal IN :rekeningAsal)")
     Page<Transaksi> findByWaktuTransaksiBetweenAndRekeningAsalInOrRekeningTujuanIn(
             @Param("startDate") Timestamp startDate,
             @Param("endDate") Timestamp endDate,
             @Param("rekeningAsal") List<Rekening> rekeningAsal,
-            @Param("rekeningTujuan") List<Rekening> rekeningTujuan,
             Pageable pageable);
 }

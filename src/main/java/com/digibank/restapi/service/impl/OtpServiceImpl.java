@@ -20,9 +20,14 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -105,10 +110,14 @@ public class OtpServiceImpl implements OtpService {
 
     @Transactional
     @Scheduled(fixedRate = 120000)
-    public void deleteExpiredUserOtp() {
-        LocalDateTime twoMinutesAgo = LocalDateTime.now().minusMinutes(2);
-        userOtpRepository.deleteByCreatedAtBefore(twoMinutesAgo);
+    public void deleteExpiredUserOtpAndInactiveUsers() {
+
+        userOtpRepository.deleteByCreatedAtBefore(LocalDateTime.now());
+
+        List<User> inactiveUsers = userRepository.findByStatusUserAndActive(AccountStatus.INACTIVE, null);
+        userRepository.deleteAll(inactiveUsers);
     }
+
     @Override
     public String regenerateOtp(User idUser) {
 
