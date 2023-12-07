@@ -34,7 +34,6 @@ public class SecurityConfig {
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class
                 );
 
-
 //                .exceptionHandling( e -> {
 //                    e.authenticationEntryPoint(authenticationEntryPoint());
 //                });
