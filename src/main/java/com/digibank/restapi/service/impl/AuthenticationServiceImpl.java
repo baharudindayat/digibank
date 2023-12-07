@@ -26,11 +26,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var user = userRepository.findByEmail(req.getEmail())
                 .orElseThrow(() -> new ResponseBadRequestException("Maaf Email dan Kata Sandi dimasukkan salah Pastikan Email dan Kata Sandi benar."));
 
-        if(user.getStatusUser() != AccountStatus.ACTIVE) {
-            throw new ResponseBadRequestException("Maaf Akun Anda Terblokir");
+        if(user.getStatusUser() == AccountStatus.TERBLOKIR) {
+            throw new ResponseBadRequestException("Maaf! Rekening terblokir silahkan hubungi cabang bank terdekat");
         }
-
-        if(BCrypt.checkpw(req.getPassword(), user.getPassword()) ) {
+        if(user.getStatusUser() == AccountStatus.INACTIVE) {
+            throw new ResponseBadRequestException("Maaf! Akun Anda belum aktif, silahkan aktifkan akun terlebih dahulu");
+        }
+        if(BCrypt.checkpw(req.getPassword(), user.getPassword()) && user.getStatusUser() == AccountStatus.ACTIVE) {
             var jwt = jwtService.generateToken(user);
             return LoginResDto.builder().token(jwt).build();
         } else {

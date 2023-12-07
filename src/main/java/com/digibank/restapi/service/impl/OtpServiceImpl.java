@@ -111,11 +111,8 @@ public class OtpServiceImpl implements OtpService {
     @Transactional
     @Scheduled(fixedRate = 120000)
     public void deleteExpiredUserOtpAndInactiveUsers() {
-
-        userOtpRepository.deleteByCreatedAtBefore(LocalDateTime.now());
-
-        List<User> inactiveUsers = userRepository.findByStatusUserAndActive(AccountStatus.INACTIVE, null);
-        userRepository.deleteAll(inactiveUsers);
+        LocalDateTime twoMinutesAgo = LocalDateTime.now().minusMinutes(2);
+        userOtpRepository.deleteByCreatedAtBefore(twoMinutesAgo);
     }
 
     @Override
