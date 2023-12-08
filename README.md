@@ -699,18 +699,17 @@ Response Body (success) :
 ```json
 {
     "data": {
-        "name": "Kevin raihan saleh",
+        "name": "Kevin Raihan Saleh",
         "nik": "1231231231312315",
         "email": "kevin@gmail.com",
-        "rekening": [
+        "accounts": [
             {
-                "noRekening": 7727272726677,
+                "rekening": "7727272726677",
                 "saldo": 2000000.0,
-                "createdAt": "2023-11-20T08:39:57.878+00:00",
-                "tipeRekening": {
-                    "idTipe": 1,
-                    "namaTipe": "GOLD",
-                    "limitTransfer": "500000000"
+                "typeRekening": {
+                    "idTipe": 3,
+                    "namaTipe": "Platinum",
+                    "limitTransfer": "1500000000"
                 }
             }
         ]
