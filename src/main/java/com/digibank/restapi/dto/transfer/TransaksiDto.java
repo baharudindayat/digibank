@@ -1,6 +1,5 @@
 package com.digibank.restapi.dto.transfer;
 
-import com.digibank.restapi.model.enums.JenisTransaksi;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
