@@ -409,7 +409,7 @@ Response Body (failed) :
 Endpoint : POST api/v1/users/confirm-accounts
 
 Tipe data Body:
-- noRekening -> Long
+- noRekening -> String
 
 Request Body :
 
