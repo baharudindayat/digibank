@@ -1,6 +1,5 @@
 package com.digibank.restapi.dto.transfer;
 
-import com.digibank.restapi.model.enums.JenisTransaksi;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,7 @@ public class TransaksiDto {
 
         private String biayaAdmin;
 
-        private JenisTransaksi JenisTransaksi;
+        private String JenisTransaksi;
 
         private String catatan;
 }
