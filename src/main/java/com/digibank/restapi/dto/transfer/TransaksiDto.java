@@ -22,7 +22,7 @@ public class TransaksiDto {
 
         private String biayaAdmin;
 
-        private JenisTransaksi JenisTransaksi;
+        private String JenisTransaksi;
 
         private String catatan;
 }

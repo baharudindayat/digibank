@@ -107,7 +107,7 @@ public class TransferServiceImpl implements TransferService {
                 rekeningAsal.get().getIdCif().getIdUsers().setStatusUser(AccountStatus.TERBLOKIR);
                 rekeningAsal.get().getIdCif().getIdUsers().setCountBlockedMpin(0);
                 userRepository.save(rekeningAsal.get().getIdCif().getIdUsers());
-                throw new TransferFailedException("Maaf! Akun ini telah terblokir karena salah memasukkan MPIN 3 kali, Silahkan hubungi call center terdekat untuk membuka blokir akun");
+                throw new TransferFailedException("Maaf! Akun ini telah terblokir karena salah memasukkan MPIN 3 kali, Silahkan hubungi call center atau ke kantor cabang terdekat untuk membuka blokir akun");
             } else {
                 rekeningAsal.get().getIdCif().getIdUsers().setCountBlockedMpin(getCountMpinWrong + 1);
                 userRepository.save(rekeningAsal.get().getIdCif().getIdUsers());
@@ -121,6 +121,8 @@ public class TransferServiceImpl implements TransferService {
         Transaksi transaksi = new Transaksi();
         transaksi.setRekeningTujuan(rekeningTujuan.get());
         transaksi.setRekeningAsal(rekeningAsal.get());
+
+
         transaksi.setJenisTransaksi(JenisTransaksi.ANTARREKENING);
         transaksi.setNominal(transferDto.getNominal());
         transaksi.setCatatan(transferDto.getCatatan());
@@ -147,8 +149,14 @@ public class TransferServiceImpl implements TransferService {
         transaksiDto.setBiayaAdmin(String.valueOf(0L));
         transaksiDto.setTotalTransaksi(String.format("%.0f",transaksi.getTotalTransaksi()));
         transaksiDto.setCatatan(transaksi.getCatatan());
-        transaksiDto.setJenisTransaksi(transaksi.getJenisTransaksi());
 
+        Transaksi antarrekening = new Transaksi();
+        antarrekening.setJenisTransaksi(JenisTransaksi.ANTARREKENING);
+        if (transaksi.getJenisTransaksi().equals(antarrekening.getJenisTransaksi())){
+            transaksiDto.setJenisTransaksi("Antar Rekening");
+        } else {
+            transaksiDto.setJenisTransaksi("Antar Bank");
+        }
         return transaksiDto;
     }
 
@@ -202,7 +210,7 @@ public class TransferServiceImpl implements TransferService {
 
         rekeningNameDto.setNoRekening(numberRekening);
         rekeningNameDto.setNama(getAccountTujuan.get().getIdCif().getNamaLengkap());
-        rekeningNameDto.setNamaBank("DigiBank");
+        rekeningNameDto.setNamaBank("BANK DIGI");
         return rekeningNameDto;
     }
 
