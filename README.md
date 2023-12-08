@@ -415,7 +415,7 @@ Request Body :
 
 ```json
 {
-    "noRekening" : 7712345683214745
+    "noRekening" : "7712345683214745"
 }
 ```
 
@@ -441,6 +441,60 @@ Response Body (failed) :
     "message" : "Nomor rekening belum terdaftar"
 }
 ```
+
+### CIF & Accounts
+
+Endpoint : PUT /api/v1/users/{id}/user-cif
+
+Path variable : idUser
+
+Tipe data Body:
+- noRekening -> String
+
+Request Body :
+
+```json
+{
+   "noRekening" : "7712345683214745"
+}
+```
+
+Response Body (success) :
+
+```json
+{
+    "status" : 200,
+    "message" : "User berhasil ditambahkan",
+}
+```
+
+Response Body (error) :
+
+```json
+{
+    "status" : 401,
+    "message" : "User tidak ditemukkan",
+}
+```
+
+Response Body (error) :
+
+```json
+{
+    "status" : 401,
+    "message" : "CIF tidak ditemukkan",
+}
+```
+
+Response Body (error) :
+
+```json
+{
+    "status" : 400,
+    "message" : "Maaf! Nomor Rekening Tidak Terdaftar Silahkan Daftar Rekening.",
+}
+```
+
 
 ### Create Password
 
