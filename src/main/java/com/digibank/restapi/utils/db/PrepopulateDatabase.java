@@ -50,9 +50,26 @@ public class PrepopulateDatabase implements CommandLineRunner {
         entityManager.persist(ktp);
 
         //bank
+        Bank digi = new Bank();
+        digi.setNamaBank("BANK DIGI");
+        entityManager.persist(digi);
+
         Bank bsi = new Bank();
-        bsi.setNamaBank("BANK DIGI");
+        bsi.setNamaBank("BANK SYARIAH INDONESIA");
         entityManager.persist(bsi);
+
+        Bank bca = new Bank();
+        bca.setNamaBank("BANK CENTRAL ASIA");
+        entityManager.persist(bca);
+
+        Bank mandiri = new Bank();
+        mandiri.setNamaBank("BANK MANDIRI");
+        entityManager.persist(mandiri);
+
+        Bank bri = new Bank();
+        bri.setNamaBank("BANK RAKYAT INDONESIA");
+        entityManager.persist(bri);
+
 
         //user
         User userDevano = new User();
