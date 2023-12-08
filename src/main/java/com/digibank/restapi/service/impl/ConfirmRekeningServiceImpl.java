@@ -27,6 +27,10 @@ public class ConfirmRekeningServiceImpl implements ConfirmRekeningService {
         Optional<CIF> cif = Optional.ofNullable(cifRepository.findById(rekening.get().getIdCif().getId_cif())
                 .orElseThrow(() -> new ResponseBadRequestException("Cif belum terdaftar")));
 
+        if(cif.get().getIdUsers() != null) {
+            throw new ResponseBadRequestException("Nomor rekening tidak ditersedia");
+        }
+
         ConfirmRekeningResDto confirmRekeningResDto = new ConfirmRekeningResDto();
         confirmRekeningResDto.setNamaLengkap(cif.get().getNamaLengkap());
         confirmRekeningResDto.setNik(cif.get().getNik());

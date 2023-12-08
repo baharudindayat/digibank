@@ -29,6 +29,7 @@ public class UserController {
     private final PasswordService passwordService;
     private final TypeRekeningService typeRekeningService;
     private final CifService cifService;
+    private final UserCifService userCifService;
     private final ConfirmRekeningService confirmRekeningService;
 
     @GetMapping("/cards")
@@ -70,6 +71,16 @@ public class UserController {
             @PathVariable long idTipe) {
         String newCif = cifService.createCif(cifDto, idUser, idTipe);
         return ResponseHandler.generateResponseCif("CIF Berhasil Dibuat", HttpStatus.OK, newCif);
+    }
+
+    @PutMapping("{idUser}/user-cif")
+    public ResponseEntity<Object> createUserRekening(
+            @RequestBody ConfirmRekeningReqDto confirmRekeningReqDto,
+            @PathVariable long idUser
+           ) {
+
+        String newCif = userCifService.createUserRekening(confirmRekeningReqDto, idUser);
+        return ResponseHandler.createMpin(newCif, HttpStatus.OK);
     }
 
     @PutMapping("/{idUser}/mpin")
