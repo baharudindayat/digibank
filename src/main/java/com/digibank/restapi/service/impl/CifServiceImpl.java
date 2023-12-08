@@ -53,9 +53,7 @@ public class CifServiceImpl implements CifService {
         String noRekening = noRekUtil.generateRekening();
         Rekening rekening = new Rekening();
         rekening.setNoRekening(Long.parseLong(noRekening));
-        if(idCif.isPresent()){
-            throw new ResponseBadRequestException("Rekenig Anda salah");
-        }
+
         rekening.setIdCif(idCif.get());
         rekening.setTipeRekening(typeRekening.get());
 
