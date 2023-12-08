@@ -23,6 +23,8 @@ public class PrepopulateDatabase implements CommandLineRunner {
     @Transactional
     @Override
     public void run(String... args)  {
+
+
         //ktp
         Ktp ktp = new Ktp();
         ktp.setNik("3324062206020003");
@@ -48,14 +50,31 @@ public class PrepopulateDatabase implements CommandLineRunner {
         entityManager.persist(ktp);
 
         //bank
+        Bank digi = new Bank();
+        digi.setNamaBank("BANK DIGI");
+        entityManager.persist(digi);
+
         Bank bsi = new Bank();
-        bsi.setNamaBank("Digibank");
+        bsi.setNamaBank("BANK SYARIAH INDONESIA");
         entityManager.persist(bsi);
+
+        Bank bca = new Bank();
+        bca.setNamaBank("BANK CENTRAL ASIA");
+        entityManager.persist(bca);
+
+        Bank mandiri = new Bank();
+        mandiri.setNamaBank("BANK MANDIRI");
+        entityManager.persist(mandiri);
+
+        Bank bri = new Bank();
+        bri.setNamaBank("BANK RAKYAT INDONESIA");
+        entityManager.persist(bri);
+
 
         //user
         User userDevano = new User();
-        userDevano.setEmail("devanozaidan@gmail.com");
-        userDevano.setPassword("$2y$10$KMII6gfpriF5nawIrKFiIerrafGi4oTbFI4b9ZzXBjn26PBdZS.7O");
+        userDevano.setEmail("devano@gmail.com");
+        userDevano.setPassword("$2a$12$.bh2UXaBuSQMT8E7JqXvNeZ9WMuGv6yEQ1vYgRWwea1xU5MbTXJT.");
         userDevano.setStatusUser(AccountStatus.ACTIVE);
         userDevano.setMpin("898725");
         userDevano.setActive(true);
@@ -64,12 +83,21 @@ public class PrepopulateDatabase implements CommandLineRunner {
 
         User userKepin = new User();
         userKepin.setEmail("kevin@gmail.com");
-        userKepin.setPassword("$2y$10$KMII6gfpriF5nawIrKFiIerrafGi4oTbFI4b9ZzXBjn26PBdZS.7O");
+        userKepin.setPassword("$2a$12$.bh2UXaBuSQMT8E7JqXvNeZ9WMuGv6yEQ1vYgRWwea1xU5MbTXJT.");
         userKepin.setStatusUser(AccountStatus.ACTIVE);
         userKepin.setMpin("898725");
         userKepin.setActive(true);
         userKepin.setCountBlockedMpin(0);
         entityManager.persist(userKepin);
+
+        User userIlham = new User();
+        userIlham.setEmail("");
+        userIlham.setPassword("");
+        userIlham.setStatusUser(AccountStatus.INACTIVE);
+        userIlham.setMpin("");
+        userIlham.setActive(null);
+        userIlham.setCountBlockedMpin(0);
+        entityManager.persist(userIlham);
 
 
         //CIF
@@ -78,32 +106,41 @@ public class PrepopulateDatabase implements CommandLineRunner {
         cifDevano.setNamaLengkap("Muhammad Devano Zaidan");
         cifDevano.setAlamat("example address");
         cifDevano.setPekerjaan("example job");
-        cifDevano.setPenghasilan("2000000");
+        cifDevano.setPenghasilan("10 sd 50 juta");
         cifDevano.setIdUsers(userDevano);
         entityManager.persist(cifDevano);
 
         CIF cifKepin = new CIF();
         cifKepin.setNik("1231231231312315");
-        cifKepin.setNamaLengkap("Kevin raihan saleh");
+        cifKepin.setNamaLengkap("Kevin Raihan Saleh");
         cifKepin.setAlamat("example address");
         cifKepin.setPekerjaan("example job");
-        cifKepin.setPenghasilan("2000000");
+        cifKepin.setPenghasilan("10 sd 50 juta");
         cifKepin.setIdUsers(userKepin);
         entityManager.persist(cifKepin);
 
-        //tipe rekening
-        TypeRekening tipeRekeningGold = new TypeRekening();
-        tipeRekeningGold.setNamaTipe("GOLD");
-        tipeRekeningGold.setLimitTransfer("500000000");
-        entityManager.persist(tipeRekeningGold);
+        CIF cifIlham = new CIF();
+        cifIlham.setNik("1231231231312317");
+        cifIlham.setNamaLengkap("Alexander Ilham");
+        cifIlham.setAlamat("example address");
+        cifIlham.setPekerjaan("example job");
+        cifIlham.setPenghasilan("10 sd 50 juta");
+        cifIlham.setIdUsers(userIlham);
+        entityManager.persist(cifIlham);
 
+        //tipe rekening
         TypeRekening tipeRekeningSilver = new TypeRekening();
-        tipeRekeningSilver.setNamaTipe("SILVER");
-        tipeRekeningSilver.setLimitTransfer("1000000000");
+        tipeRekeningSilver.setNamaTipe("Silver");
+        tipeRekeningSilver.setLimitTransfer("500000000");
         entityManager.persist(tipeRekeningSilver);
 
+        TypeRekening tipeRekeningGold = new TypeRekening();
+        tipeRekeningGold.setNamaTipe("Gold");
+        tipeRekeningGold.setLimitTransfer("1000000000");
+        entityManager.persist(tipeRekeningGold);
+
         TypeRekening tipeRekeningPlatinum = new TypeRekening();
-        tipeRekeningPlatinum.setNamaTipe("PLATINUM");
+        tipeRekeningPlatinum.setNamaTipe("Platinum");
         tipeRekeningPlatinum.setLimitTransfer("1500000000");
         entityManager.persist(tipeRekeningPlatinum);
 
@@ -115,13 +152,19 @@ public class PrepopulateDatabase implements CommandLineRunner {
         devano.setIdCif(cifDevano);
         entityManager.persist(devano);
 
-
         Rekening kepin = new Rekening();
         kepin.setNoRekening(7727272726677L);
         kepin.setSaldo(2000000.0);
-        kepin.setTipeRekening(tipeRekeningGold);
+        kepin.setTipeRekening(tipeRekeningPlatinum);
         kepin.setIdCif(cifKepin);
         entityManager.persist(kepin);
+
+        Rekening ilham = new Rekening();
+        ilham.setNoRekening(7727272726679L);
+        ilham.setSaldo(18412000.0);
+        ilham.setTipeRekening(tipeRekeningPlatinum);
+        ilham.setIdCif(cifIlham);
+        entityManager.persist(ilham);
 
         //transaksi
         boolean isDebit = true;
@@ -138,7 +181,7 @@ public class PrepopulateDatabase implements CommandLineRunner {
             long diff = end - offset + 1;
             long randomTime = offset + (long) (Math.random() * diff);
             exampleTransaction.setWaktuTransaksi(new Timestamp(randomTime));
-            exampleTransaction.setJenisTransaksi(JenisTransaksi.PINDAHBUKU);
+            exampleTransaction.setJenisTransaksi(JenisTransaksi.ANTARREKENING);
             exampleTransaction.setTotalTransaksi(exampleTransaction.getNominal() + 6500);
             exampleTransaction.setTipeTransaksi((isDebit) ? TipeTransaksi.DEBIT : TipeTransaksi.KREDIT);
             isDebit = !isDebit;

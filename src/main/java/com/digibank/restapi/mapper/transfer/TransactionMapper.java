@@ -23,11 +23,18 @@ public interface TransactionMapper {
     RekeningDto rekeningToRekeningDto(Rekening rekening, Transaksi transaksi);
 
     @Mapping(target = "kodeTransaksi", source = "kodeTransaksi")
-    @Mapping(target = "tipeTransaksi", source = "tipeTransaksi")
+    @Mapping(target = "jenisTransaksi", expression = "java(getJenisTransakasi(transaksi))")
     @Mapping(target = "biayaAdmin", expression = "java(getBiayaAdmin(transaksi))")
     @Mapping(target = "totalTransaksi", expression = "java(calculateTotalTransaction(transaksi))")
     @Mapping(target = "catatan", source = "catatan")
     TransactionDetailDto transactionToTransactionDetailDto(Transaksi transaksi);
+
+    default String getJenisTransakasi(Transaksi transaksi){
+        if(transaksi.getJenisTransaksi() == JenisTransaksi.ANTARREKENING){
+            return "Antar Rekening";
+        }
+        return "Antar Bank";
+    }
 
     default String calculateTotalTransaction(Transaksi transaksi) {
         if (transaksi == null) {
@@ -40,7 +47,7 @@ public interface TransactionMapper {
     }
 
     default Integer getBiayaAdmin(Transaksi transaksi) {
-        if(transaksi.getJenisTransaksi() == JenisTransaksi.PINDAHBUKU) {
+        if(transaksi.getJenisTransaksi() == JenisTransaksi.ANTARREKENING) {
             return 0;
         }
         return 6500;

@@ -23,7 +23,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CifServiceImpl implements CifService {
 
-    private  final UserRepository userRepository;
+    private final UserRepository userRepository;
     private final CifRepository repository;
     private final NoRekUtil noRekUtil;
     private final RekeningRepository rekeningRepository;
@@ -38,9 +38,6 @@ public class CifServiceImpl implements CifService {
         Optional<TypeRekening> typeRekening = Optional.ofNullable(typeRekeningRepository.findById(idTipe)
                 .orElseThrow(() -> new ResponseBadRequestException("Tipe rekening tidak ditemukan")));
 
-        Optional<CIF> idCif = Optional.ofNullable(repository.findByNik(cifDto.getNik())
-                .orElseThrow(() -> new ResponseUnauthorizationException("NIK tidak ditemukan")));
-
         CIF cif = new CIF();
         cif.setNik(cifDto.getNik());
         cif.setAlamat(cifDto.getAlamat());
@@ -50,12 +47,26 @@ public class CifServiceImpl implements CifService {
         cif.setIdUsers(user.get());
         repository.save(cif);
 
+        Optional<CIF> idCif = Optional.ofNullable(repository.findByNik(cifDto.getNik())
+                .orElseThrow(() -> new ResponseUnauthorizationException("NIK tidak ditemukan")));
+
         String noRekening = noRekUtil.generateRekening();
         Rekening rekening = new Rekening();
         rekening.setNoRekening(Long.parseLong(noRekening));
+
         rekening.setIdCif(idCif.get());
         rekening.setTipeRekening(typeRekening.get());
-        rekening.setSaldo(0.0);
+
+        int typeValue = (int) typeRekening.get().getIdTipe();
+
+        if (typeValue == 1) {
+            rekening.setSaldo(50000.0);
+        } else if (typeValue == 2) {
+            rekening.setSaldo(100000.0);
+        }else if(typeValue == 3){
+            rekening.setSaldo(1000000.0);
+        }
+
         rekeningRepository.save(rekening);
         return noRekening;
     }

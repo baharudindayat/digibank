@@ -121,21 +121,21 @@ public class TransferServiceImpl implements TransferService {
         Transaksi transaksi = new Transaksi();
         transaksi.setRekeningTujuan(rekeningTujuan.get());
         transaksi.setRekeningAsal(rekeningAsal.get());
-        transaksi.setJenisTransaksi(JenisTransaksi.PINDAHBUKU);
+        transaksi.setJenisTransaksi(JenisTransaksi.ANTARREKENING);
         transaksi.setNominal(transferDto.getNominal());
         transaksi.setCatatan(transferDto.getCatatan());
-        transaksi.setTipeTransaksi(TipeTransaksi.KREDIT);
+        transaksi.setTipeTransaksi(TipeTransaksi.DEBIT);
         transaksi.setBank(bank);
         transaksi.setTotalTransaksi(transferDto.getNominal());
         transaksiRepository.save(transaksi);
 
         Transaksi transaksiTujuan = new Transaksi();
-        transaksiTujuan.setRekeningTujuan(rekeningTujuan.get());
-        transaksiTujuan.setRekeningAsal(rekeningAsal.get());
-        transaksiTujuan.setJenisTransaksi(JenisTransaksi.PINDAHBUKU);
+        transaksiTujuan.setRekeningTujuan(rekeningAsal.get());
+        transaksiTujuan.setRekeningAsal(rekeningTujuan.get());
+        transaksiTujuan.setJenisTransaksi(JenisTransaksi.ANTARREKENING);
         transaksiTujuan.setNominal(transferDto.getNominal());
         transaksiTujuan.setCatatan(transferDto.getCatatan());
-        transaksiTujuan.setTipeTransaksi(TipeTransaksi.DEBIT);
+        transaksiTujuan.setTipeTransaksi(TipeTransaksi.KREDIT);
         transaksiTujuan.setBank(bank);
         transaksiTujuan.setTotalTransaksi(transferDto.getNominal());
         transaksiRepository.save(transaksiTujuan);
@@ -155,7 +155,7 @@ public class TransferServiceImpl implements TransferService {
     @Override
     public Object getAccountRekening(RequestRekeningNameDto requestRekeningNameDto) {
         Optional<Rekening> getAccountTujuan = transferRepository.findByNoRekening(Long.parseLong(requestRekeningNameDto.getNoRekeningTujuan()));
-        Optional<Rekening> getAccountAsal = transferRepository.findByNoRekening(Long.parseLong(requestRekeningNameDto.getNoRekeningAsal()));
+        Optional<Rekening> getAccountAsal = transferRepository.findByNoRekening(Long.parseLong(requestRekeningNameDto.getNoRekeningSumber()));
 
         RekeningNameDto rekeningNameDto = new RekeningNameDto();
         if (getAccountTujuan.isPresent()) {
@@ -190,6 +190,9 @@ public class TransferServiceImpl implements TransferService {
 
     @NotNull
     private Object getObject(Optional<Rekening> getAccountTujuan, RekeningNameDto rekeningNameDto) {
+        if (getAccountTujuan.isEmpty()) {
+            throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");
+        }
         AccountStatus getUser = getAccountTujuan.get().getIdCif().getIdUsers().getStatusUser();
         if (getUser.equals(AccountStatus.TERBLOKIR)) {
             throw new TransferFailedException("Maaf! Nomor Rekening yang dituju terblokir");

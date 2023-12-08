@@ -29,6 +29,7 @@ public class UserController {
     private final PasswordService passwordService;
     private final TypeRekeningService typeRekeningService;
     private final CifService cifService;
+    private final UserCifService userCifService;
     private final ConfirmRekeningService confirmRekeningService;
 
     @GetMapping("/cards")
@@ -41,7 +42,6 @@ public class UserController {
         OtpResponseDto newOtp = userService.register(registerDto);
         return ResponseHandler.generateResponseCreate(HttpStatus.CREATED, "OTP berhasil terkirim", newOtp);
     }
-
 
     @PutMapping("/{idUser}/otp-verification")
     public ResponseEntity<Object> verifyOtp(@PathVariable(required = false) User idUser, @RequestBody OtpVerificationDto otpVerificationDto) {
@@ -73,6 +73,16 @@ public class UserController {
         return ResponseHandler.generateResponseCif("CIF Berhasil Dibuat", HttpStatus.OK, newCif);
     }
 
+    @PutMapping("{idUser}/user-cif")
+    public ResponseEntity<Object> createUserRekening(
+            @RequestBody ConfirmRekeningReqDto confirmRekeningReqDto,
+            @PathVariable long idUser
+           ) {
+
+        String newCif = userCifService.createUserRekening(confirmRekeningReqDto, idUser);
+        return ResponseHandler.createMpin(newCif, HttpStatus.OK);
+    }
+
     @PutMapping("/{idUser}/mpin")
     public ResponseEntity<Object> createMpin(
             @RequestBody CreateMpinDto createMpinDto, @PathVariable(required = false) Long idUser) {
@@ -92,7 +102,6 @@ public class UserController {
         LoginResDto newResponse = authenticationService.login(request);
         return ResponseHandler.loginResponse("Login Berhasil!", HttpStatus.OK, newResponse);
     }
-
 
     @PostMapping("/confirm-accounts")
     public ResponseEntity<Object> confirmRekening(@RequestBody ConfirmRekeningReqDto confirmRekeningReqDto) {
