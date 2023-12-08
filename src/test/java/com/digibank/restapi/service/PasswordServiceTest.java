@@ -1,5 +1,6 @@
 package com.digibank.restapi.service;
 
+import com.digibank.restapi.dto.changePassword.ChangePasswordDto;
 import com.digibank.restapi.dto.createPassword.CreatePasswordDto;
 import com.digibank.restapi.model.entity.User;
 import com.digibank.restapi.repository.UserRepository;
@@ -26,6 +27,9 @@ public class PasswordServiceTest {
     @InjectMocks
     private CreatePasswordServiceImpl passwordService;
 
+    @Mock
+    private JwtService jwtService;
+
     @Test
     public void CreatePassworTest() {
 
@@ -39,22 +43,42 @@ public class PasswordServiceTest {
         CreatePasswordDto createPasswordDto = CreatePasswordDto.builder()
                 .password(newPassword).build();
 
-        when(userRepository.findById(Long.valueOf(userId)))
+        when(userRepository.findById((long) userId))
                 .thenReturn(Optional.of(user));
 
         when(userRepository.save(Mockito.any(User.class)))
-                .thenAnswer(invocationOnMock -> {
-                   User savedPassword = invocationOnMock.getArgument(0);
-                   return savedPassword;
-                });
+                .thenAnswer(invocationOnMock -> invocationOnMock.<User>getArgument(0));
 
-        CreatePasswordDto savedPasswordDto = passwordService.createPassword(Long.valueOf(userId), createPasswordDto);
+        CreatePasswordDto savedPasswordDto = passwordService.createPassword((long) userId, createPasswordDto);
 
         assertTrue(BCrypt.checkpw(newPassword, user.getPassword()));
         assertEquals(createPasswordDto, savedPasswordDto);
-        Mockito.verify(userRepository, Mockito.times(1)).findById(Long.valueOf(userId));
+        Mockito.verify(userRepository, Mockito.times(1)).findById((long) userId);
         Mockito.verify(userRepository, Mockito.times(1)).save(user);
 
+    }
+
+    @Test
+    void testChangePasswordWithValidation() {
+
+        String token = "your_sample_token";
+        ChangePasswordDto changePasswordDto = new ChangePasswordDto();
+        changePasswordDto.setOldPassword("old_password");
+        changePasswordDto.setNewPassword("new_password");
+        changePasswordDto.setConfirmPassword("new_password");
+
+        User mockedUser = new User();
+        mockedUser.setEmail("user@example.com");
+        mockedUser.setPassword(BCrypt.hashpw("old_password", BCrypt.gensalt()));
+
+        Mockito.when(jwtService.extractUserName(token)).thenReturn("user@example.com");
+        Mockito.when(userRepository.findByEmail("user@example.com")).thenReturn(Optional.of(mockedUser));
+
+        CreatePasswordServiceImpl passwordService = new CreatePasswordServiceImpl(userRepository, jwtService);
+
+        passwordService.changePasswordWithValidation(token, changePasswordDto);
+
+        Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any(User.class));
     }
 
 }
