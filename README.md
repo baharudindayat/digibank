@@ -639,10 +639,32 @@ Response Body (failed email&password) :
 
 ```json
 {
-    "status" : 401,
+    "status" : 400,
     "message" : "Maaf! Email dan Kata Sandi yang dimasukkan salah. Pastikan Email dan Kata Sandi benar."
 }
 ```
+
+
+Response Body (akun terblokir) :
+
+```json
+{
+    "status": 400,
+    "message": "Maaf! Rekening terblokir silahkan hubungi cabang bank terdekat"
+   
+}
+```
+
+Response Body (akun inactive) :
+
+```json
+{
+    "status": 400,
+    "message": "Maaf! Akun Anda belum aktif, silahkan aktifkan akun terlebih dahulu"
+    
+}
+```
+
 
 ## Profiling
 
