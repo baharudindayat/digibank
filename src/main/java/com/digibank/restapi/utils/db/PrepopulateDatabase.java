@@ -54,10 +54,6 @@ public class PrepopulateDatabase implements CommandLineRunner {
         digi.setNamaBank("BANK DIGI");
         entityManager.persist(digi);
 
-        Bank bsi = new Bank();
-        bsi.setNamaBank("BANK SYARIAH INDONESIA");
-        entityManager.persist(bsi);
-
         Bank bca = new Bank();
         bca.setNamaBank("BANK CENTRAL ASIA");
         entityManager.persist(bca);
@@ -70,6 +66,10 @@ public class PrepopulateDatabase implements CommandLineRunner {
         bri.setNamaBank("BANK RAKYAT INDONESIA");
         entityManager.persist(bri);
 
+
+        Bank bsi = new Bank();
+        bsi.setNamaBank("BANK SYARIAH INDONESIA");
+        entityManager.persist(bsi);
 
         //user
         User userDevano = new User();
