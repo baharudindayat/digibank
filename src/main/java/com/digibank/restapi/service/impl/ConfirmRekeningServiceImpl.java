@@ -28,7 +28,7 @@ public class ConfirmRekeningServiceImpl implements ConfirmRekeningService {
                 .orElseThrow(() -> new ResponseBadRequestException("Cif belum terdaftar")));
 
         if(cif.get().getIdUsers() != null) {
-            throw new ResponseBadRequestException("Nomor rekening tidak ditersedia");
+            throw new ResponseBadRequestException("Nomor rekening tidak tersedia");
         }
 
         ConfirmRekeningResDto confirmRekeningResDto = new ConfirmRekeningResDto();
