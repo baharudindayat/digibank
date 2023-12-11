@@ -53,12 +53,22 @@ public class TransactionServiceImpl implements TransactionService {
             RekeningDto rekeningAsalDto = transactionMapper.rekeningToRekeningDto(rekeningAsal, successfullTransaction);
             RekeningDto rekeningTujuanDto = transactionMapper.rekeningToRekeningDto(rekeningTujuan, successfullTransaction);
 
-            return TransactionResposneDto.builder()
-                    .error(false)
-                    .message("transaksi ditemukan")
-                    .pengirim(rekeningAsalDto)
-                    .penerima(rekeningTujuanDto)
-                    .data(transactionMapper.transactionToTransactionDetailDto(successfullTransaction)).build();
+            if(successfullTransaction.getTipeTransaksi() == TipeTransaksi.KREDIT){
+                return TransactionResposneDto.builder()
+                        .error(false)
+                        .message("transaksi ditemukan")
+                        .pengirim(rekeningTujuanDto)
+                        .penerima(rekeningAsalDto)
+                        .data(transactionMapper.transactionToTransactionDetailDto(successfullTransaction)).build();
+            }else {
+                return TransactionResposneDto.builder()
+                        .error(false)
+                        .message("transaksi ditemukan")
+                        .pengirim(rekeningAsalDto)
+                        .penerima(rekeningTujuanDto)
+                        .data(transactionMapper.transactionToTransactionDetailDto(successfullTransaction)).build();
+            }
+
         } else {
             throw new TransactionNotFoundException("Transaction not found");
         }
