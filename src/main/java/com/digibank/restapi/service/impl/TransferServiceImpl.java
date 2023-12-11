@@ -174,8 +174,8 @@ public class TransferServiceImpl implements TransferService {
             return getObject(getAccountTujuan, rekeningNameDto);
 
         } else {
-            throw new AccountNotFoundException("Maaf! Nomor Rekening yang dituju" +
-                    "tidak terdaftar. Pastikan memasukkan" +
+            throw new AccountNotFoundException("Maaf! Nomor Rekening yang dituju " +
+                    "tidak terdaftar. Pastikan memasukkan " +
                     "Nomor Rekening yang benar ");
         }
     }
@@ -190,8 +190,8 @@ public class TransferServiceImpl implements TransferService {
             return getObject(getAccountTujuan, rekeningNameDto);
 
         } else {
-            throw new AccountNotFoundException("Maaf! Nomor Rekening yang dituju" +
-                    "tidak terdaftar. Pastikan memasukkan" +
+            throw new AccountNotFoundException("Maaf! Nomor Rekening yang dituju " +
+                    "tidak terdaftar. Pastikan memasukkan " +
                     "Nomor Rekening yang benar ");
         }
     }
