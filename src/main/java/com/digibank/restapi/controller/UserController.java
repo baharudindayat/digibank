@@ -87,7 +87,7 @@ public class UserController {
     public ResponseEntity<Object> createMpin(
             @RequestBody CreateMpinDto createMpinDto, @PathVariable(required = false) Long idUser) {
         createMpinService.createMpin(idUser, createMpinDto);
-        return ResponseHandler.createMpin("Selamat! Akun berhasil dibuat. Silakan masuk akun.", HttpStatus.OK);
+        return ResponseHandler.createMpin("Selamat! Akun berhasil dibuat.\nSilakan masuk akun.", HttpStatus.OK);
     }
 
     @PostMapping("/{idUser}/confirm-mpin")

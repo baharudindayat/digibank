@@ -22,13 +22,17 @@ public class ConfirmRekeningServiceImpl implements ConfirmRekeningService {
     public ConfirmRekeningResDto confirmRekening(ConfirmRekeningReqDto confirmRekeningReqDto) {
 
         Optional<Rekening> rekening = Optional.ofNullable(rekeningRepository.findById(Long.valueOf(confirmRekeningReqDto.getNoRekening()))
-                .orElseThrow(() -> new ResponseBadRequestException("Maaf! Nomor Rekening Tidak Terdaftar Silahkan Daftar Rekening.")));
+                .orElseThrow(() -> new ResponseBadRequestException("Maaf! Nomor rekening tidak terdaftar \n" +
+                        "atau sudah digunakan sebelumnya. \n" +
+                        "Silakan daftar rekening.")));
 
         Optional<CIF> cif = Optional.ofNullable(cifRepository.findById(rekening.get().getIdCif().getId_cif())
                 .orElseThrow(() -> new ResponseBadRequestException("Cif belum terdaftar")));
 
         if(cif.get().getIdUsers() != null) {
-            throw new ResponseBadRequestException("Nomor rekening tidak tersedia");
+            throw new ResponseBadRequestException("Maaf! Nomor rekening tidak terdaftar \n" +
+                    "atau sudah digunakan sebelumnya. \n" +
+                    "Silakan daftar rekening.");
         }
 
         ConfirmRekeningResDto confirmRekeningResDto = new ConfirmRekeningResDto();
