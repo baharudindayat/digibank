@@ -61,7 +61,7 @@ public class UserController {
             @PathVariable(required = false) Long idUser,
             @RequestBody CreatePasswordDto createPasswordRequest) {
             passwordService.createPassword(idUser, createPasswordRequest);
-            return ResponseHandler.generateResponseVerivyOtp(HttpStatus.OK, "Kata Sandi Berhasil Disimpan");
+            return ResponseHandler.generateResponseVerivyOtp(HttpStatus.OK, "Kata sandi berhasil disimpan.");
     }
 
     @PostMapping("{idUser}/tipe-rekening/{idTipe}/cif")
@@ -87,7 +87,7 @@ public class UserController {
     public ResponseEntity<Object> createMpin(
             @RequestBody CreateMpinDto createMpinDto, @PathVariable(required = false) Long idUser) {
         createMpinService.createMpin(idUser, createMpinDto);
-        return ResponseHandler.createMpin("Selamat Akun Berhasil dibuat Silahkan Masuk Akun", HttpStatus.OK);
+        return ResponseHandler.createMpin("Selamat! Akun berhasil dibuat. Silakan masuk akun.", HttpStatus.OK);
     }
 
     @PostMapping("/{idUser}/confirm-mpin")

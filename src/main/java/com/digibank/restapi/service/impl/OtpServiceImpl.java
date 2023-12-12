@@ -82,14 +82,14 @@ public class OtpServiceImpl implements OtpService {
         LocalDateTime createdAt = userOTP.get().getCreatedAt();
         long diffInSeconds = Duration.between(createdAt, currentTime).getSeconds();
         if(!Objects.equals(userOTP.get().getOtp(), otpVerificationDto.getOtp())) {
-            throw  new ResponseBadRequestException("Kode OTP yang dimasukkan tidak valid");
+            throw  new ResponseBadRequestException("Maaf! Kode OTP yang dimasukkan tidak valid. Silakan coba lagi.");
         }
         if (diffInSeconds < (2 * 60)) {
             User user = userOTP.get().getIdUser();
             Boolean active = user.getActive();
 
             if (active != null && active) {
-                throw new ResponseBadRequestException("Akun sudah terverifikasi");
+                throw new ResponseBadRequestException("Email sudah terverifikasi");
             }
 
             if (active == null) {
@@ -104,7 +104,7 @@ public class OtpServiceImpl implements OtpService {
             return otpVerificationDto;
         } else {
             userOtpRepository.delete(userOTP.get());
-            throw new ResponseBadRequestException("Kode OTP yang dimasukkan tidak valid");
+            throw new ResponseBadRequestException("Maaf! Kode OTP yang dimasukkan tidak valid. Silakan coba lagi.");
         }
     }
 
