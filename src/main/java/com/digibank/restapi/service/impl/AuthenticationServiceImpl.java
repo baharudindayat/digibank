@@ -24,19 +24,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public LoginResDto login(LoginReqDto req) {
         var user = userRepository.findByEmail(req.getEmail())
-                .orElseThrow(() -> new ResponseBadRequestException("Maaf Email dan Kata Sandi dimasukkan salah Pastikan Email dan Kata Sandi benar."));
+                .orElseThrow(() -> new ResponseBadRequestException("Maaf! Email atau kata sandi yang dimasukkan salah. Pastikan email dan kata sandi benar."));
 
         if(user.getStatusUser() == AccountStatus.TERBLOKIR) {
-            throw new ResponseBadRequestException("Maaf! Rekening terblokir silahkan hubungi cabang bank terdekat");
+            throw new ResponseBadRequestException("Maaf! Akun terblokir. Silakan hubungi cabang bank terdekat.");
         }
         if(user.getStatusUser() == AccountStatus.INACTIVE) {
-            throw new ResponseBadRequestException("Maaf! Akun Anda belum aktif, silahkan aktifkan akun terlebih dahulu");
+            throw new ResponseBadRequestException("Maaf! Akun Anda belum aktif. Silahkan aktifkan akun terlebih dahulu.");
         }
         if(BCrypt.checkpw(req.getPassword(), user.getPassword()) && user.getStatusUser() == AccountStatus.ACTIVE) {
             var jwt = jwtService.generateToken(user);
             return LoginResDto.builder().token(jwt).build();
         } else {
-            throw new ResponseBadRequestException("Maaf Email dan Kata Sandi dimasukkan salah Pastikan Email dan Kata Sandi benar.");
+            throw new ResponseBadRequestException("Maaf! Email atau kata sandi yang dimasukkan salah. Pastikan email dan kata sandi benar.");
         }
     }
 }
