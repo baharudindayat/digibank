@@ -7,6 +7,7 @@ import com.digibank.restapi.model.entity.CIF;
 import com.digibank.restapi.model.entity.Rekening;
 import com.digibank.restapi.model.entity.TypeRekening;
 import com.digibank.restapi.model.entity.User;
+import com.digibank.restapi.model.entity.dukcapil.Ktp;
 import com.digibank.restapi.repository.CifRepository;
 import com.digibank.restapi.repository.RekeningRepository;
 import com.digibank.restapi.repository.TypeRekeningRepository;
@@ -14,6 +15,7 @@ import com.digibank.restapi.repository.UserRepository;
 import com.digibank.restapi.service.CifService;
 import com.digibank.restapi.utils.NoRekUtil;
 import lombok.AllArgsConstructor;
+import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -50,8 +52,15 @@ public class CifServiceImpl implements CifService {
         Optional<CIF> idCif = Optional.ofNullable(repository.findByNik(cifDto.getNik())
                 .orElseThrow(() -> new ResponseUnauthorizationException("NIK tidak ditemukan")));
 
-        String noRekening = noRekUtil.generateRekening();
+        String noRekening;
         Rekening rekening = new Rekening();
+        Optional<Rekening> existingRekening;
+
+        do {
+            noRekening = noRekUtil.generateRekening();
+            existingRekening = rekeningRepository.findByNoRekening(Long.parseLong(noRekening));
+        } while (existingRekening.isPresent());
+
         rekening.setNoRekening(Long.parseLong(noRekening));
 
         rekening.setIdCif(idCif.get());
@@ -63,7 +72,7 @@ public class CifServiceImpl implements CifService {
             rekening.setSaldo(50000.0);
         } else if (typeValue == 2) {
             rekening.setSaldo(100000.0);
-        }else if(typeValue == 3){
+        } else if (typeValue == 3) {
             rekening.setSaldo(1000000.0);
         }
 
